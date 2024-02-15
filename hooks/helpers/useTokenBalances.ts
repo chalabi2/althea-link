@@ -9,7 +9,7 @@ import { getEVMTokenBalanceList } from "@/utils/tokens";
 import { getCosmosTokenBalanceList } from "@/utils/cosmos";
 import { useQuery } from "react-query";
 import { getCosmosEIPChainObject } from "@/utils/networks";
-import { ethToCantoAddress } from "@/utils/address";
+import { ethToAltheaAddress } from "@/utils/address";
 import { addTokenBalances } from "@/utils/math";
 
 /**
@@ -59,7 +59,7 @@ export default function useTokenBalances(
 
             // get canto address
             const { data: cantoAddress, error: cantoAddressError } =
-              await ethToCantoAddress(userEthAddress);
+              await ethToAltheaAddress(userEthAddress);
             if (cantoAddressError) throw cantoAddressError;
 
             // get native balances

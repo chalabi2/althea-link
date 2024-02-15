@@ -14,7 +14,7 @@ const EcoTile = (props: Props) => {
     <div className={styles.card}>
       {props.link === "" ? (
         <Text
-          font="proto_mono"
+          font="macan-font"
           size="x-lg"
           theme="primary-light"
           className={styles["card-title"]}
@@ -23,7 +23,7 @@ const EcoTile = (props: Props) => {
         </Text>
       ) : (
         <a href={props.link} target="_blank" className={styles["card-title"]}>
-          <Text font="proto_mono" size="x-lg" theme="primary-light">
+          <Text font="macan-font" size="x-lg" theme="primary-light">
             {props.name}
           </Text>
           {props.link !== "" && (

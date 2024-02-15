@@ -15,7 +15,7 @@ export const StakingTabs = (props: StakingTabsProps) => {
           props.activeTab === "delegate" ? styles.activeTab : styles.Tab
         }
       >
-        <Text font="proto_mono">Delegate</Text>
+        <Text font="macan-font">Delegate</Text>
       </div>
       <div
         onClick={() => props.handleTabChange("undelegate")}
@@ -23,7 +23,7 @@ export const StakingTabs = (props: StakingTabsProps) => {
           props.activeTab === "undelegate" ? styles.activeTab : styles.Tab
         }
       >
-        <Text font="proto_mono">Undelegate</Text>
+        <Text font="macan-font">Undelegate</Text>
       </div>
       <div
         onClick={() => props.handleTabChange("redelegate")}
@@ -31,7 +31,7 @@ export const StakingTabs = (props: StakingTabsProps) => {
           props.activeTab === "redelegate" ? styles.activeTab : styles.Tab
         }
       >
-        <Text font="proto_mono">Redelegate</Text>
+        <Text font="macan-font">Redelegate</Text>
       </div>
     </div>
   );

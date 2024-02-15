@@ -269,7 +269,7 @@ export default function StakingPage() {
       <div>
         <Spacer height="20px" />
       </div>
-      <Text size="x-lg" font="proto_mono" className={styles.title}>
+      <Text size="x-lg" font="macan" className={styles.title}>
         STAKING
       </Text>
       <Spacer height="20px" />
@@ -278,7 +278,7 @@ export default function StakingPage() {
           {userStaking && userStaking.unbonding.length > 0 && (
             <Table
               title="Unbonding Delegations"
-              headerFont="rm_mono"
+              headerFont="macan-font"
               headers={[
                 {
                   value: "Name",
@@ -306,7 +306,7 @@ export default function StakingPage() {
           {hasUserStaked && userStaking && (
             <Table
               title="My Staking"
-              headerFont="rm_mono"
+              headerFont="macan"
               headers={[
                 {
                   value: "Name",
@@ -382,7 +382,7 @@ export default function StakingPage() {
                   </Container>
                 </Container>
               }
-              headerFont="rm_mono"
+              headerFont="macan"
               headers={[
                 {
                   value: "Rank",
@@ -429,7 +429,7 @@ export default function StakingPage() {
                           vertical: true,
                         }}
                       >
-                        <Text font="proto_mono" size="lg">
+                        <Text font="macan-font" size="lg">
                           NO {currentFilter} VALIDATORS FOUND
                         </Text>
                       </Container>,
@@ -442,11 +442,11 @@ export default function StakingPage() {
           <Container direction="column" width="100%" height="100%">
             <div className={styles.infoBox}>
               <div>
-                <Text font="rm_mono">Total Staked </Text>
+                <Text font="macan">Total Staked </Text>
               </div>
               <Container direction="row" center={{ vertical: true }}>
                 <div style={{ marginRight: "5px" }}>
-                  <Text font="proto_mono" size="title">
+                  <Text font="macan-font" size="title">
                     {displayAmount(
                       totalStaked ? totalStaked.toFixed(2) : "0",
                       0
@@ -457,7 +457,7 @@ export default function StakingPage() {
                 <Icon
                   themed
                   icon={{
-                    url: "/tokens/canto.svg",
+                    url: "/althea.png",
                     size: 24,
                   }}
                 />
@@ -465,21 +465,21 @@ export default function StakingPage() {
             </div>
             <div className={styles.infoBox}>
               <div>
-                <Text font="rm_mono">APR</Text>
+                <Text font="macan">APR</Text>
               </div>
               <Container direction="row" center={{ vertical: true }}>
-                <Text font="proto_mono" size="title">
+                <Text font="macan-font" size="title">
                   {formatPercent((parseFloat(apr) / 100).toString())}
                 </Text>
               </Container>
             </div>
             <div className={styles.infoBox}>
               <div>
-                <Text font="rm_mono">Rewards</Text>
+                <Text font="macan">Rewards</Text>
               </div>
               <Container direction="row" center={{ vertical: true }}>
                 <div style={{ marginRight: "5px" }}>
-                  <Text font="proto_mono" size="title">
+                  <Text font="macan-font" size="title">
                     {totalRewards?.toFixed(5)}{" "}
                   </Text>
                   <Text> </Text>
@@ -487,7 +487,7 @@ export default function StakingPage() {
                 <Icon
                   themed
                   icon={{
-                    url: "/tokens/canto.svg",
+                    url: "/althea.png",
                     size: 24,
                   }}
                 />

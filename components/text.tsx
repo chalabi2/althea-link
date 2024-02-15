@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 interface Props {
-  font?: "rm_mono" | "proto_mono";
+  font?: "macan" | "macan-font";
   weight?: "normal" | "bold";
   size?: "xx-sm" | "x-sm" | "sm" | "md" | "lg" | "x-lg" | "title";
   opacity?: number;
@@ -38,7 +38,7 @@ const themes = {
 
 const Text = styled.p<Props>`
   font-family: ${(props) =>
-    props.font == "proto_mono" ? "var(--proto-mono)" : "var(--rm-mono)"};
+    props.font == "macan-font" ? "var(--proto-mono)" : "var(--rm-mono)"};
   font-weight: ${(props) => props.weight ?? "normal"};
   line-height: 140%;
   letter-spacing: -0.32px;

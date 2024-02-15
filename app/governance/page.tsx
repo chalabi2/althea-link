@@ -32,7 +32,7 @@ export default function GovernancePage() {
     <div>
       <div className={styles.container}>
         <div className={styles.header}>
-          <Text font="proto_mono" className={styles.title}>
+          <Text font="macan" className={styles.title}>
             Governance
           </Text>
           <Container

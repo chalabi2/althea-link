@@ -43,7 +43,7 @@ export const ManageAmbientPosition = ({
   const PoolHeader = () => (
     <div className={styles.iconTitle}>
       <Icon icon={{ url: pool.logoURI, size: 60 }} />
-      <Text size="lg" font="proto_mono">
+      <Text size="lg" font="macan-font">
         {pool.symbol}
       </Text>
     </div>
@@ -346,7 +346,7 @@ const RemoveLiquidity = ({
       </Container>
       <Spacer height="40px" />
 
-      <Text font="proto_mono" size="sm">
+      <Text font="macan-font" size="sm">
         Expected Tokens
       </Text>
       <Spacer height="6px" />

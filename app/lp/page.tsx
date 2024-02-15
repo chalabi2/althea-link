@@ -99,7 +99,7 @@ export default function Page() {
         <>
           <Table
             title="Your Pairs"
-            headerFont="proto_mono"
+            headerFont="macan-font"
             headers={[
               { value: "Pair", ratio: 2 },
               { value: "APR", ratio: 1 },
@@ -174,7 +174,7 @@ export default function Page() {
             />
           </Container>
         }
-        headerFont="proto_mono"
+        headerFont="macan-font"
         headers={[
           { value: "Pair", ratio: 2 },
           { value: "APR", ratio: 1 },

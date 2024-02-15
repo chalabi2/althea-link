@@ -54,7 +54,7 @@ const Selector = (props: Props) => {
         width="32rem"
         height="36rem"
       >
-        <Text size="lg" font="proto_mono">
+        <Text size="lg" font="macan-font">
           {props.title}
         </Text>
         {props.searchProps && (
@@ -119,10 +119,10 @@ const Selector = (props: Props) => {
                   />
                 )}
                 <Container direction="row" gap={"auto"} width="100%">
-                  <Text size="md" font="proto_mono">
+                  <Text size="md" font="macan-font">
                     {item.name}
                   </Text>
-                  <Text size="md" font="proto_mono">
+                  <Text size="md" font="macan-font">
                     {item.secondary}
                   </Text>
                 </Container>
@@ -152,7 +152,7 @@ const Selector = (props: Props) => {
                         height={30}
                       />
                     )}
-                    <Text size="md" font="proto_mono">
+                    <Text size="md" font="macan-font">
                       {group.main.name} {group.main.secondary}
                     </Text>
                     <div
@@ -206,7 +206,7 @@ const Selector = (props: Props) => {
                   }}
                 />
               </div>
-              <Text size="md" font="proto_mono">
+              <Text size="md" font="macan-font">
                 Back
               </Text>
             </Container>
@@ -235,7 +235,7 @@ const Selector = (props: Props) => {
                         height={30}
                       />
                     )}
-                    <Text size="md" font="proto_mono">
+                    <Text size="md" font="macan-font">
                       {item.name} {item.secondary}
                     </Text>
                   </Container>
@@ -285,7 +285,7 @@ const Selector = (props: Props) => {
               />
             )
           )}
-          <Text size="md" font="proto_mono">
+          <Text size="md" font="macan-font">
             {props.activeItem?.name ?? "SELECT ITEM"}
           </Text>
         </Container>

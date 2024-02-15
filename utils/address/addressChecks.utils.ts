@@ -5,8 +5,8 @@ import { isAddress as checkHex } from "web3-validator";
  * @param {string} cantoAddress address to check
  * @returns {boolean} if a valid canto address
  */
-export function isValidCantoAddress(cantoAddress: string): boolean {
-  return cantoAddress.startsWith("canto") && cantoAddress.length === 44;
+export function isValidAltheaAddress(altheaAddress: string): boolean {
+  return altheaAddress.startsWith("althea") && altheaAddress.length === 44;
 }
 
 /**
@@ -14,7 +14,9 @@ export function isValidCantoAddress(cantoAddress: string): boolean {
  * @param {string} ethAddress address to check
  * @returns {boolean} if a valid eth address
  */
-export function isValidEthAddress(ethAddress: string): ethAddress is `0x${string}` {
+export function isValidEthAddress(
+  ethAddress: string
+): ethAddress is `0x${string}` {
   return checkHex(ethAddress);
 }
 

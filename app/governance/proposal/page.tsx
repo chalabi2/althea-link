@@ -91,7 +91,7 @@ export default function Page() {
   if (!id) {
     return (
       <div className={styles.noProposalContainer}>
-        <Text font="proto_mono">Proposal ID is missing</Text>
+        <Text font="macan-font">Proposal ID is missing</Text>
       </div>
     );
   }
@@ -101,7 +101,7 @@ export default function Page() {
   if (!proposal) {
     return (
       <div className={styles.noProposalContainer}>
-        <Text font="proto_mono">
+        <Text font="macan-font">
           No proposal found with the ID {proposalId}{" "}
         </Text>
       </div>

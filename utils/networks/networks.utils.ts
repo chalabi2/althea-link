@@ -14,14 +14,12 @@ import { getEthTransactionLink } from "@/config/networks/helpers";
 const layerzeroMainnetScanUrl = "https://layerzeroscan.com";
 const layerzeroTestnetScanUrl = "https://testnet.layerzeroscan.com";
 
-
 export const getLayerZeroTransactionlink = (chainId: string | number) => {
   if (getNetworkInfoFromChainId(chainId).data.isTestChain) {
-    return getEthTransactionLink(layerzeroTestnetScanUrl)
+    return getEthTransactionLink(layerzeroTestnetScanUrl);
   }
-  return getEthTransactionLink(layerzeroMainnetScanUrl)
-}
-
+  return getEthTransactionLink(layerzeroMainnetScanUrl);
+};
 
 // will get correct cosmos canto chain from evm or cosmos chain id
 export function getCantoCosmosNetwork(
@@ -37,9 +35,8 @@ export function getCantoCosmosNetwork(
     chainId === NETWORKS.CANTO_TESTNET_COSMOS.chainId
   ) {
     return COSMOS_NETWORKS.CANTO_TESTNET_COSMOS;
-  } else {
-    return null;
   }
+  return null;
 }
 
 export function isCantoChainId(chainId: number): boolean {

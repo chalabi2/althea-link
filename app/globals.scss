@@ -46,12 +46,15 @@ a {
 
 .light {
   --graph-fill: #868686;
+  --text-blue-color: #0038d2;
   --graph-filled: #141414;
   --anim-bg-color: #dddddd;
   --canto-color: var(--extra-success-color, #06fc99);
   --dark-color: 17, 17, 17;
   --light-color: 255, 255, 255;
   --lighten-color: white;
+  --background-color-start: #cce4ff;
+  --background-color-end: #ffffff;
   --darken-color: black;
   --primary-dark-color: #222;
   --primary-light-color: #eee;
@@ -62,7 +65,7 @@ a {
   --light-10-color: #ffffff20;
   --light-20-color: #ffffff40;
   --text-light-color: #ffffff;
-  --card-background-color: #c1c1c1;
+
   --text-light-30-color: #ffffff4c;
   --extra-failure-color: #ef4444;
   --text-dark-30-color: #1111114c;
@@ -73,12 +76,12 @@ a {
   --card-primary-color: #111111;
   --border-optional-color: #ffffff00;
   --extra-shadow: #cdcdcd;
-  --border-stroke-color: #b3b3b3;
+  --border-stroke-color: black;
   --border-radius: 0px;
   --text-dark-color: #111111;
-  --card-sub-surface-color: #dfdfdf;
+  --card-sub-surface-color: white;
   --card-surface-color: #f1f1f1;
-  --border-stoke-dark-color: #222;
+  --althea-blue: #0077ff;
   --dark-mode: 0;
   --light-mode: 1;
   --box-shadow: 6px 6px 0px 0px rgba(17, 17, 17, 0.15);
@@ -103,7 +106,8 @@ a {
 
 .dark {
   --card-primary-color-opp: #111111;
-
+  --text-blue-color: #0038d2;
+  --althea-blue: #0077ff;
   --graph-fill: #969696;
   //   --graph-filled: #dcdcdc;
   --graph-filled: #06fc99;
@@ -123,7 +127,8 @@ a {
   --light-10-color: #121212e3;
   --light-20-color: #2d2d2d;
   --text-light-color: #111111;
-  --card-background-color: #0b0b0b;
+  --background-color-start: #0d2642;
+  --background-color-end: #101112;
   --text-light-30-color: #1111114c;
   --extra-failure-color: #ef4444;
   --text-dark-30-color: #ededed4c;
@@ -134,10 +139,10 @@ a {
   --card-primary-color: #0ee489;
   --border-optional-color: #ffffff00;
   --extra-shadow: #cdcdcd;
-  --border-stroke-color: #3d3d3d;
+  --border-stroke-color: white;
   --border-radius: 5;
   --text-dark-color: #ececec;
-  --card-sub-surface-color: #292929;
+  --card-sub-surface-color: black;
   --card-surface-color: #1e1e1e;
   --dark-mode: 1;
   --light-mode: 0;
@@ -187,7 +192,11 @@ a {
 //   }
 // }
 body {
-  background-color: var(--card-background-color);
+  background: linear-gradient(
+    90deg,
+    var(--background-color-start) 0%,
+    var(--background-color-end) 100%
+  );
   color: var(--text-dark-color);
   min-height: 100vh;
   display: grid;

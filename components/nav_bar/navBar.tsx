@@ -80,17 +80,9 @@ const NavBar = () => {
             themed
           />
         </button>
-        <Link href="/">
-          <Image
-            src="/tokens/canto.svg"
-            width={40}
-            height={40}
-            alt="canto"
-            style={{
-              filter: "invert(var(--dark-mode))",
-            }}
-          />
-        </Link>
+        {/* <Link href="/">
+          <Image src="/althea.png" width={80} height={80} alt="althea" />
+        </Link> */}
       </div>
 
       <div className={styles["nav-links"]} data-menu-open={isMenuOpen}>
@@ -105,7 +97,7 @@ const NavBar = () => {
           <Text size="sm">Bridge</Text>
         </Link>
 
-        <Link
+        {/* <Link
           href="/lending"
           className={clsx(
             styles["nav-link"],
@@ -114,7 +106,7 @@ const NavBar = () => {
           onClick={() => Analytics.actions.events.clickedNavLink("Lending")}
         >
           <Text size="sm">Lending</Text>
-        </Link>
+        </Link> */}
         <Link
           href="/lp"
           className={clsx(
@@ -134,6 +126,26 @@ const NavBar = () => {
           onClick={() => Analytics.actions.events.clickedNavLink("Explore")}
         >
           <Text size="sm">Explore</Text>
+        </Link>
+        <Link
+          href="/staking"
+          className={clsx(
+            styles["nav-link"],
+            currentPath == "/staking" && styles.active
+          )}
+          onClick={() => Analytics.actions.events.clickedNavLink("Staking")}
+        >
+          <Text size="sm">Staking</Text>
+        </Link>
+        <Link
+          href="/governance"
+          className={clsx(
+            styles["nav-link"],
+            currentPath.includes("governance") && styles.active
+          )}
+          onClick={() => Analytics.actions.events.clickedNavLink("Governance")}
+        >
+          <Text size="sm">Governance</Text>
         </Link>
         {/* {currentPath == "/staking" && (
           <Link
@@ -156,7 +168,7 @@ const NavBar = () => {
             <Text size="sm">Governance</Text>
           </Link>
         )} */}
-        <div
+        {/*  <div
           className={styles.moreLink}
           onMouseEnter={() => setIsMoreModalOpen(true)}
           onMouseLeave={() => setIsMoreModalOpen(false)}
@@ -206,7 +218,7 @@ const NavBar = () => {
               }
             </div>
           )}
-        </div>
+        </div> */}
       </div>
       <div className={styles["btn-grp"]}>
         <div className={styles.theme}>

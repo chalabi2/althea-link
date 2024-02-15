@@ -8,7 +8,7 @@ import { StakingTransactionParams, StakingTxTypes } from "./types";
 import { createMsgsDelegate } from "@/transactions/cosmos/messages/staking/delegate";
 import { createMsgsRedelegate } from "@/transactions/cosmos/messages/staking/redelegate";
 import { createMsgsClaimStakingRewards } from "@/transactions/cosmos/messages/staking/claimRewards";
-import { ethToCantoAddress } from "@/utils/address/conversion.utils";
+import { ethToAltheaAddress } from "@/utils/address/conversion.utils";
 import { displayAmount } from "@/utils/formatting/balances.utils";
 import {
   CantoFETxType,
@@ -27,7 +27,7 @@ export async function stakingTx(
   txParams: StakingTransactionParams
 ): PromiseWithError<TxCreatorFunctionReturn> {
   // convert user eth address into canto address
-  const { data: cantoAddress, error } = await ethToCantoAddress(
+  const { data: altheaAddress, error } = await ethToAltheaAddress(
     txParams.ethAccount
   );
   if (error) {
@@ -41,7 +41,7 @@ export async function stakingTx(
           _delegateTx(
             txParams.ethAccount,
             txParams.chainId,
-            cantoAddress,
+            altheaAddress,
             txParams.validator.operator_address,
             txParams.amount,
             false,
@@ -59,7 +59,7 @@ export async function stakingTx(
           _delegateTx(
             txParams.ethAccount,
             txParams.chainId,
-            cantoAddress,
+            altheaAddress,
             txParams.validator.operator_address,
             txParams.amount,
             txParams.txType === StakingTxTypes.UNDELEGATE,
@@ -77,7 +77,7 @@ export async function stakingTx(
           _redelegateTx(
             txParams.ethAccount,
             txParams.chainId,
-            cantoAddress,
+            altheaAddress,
             txParams.validator.operator_address,
             txParams.newValidatorAddress,
             txParams.amount,
@@ -95,7 +95,7 @@ export async function stakingTx(
           _claimRewardsTx(
             txParams.ethAccount,
             txParams.chainId,
-            cantoAddress,
+            altheaAddress,
             txParams.validatorAddresses,
             TX_DESCRIPTIONS.CLAIM_STAKING_REWARDS()
           ),
@@ -128,7 +128,7 @@ const _delegateTx = (
     delegatorCantoAddress,
     validatorAddress,
     amount,
-    denom: "acanto",
+    denom: "aalthea",
     undelegate,
   }),
 });
@@ -152,7 +152,7 @@ const _redelegateTx = (
     validatorSrcAddress,
     validatorDstAddress,
     amount,
-    denom: "acanto",
+    denom: "aalthea",
   }),
 });
 
@@ -193,7 +193,7 @@ export function validateStakingTxParams(
         txParams.amount,
         "1",
         txParams.nativeBalance,
-        "CANTO",
+        "ALTHEA",
         18
       );
     case StakingTxTypes.UNDELEGATE:
@@ -202,7 +202,7 @@ export function validateStakingTxParams(
         txParams.amount,
         "1",
         txParams.validator.userDelegation.balance,
-        "CANTO",
+        "ALTHEA",
         18
       );
     case StakingTxTypes.REDELEGATE: {
@@ -218,7 +218,7 @@ export function validateStakingTxParams(
         txParams.amount,
         "1",
         txParams.validator.userDelegation.balance,
-        "CANTO",
+        "ALTHEA",
         18
       );
     }
