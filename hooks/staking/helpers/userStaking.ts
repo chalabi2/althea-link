@@ -5,7 +5,7 @@ import {
   errMsg,
 } from "@/config/interfaces";
 import { UserStakingReturn } from "../interfaces/validators";
-import { ethToCantoAddress } from "@/utils/address";
+import { ethToAltheaAddress } from "@/utils/address";
 import { tryFetch } from "@/utils/async";
 import * as NETWORKS from "@/config/networks";
 
@@ -63,7 +63,7 @@ export async function getAllUserStakingData(
         },
       });
     const { data: cantoAddress, error: cantoAddressError } =
-      await ethToCantoAddress(userEthAddress);
+      await ethToAltheaAddress(userEthAddress);
     if (cantoAddressError) throw cantoAddressError;
 
     const userStakingData = await tryFetch<UserStakingReturn>(

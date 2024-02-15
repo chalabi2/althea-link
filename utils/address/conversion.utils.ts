@@ -1,14 +1,14 @@
 import { NEW_ERROR, NO_ERROR, PromiseWithError } from "@/config/interfaces";
 import { CANTO_MAINNET_COSMOS } from "@/config/networks";
 import { tryFetch } from "../async";
-import { isValidCantoAddress } from ".";
+import { isValidAltheaAddress } from ".";
 
 /**
  * Convert an eth hex address to bech32 canto address.
  * @param {string} ethAddress The eth address to convert into a canto address
  * @return {string} The converted address
  */
-export async function ethToCantoAddress(
+export async function ethToAltheaAddress(
   ethAddress: string
 ): PromiseWithError<string> {
   try {
@@ -22,11 +22,11 @@ export async function ethToCantoAddress(
     if (error) throw error;
 
     // check if canto address is valid
-    if (!isValidCantoAddress(result.cosmos_address))
+    if (!isValidAltheaAddress(result.cosmos_address))
       throw Error("invalid canto address: " + result.cosmos_address);
 
     return NO_ERROR(result.cosmos_address);
   } catch (err) {
-    return NEW_ERROR("ethToCantoAddress", err);
+    return NEW_ERROR("ethToAltheaAddress", err);
   }
 }

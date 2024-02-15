@@ -12,7 +12,7 @@ export interface ButtonProps {
     size?: number;
   };
   padding?: "sm" | "md" | "lg" | number;
-  fontFamily?: "rm_mono" | "proto_mono";
+  fontFamily?: "rm_mono" | "macan-font";
   fontSize?: "sm" | "md" | "lg" | number;
   weight?: "regular" | "bold";
   children: React.ReactNode;
@@ -40,7 +40,7 @@ const Button = (props: ButtonProps) => {
 
   const getFontFamily = () => {
     switch (props.fontFamily) {
-      case "proto_mono":
+      case "macan-font":
         return "var(--proto-mono)";
       default:
         return "var(--rm-mono)";

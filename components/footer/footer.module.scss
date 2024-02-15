@@ -3,13 +3,17 @@
   height: 28px;
   position: fixed;
   width: calc(100% + 1px);
-  background-color: var(--card-background-color);
+  background: linear-gradient(
+    90deg,
+    var(--background-color-start) 0%,
+    var(--background-color-end) 100%
+  );
   bottom: 0;
   z-index: 9;
 
   align-items: center;
   justify-content: space-between;
-  border-top: 1px solid var(--border-stoke-dark-color, #222);
+  border-top: 1px solid var(--border-stroke-color, #222);
   border-radius: var(--border-radius, 0px);
   .links {
     display: flex;
@@ -21,7 +25,7 @@
     height: 100%;
     display: flex;
     align-items: center;
-    border-right: #999 1px solid;
+    border-right: var(--border-stroke-color, #222) 1px solid;
     text-transform: uppercase;
     transition: background 0.1s ease-out;
     &:hover {
@@ -135,15 +139,15 @@
       flex-wrap: wrap;
 
       height: calc(56px / 2);
-      border-top: 1px solid var(--border-stoke-dark-color, #999);
+      border-top: 1px solid var(--broder-stroke-color, #999);
       &:first-of-type {
         border-top: none;
       }
       width: 100%;
     }
 
-    border-top: 1px solid var(--border-stoke-dark-color, #999);
-    border-bottom: 1px solid var(--border-stoke-dark-color, #999);
+    border-top: 1px solid var(--broder-stroke-color, #999);
+    border-bottom: 1px solid var(--broder-stroke-color, #999);
   }
 
   .links > * {

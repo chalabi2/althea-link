@@ -18,7 +18,7 @@ const rm_mono = localFont({
 });
 
 const proto_mono = localFont({
-  src: "../fonts/proto-mono-regular.ttf",
+  src: "../fonts/macan.ttf",
   weight: "400",
   style: "normal",
   variable: "--proto-mono",

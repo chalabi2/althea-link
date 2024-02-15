@@ -96,8 +96,8 @@
     width: 10px;
     transform: translate(20%, -80%) scale(1, 1);
     height: 10px;
-    border-right: 2px solid var(--primary-dark-color);
-    border-top: 2px solid var(--primary-dark-color);
+    border-right: 2px solid var(--text-blue-color);
+    border-top: 2px solid var(--text-blue-color);
   }
   &::after {
     position: absolute;
@@ -108,8 +108,8 @@
     width: 10px;
     transform: translate(-20%, 90%) scale(1, 1);
     height: 10px;
-    border-left: 2px solid var(--primary-dark-color);
-    border-bottom: 2px solid var(--primary-dark-color);
+    border-left: 2px solid var(--text-blue-color);
+    border-bottom: 2px solid var(--text-blue-color);
   }
 }
 
@@ -187,6 +187,7 @@
 }
 
 .moreLink {
+.moreLink {
   padding: 0 1rem;
   display: flex;
   flex-direction: column;
@@ -194,6 +195,7 @@
   height: 50px;
 }
 
+.popUp {
 .popUp {
   opacity: 1;
   display: flex;
@@ -209,6 +211,7 @@
 }
 
 .moreButtonContainer {
+.moreButtonContainer {
   display: flex;
   flex-direction: row;
   cursor: pointer;
@@ -222,7 +225,7 @@
   }
 }
 
-.dropdownlink {
+.optionsContainer1 {
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -241,6 +244,7 @@
   opacity: 1;
 }
 
+.dropdown {
 .dropdown {
   display: flex;
   flex-direction: column;

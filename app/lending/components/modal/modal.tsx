@@ -158,7 +158,7 @@ export const LendingModal = (props: Props) => {
                   horizontal: true,
                 }}
               >
-                <Text font="proto_mono" size="sm">
+                <Text font="macan-font" size="sm">
                   {displayAmount(cToken.collateralFactor, 16) + "%"}
                 </Text>
               </Container>
@@ -258,7 +258,7 @@ export const LendingModal = (props: Props) => {
         />
         <Spacer height="10px" />
 
-        <Text font="proto_mono" size="lg">
+        <Text font="macan-font" size="lg">
           {cToken.underlying.symbol}
         </Text>
         <Spacer height="20px" />
@@ -397,11 +397,11 @@ export const ModalItem = ({
       vertical: true,
     }}
   >
-    <Text size="sm" font="proto_mono">
+    <Text size="sm" font="macan-font">
       {name}
     </Text>
     {typeof value === "string" ? (
-      <Text size="sm" font="proto_mono">
+      <Text size="sm" font="macan-font">
         {value}{" "}
         <span>
           {note && (
@@ -443,10 +443,10 @@ const CTokenAmountCard = ({
 
   return (
     <Container direction="row" gap="auto">
-      <Text size="sm" font="proto_mono">
+      <Text size="sm" font="macan-font">
         {name}
       </Text>
-      <Text size="sm" font="proto_mono">
+      <Text size="sm" font="macan-font">
         {displayAmount(amount, decimals, {
           symbol: note ? undefined : symbol,
         })}
@@ -491,7 +491,7 @@ const BorrowLimits = ({
         );
         return (
           <Text
-            font="proto_mono"
+            font="macan-font"
             role="button"
             key={limit}
             size="x-sm"

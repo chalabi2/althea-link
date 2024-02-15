@@ -5,7 +5,7 @@ import useScreenSize from "@/hooks/helpers/useScreenSize";
 interface Props {
   title?: string | React.ReactNode;
   secondary?: React.ReactNode;
-  headerFont: "proto_mono" | "rm_mono";
+  headerFont: "macan" | "macan-font";
   headers: {
     value: string | React.ReactNode;
     ratio: number;
