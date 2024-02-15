@@ -84,7 +84,7 @@ const HighlightCard = ({
             value={formattedAmount(cToken.userDetails?.balanceOfCToken ?? "0")}
             name={
               <Container key={"popkey"} direction="row" gap={10}>
-                <Text font="proto_mono">{cToken.symbol + " Balance"}</Text>
+                <Text font="macan-font">{cToken.symbol + " Balance"}</Text>
                 <InfoPop>
                   <Text>
                     cNOTE is collateralized NOTE. Supply NOTE to receive cNOTE
@@ -120,7 +120,7 @@ const HighlightCard = ({
 
       <div className={styles.actions}>
         <Button
-          fontFamily="proto_mono"
+          fontFamily="macan-font"
           width={"fill"}
           height={"large"}
           fontSize={"lg"}
@@ -130,7 +130,7 @@ const HighlightCard = ({
         </Button>
 
         <Button
-          fontFamily="proto_mono"
+          fontFamily="macan-font"
           width={"fill"}
           height={"large"}
           fontSize={"lg"}

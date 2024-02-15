@@ -8,7 +8,7 @@ import {
 import { createMsgsVote } from "@/transactions/cosmos/messages/voting/vote";
 import { voteOptionToNumber } from "./voteOptions";
 import { ProposalVoteTxParams } from "./voteTxParams";
-import { ethToCantoAddress } from "@/utils/address/conversion.utils";
+import { ethToAltheaAddress } from "@/utils/address/conversion.utils";
 import {
   Transaction,
   TransactionDescription,
@@ -26,7 +26,7 @@ export async function proposalVoteTx(
 ): PromiseWithError<TxCreatorFunctionReturn> {
   // convert eth address to canto address
   const { data: cantoAddress, error: ethToCantoError } =
-    await ethToCantoAddress(params.ethAccount);
+    await ethToAltheaAddress(params.ethAccount);
   if (ethToCantoError) {
     return NEW_ERROR("proposalVoteTx::" + errMsg(ethToCantoError));
   }

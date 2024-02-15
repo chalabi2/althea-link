@@ -96,7 +96,7 @@ export const StakeLPModal = (props: Props) => {
         />
         <Spacer height="10px" />
 
-        <Text font="proto_mono" size="lg">
+        <Text font="macan-font" size="lg">
           {cLPToken.underlying.symbol}
         </Text>
         <Spacer height="20px" />
@@ -153,7 +153,7 @@ export const StakeLPModal = (props: Props) => {
         >
           <Icon icon={{ url: "/dropdown.svg", size: 24 }} />
         </div>
-        <Text font="proto_mono" size="lg">
+        <Text font="macan-font" size="lg">
           Stake
         </Text>
       </Container> */}
@@ -177,7 +177,7 @@ export const StakeLPModal = (props: Props) => {
         >
           <Icon icon={{ url: "/dropdown.svg", size: 24 }} themed />
         </div>
-        <Text font="proto_mono" size="lg">
+        <Text font="macan-font" size="lg">
           Stake
         </Text>
       </Container>
@@ -228,10 +228,10 @@ const CTokenAmountCard = ({
 
   return (
     <Container direction="row" gap="auto">
-      <Text size="sm" font="proto_mono">
+      <Text size="sm" font="macan-font">
         {name}
       </Text>
-      <Text size="sm" font="proto_mono">
+      <Text size="sm" font="macan-font">
         {displayAmount(amount, decimals, {
           symbol: note ? undefined : symbol,
         })}

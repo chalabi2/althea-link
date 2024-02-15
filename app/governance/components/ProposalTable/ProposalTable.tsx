@@ -68,7 +68,7 @@ const ProposalTable = ({ proposals }: TableProps) => {
   if (proposals.length == 0) {
     return (
       <div>
-        <Text font="proto_mono">Loading Proposals...</Text>
+        <Text font="macan-font">Loading Proposals...</Text>
       </div>
     );
   }
@@ -181,7 +181,7 @@ const ProposalTable = ({ proposals }: TableProps) => {
                   ]
                 : [
                     <div key="noData" className={styles.noProposalContainer}>
-                      <Text font="proto_mono" size="lg">
+                      <Text font="macan-font" size="lg">
                         NO {currentFilter} FOUND
                       </Text>
                     </div>,

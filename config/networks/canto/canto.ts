@@ -14,36 +14,36 @@ const cantoMainBlockExplorerEVM = "https://tuber.build";
 
 // canto will have an EVM and COSMOS chain data
 const cantoMainnetBaseInfo = {
-  name: "Canto",
-  icon: "/icons/canto.svg",
+  name: "Althea",
+  icon: "/althea.png",
   isTestChain: false,
-  rpcUrl: "https://canto-rpc.ansybl.io/",
+  rpcUrl: "https://nodes.chandrastation.com/testnet/evm/althea/",
   nativeCurrency: {
-    name: "Canto",
-    baseName: "acanto",
-    symbol: "CANTO",
+    name: "Althea",
+    baseName: "aaltg",
+    symbol: "ALTG",
     decimals: 18,
   },
 };
 
 export const CANTO_MAINNET_EVM: EVMNetwork = {
   ...cantoMainnetBaseInfo,
-  id: "canto-mainnet",
-  chainId: 7700,
+  id: "althea-mainnet",
+  chainId: 417834,
   blockExplorer: {
     url: cantoMainBlockExplorerEVM,
     getAddressLink: getEthAddressLink(cantoMainBlockExplorerEVM),
     getTransactionLink: getEthTransactionLink(cantoMainBlockExplorerEVM),
   },
-  multicall3Address: "0xcA11bde05977b3631167028862bE2a173976CA11",
+  multicall3Address: "0xe9cBc7b381aA17C7574671e445830E3b90648368",
 };
 
 export const CANTO_MAINNET_COSMOS: CosmosNetwork = {
   ...cantoMainnetBaseInfo,
-  id: "canto_7700-1",
-  chainId: "canto_7700-1",
-  restEndpoint: "https://mainnode.plexnode.org:1317",
-  addressPrefix: "canto",
+  id: "althea-mainnet",
+  chainId: "althea_417834-3",
+  restEndpoint: "https://nodes.chandrastation.com/testnet/api/althea/",
+  addressPrefix: "althea",
   checkAddress: function (address) {
     return checkCosmosAddress(this.addressPrefix)(address);
   },
@@ -68,23 +68,23 @@ const cantoTestnetBaseInfo = {
   },
 };
 export const CANTO_TESTNET_EVM: EVMNetwork = {
-  ...cantoTestnetBaseInfo,
-  id: "canto-testnet",
-  chainId: 7701,
+  ...cantoMainnetBaseInfo,
+  id: "althea-mainnet",
+  chainId: 417834,
   blockExplorer: {
-    url: cantoTestnetBlockExplorerEVM,
-    getAddressLink: getEthAddressLink(cantoTestnetBlockExplorerEVM),
-    getTransactionLink: getEthTransactionLink(cantoTestnetBlockExplorerEVM),
+    url: cantoMainBlockExplorerEVM,
+    getAddressLink: getEthAddressLink(cantoMainBlockExplorerEVM),
+    getTransactionLink: getEthTransactionLink(cantoMainBlockExplorerEVM),
   },
-  multicall3Address: "0xcA11bde05977b3631167028862bE2a173976CA11",
+  multicall3Address: "0xe9cBc7b381aA17C7574671e445830E3b90648368",
 };
 
 export const CANTO_TESTNET_COSMOS: CosmosNetwork = {
-  ...cantoTestnetBaseInfo,
-  id: "canto_7701-1",
-  chainId: "canto_7701-1",
-  restEndpoint: "https://api-testnet.plexnode.wtf",
-  addressPrefix: "canto",
+  ...cantoMainnetBaseInfo,
+  id: "althea-mainnet",
+  chainId: "althea_417834-3",
+  restEndpoint: "https://nodes.chandrastation.com/testnet/api/althea/",
+  addressPrefix: "althea",
   checkAddress: function (address) {
     return checkCosmosAddress(this.addressPrefix)(address);
   },

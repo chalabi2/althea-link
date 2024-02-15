@@ -14,7 +14,7 @@ const Rewards = (props: Props) => {
     <section className={styles.rewards}>
       <div>
         <Text
-          font="proto_mono"
+          font="macan-font"
           size="lg"
           style={{
             color: "#000",
@@ -31,7 +31,7 @@ const Rewards = (props: Props) => {
           }}
         >
           <Text
-            font="proto_mono"
+            font="macan-font"
             size="x-lg"
             style={{
               fontSize: "36px",
@@ -42,7 +42,7 @@ const Rewards = (props: Props) => {
           </Text>
           <Icon
             icon={{
-              url: "/tokens/canto.svg",
+              url: "/althea.png",
               size: 24,
             }}
           />

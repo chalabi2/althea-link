@@ -55,7 +55,7 @@ import {
   getNetworkInfoFromChainId,
   isCosmosNetwork,
 } from "@/utils/networks";
-import { checkCantoPubKey, ethToCantoAddress } from "@/utils/address";
+import { checkCantoPubKey, ethToAltheaAddress } from "@/utils/address";
 import { generateCantoPublicKeyWithTx } from "@/transactions/cosmos/publicKey";
 import { getBlockTimestamp, getIBCData } from "./helpers";
 import { createMsgsIBCTransfer } from "@/transactions/cosmos/messages/ibc/ibc";
@@ -103,7 +103,7 @@ export async function ibcInKeplr(
 
     /** get canto receiver */
     const { data: cantoReceiver, error: ethToCantoError } =
-      await ethToCantoAddress(txParams.cantoEthReceiverAddress);
+      await ethToAltheaAddress(txParams.cantoEthReceiverAddress);
     if (ethToCantoError) throw ethToCantoError;
 
     /** check public key */

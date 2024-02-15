@@ -131,7 +131,7 @@ export const NewAmbientPositionModal = ({
           <Spacer height="10px" />
           <div className={styles.iconTitle}>
             <Icon icon={{ url: pool.logoURI, size: 60 }} />
-            <Text size="lg" font="proto_mono">
+            <Text size="lg" font="macan-font">
               {pool.symbol}
             </Text>
           </div>

@@ -56,14 +56,14 @@ const ConfirmationModal = (props: Props) => {
       onClose={props.onClose}
     >
       <div className={styles["confirmation-container"]}>
-        <Text size="lg" font="proto_mono">
+        <Text size="lg" font="macan-font">
           Confirmation
         </Text>
 
         <Image src={props.imgUrl} alt={"props"} width={60} height={60} />
 
         <Container direction="row" gap={10}>
-          <Text size="md" font="proto_mono">
+          <Text size="md" font="macan-font">
             {`Bridge ${props.token?.name} ${props.type} ${
               props.type === "in"
                 ? "from " + props.fromNetwork

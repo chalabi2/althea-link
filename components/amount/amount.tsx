@@ -109,10 +109,10 @@ const Amount = (props: Props) => {
         <Icon
           icon={{
             url: props.IconUrl,
-            size: 32,
+            size: 38,
           }}
         />
-        <Text font="proto_mono">{props.title}</Text>
+        <Text font="modeseven">{props.title}</Text>
       </Container>
       <Container
         direction="row"

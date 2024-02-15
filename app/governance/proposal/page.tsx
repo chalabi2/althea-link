@@ -72,7 +72,7 @@ export default function Page() {
   if (!id) {
     return (
       <div className={styles.noProposalContainer}>
-        <Text font="proto_mono">Proposal ID is missing</Text>
+        <Text font="macan-font">Proposal ID is missing</Text>
       </div>
     );
   }
@@ -82,7 +82,7 @@ export default function Page() {
   if (!proposal) {
     return (
       <div className={styles.noProposalContainer}>
-        <Text font="proto_mono">
+        <Text font="macan-font">
           No proposal found with the ID {proposalId}{" "}
         </Text>
       </div>
@@ -153,7 +153,7 @@ export default function Page() {
           </div>
         </div>
         <div style={{ padding: "10px 0px 10px 0px" }}>
-          <Text font="proto_mono" size="x-lg">
+          <Text font="macan-font" size="x-lg">
             {proposal.title}
           </Text>
         </div>
@@ -168,24 +168,24 @@ export default function Page() {
           <div className={styles.proposalInfoBox}>
             <div className={styles.proposalInfo}>
               <div>
-                <Text font="proto_mono" opacity={0.3}>
+                <Text font="macan-font" opacity={0.3}>
                   Type:
                 </Text>
               </div>
               <div>
-                <Text font="proto_mono">
+                <Text font="macan-font">
                   {formatProposalType(proposal.type_url)}
                 </Text>
               </div>
             </div>
             <div className={styles.proposalInfo}>
               <div>
-                <Text font="proto_mono" opacity={0.3}>
+                <Text font="macan-font" opacity={0.3}>
                   Total Deposit:
                 </Text>
               </div>
               <div className={styles.displayAmount}>
-                <Text font="proto_mono">
+                <Text font="macan-font">
                   {displayAmount(proposal.total_deposit[0].amount, 18, {
                     commify: true,
                     short: false,
@@ -193,26 +193,18 @@ export default function Page() {
                 </Text>
                 <div className={styles.displayAmount}>
                   <div>&nbsp;</div>
-                  <Image
-                    src="/tokens/canto.svg"
-                    width={16}
-                    height={16}
-                    alt="canto"
-                    style={{
-                      filter: "invert(var(--dark-mode))",
-                    }}
-                  />
+                  <Image src="/althea.png" width={16} height={16} alt="canto" />
                 </div>
               </div>
             </div>
             <div className={styles.proposalInfo}>
               <div>
-                <Text font="proto_mono" opacity={0.3}>
+                <Text font="macan-font" opacity={0.3}>
                   Turnout / Quorum:{" "}
                 </Text>
               </div>
               <div>
-                <Text font="proto_mono">
+                <Text font="macan-font">
                   {PROPOSAL_TURNOUT_VALUE} &nbsp; {PROPOSAL_QUORUM_VALUE}
                 </Text>
               </div>
@@ -221,24 +213,24 @@ export default function Page() {
           <div className={styles.proposalInfoBox2}>
             <div className={styles.proposalInfo2}>
               <div>
-                <Text font="proto_mono" opacity={0.3}>
+                <Text font="macan-font" opacity={0.3}>
                   Submit Time:
                 </Text>
               </div>
               <div>
-                <Text font="proto_mono">
+                <Text font="macan-font">
                   {formatTime(proposal.submit_time)}
                 </Text>
               </div>
             </div>
             <div className={styles.proposalInfo2}>
               <div>
-                <Text font="proto_mono" opacity={0.3}>
+                <Text font="macan-font" opacity={0.3}>
                   Voting End Time:
                 </Text>
               </div>
               <div>
-                <Text font="proto_mono">
+                <Text font="macan-font">
                   {formatTime(proposal.voting_end_time)}
                 </Text>
               </div>
