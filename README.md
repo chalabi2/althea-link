@@ -1,8 +1,24 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Althea App
+
+An application to interact with the althea blockchain. This app is a fork of [cantoV3](https://github.com/Plex-Engineer/canto-v3)
 
 ## Getting Started
 
-First, run the development server:
+First, create a `.env` file in the root of the project and add the following environment variables:
+
+```bash
+NEXT_PUBLIC_WALLET_CONNECT_PROJECT_ID= # wallet connect
+NEXT_PUBLIC_CANTO_MAINNET_API_URL= # This is the url of the althea api backend server
+NEXT_PUBLIC_CANTO_TESTNET_API_URL= # This is the url of the althea api backend server
+NEXT_PUBLIC_AMBIENT_API_URL=
+NEXT_PUBLIC_CANTO_DUST_BOT_URL=
+
+NEXT_PUBLIC_POSTHOG_HOST= # posthog analytics
+NEXT_PUBLIC_POSTHOG_KEY= # posthog analytics
+NEXT_PUBLIC_ETH_PRICE_KEY=
+```
+
+Second, run the development server:
 
 ```bash
 npm run dev
@@ -12,23 +28,8 @@ yarn dev
 pnpm dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Third, clone and follow the instructions in the [api server](https://github.com/chalabi2/althea-api) to run the application backend.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Backend
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+The althea api is a fork of [canto-api](https://github.com/chalabi2/althea-api) which is a go client paired with a redis server to store and retrieve data. Run the api server and update the front end environment variables to point to the correct ip:port.
