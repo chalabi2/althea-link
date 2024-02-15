@@ -95,7 +95,7 @@ export const AddLiquidityModal = ({
     <Container margin="sm">
       <div className={styles.iconTitle}>
         <Icon icon={{ url: pair.logoURI, size: 60 }} />
-        <Text size="lg" font="proto_mono">
+        <Text size="lg" font="macan-font">
           {pair.symbol}
         </Text>
       </div>
@@ -195,7 +195,7 @@ export const AddLiquidityModal = ({
             vertical: true,
           }}
         >
-          <Text size="sm" font="proto_mono">
+          <Text size="sm" font="macan-font">
             Stake
           </Text>
           <div>

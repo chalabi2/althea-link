@@ -6,7 +6,7 @@
   margin: 0 auto;
   padding: 16px;
   border-radius: var(--border-radius);
-  border: 1px solid var(--border-stroke-color);
+  border: 1px solid var(--althea-blue);
   background: var(--card-sub-surface-color, #dfdfdf);
   box-shadow: 6px 6px 0px 0px rgba(17, 17, 17, 0.15);
 }
@@ -27,12 +27,12 @@
 .header {
   display: grid;
   grid-template-columns: repeat(6, 1fr);
-  border-bottom: 1px solid var(--border-stroke-color);
+  border-bottom: 1px solid var(--althea-blue);
 
   .cell {
     // font-size: 14px;
     // font-weight: 600;
-    opacity: 0.4;
+    opacity: 1;
   }
 }
 
@@ -46,7 +46,7 @@
 
   &:not(.header) {
     // cursor: pointer;
-    border: 1px solid var(--border-stroke-color);
+    border: 1px solid var(--althea-blue);
     border-top: none;
   }
   &:not(.header):hover {

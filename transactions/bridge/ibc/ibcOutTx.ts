@@ -11,7 +11,7 @@ import {
   Transaction,
   TxCreatorFunctionReturn,
 } from "@/transactions/interfaces";
-import { ethToCantoAddress, isValidEthAddress } from "@/utils/address";
+import { ethToAltheaAddress, isValidEthAddress } from "@/utils/address";
 import { validateWeiUserInputTokenAmount } from "@/utils/math";
 import { getNetworkInfoFromChainId, isCosmosNetwork } from "@/utils/networks";
 import { isERC20Token, isIBCToken } from "@/utils/tokens";
@@ -70,7 +70,7 @@ export async function IBCOutTx(
 
     /** canto address */
     const { data: cantoAddress, error: ethToCantoError } =
-      await ethToCantoAddress(txParams.senderEthAddress);
+      await ethToAltheaAddress(txParams.senderEthAddress);
     if (ethToCantoError) throw ethToCantoError;
 
     /** channel id */

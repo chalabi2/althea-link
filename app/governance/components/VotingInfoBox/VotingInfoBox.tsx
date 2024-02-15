@@ -78,13 +78,13 @@ export function VotingInfoBox({
             style={{ backgroundColor: color, margin: "10px 5px 0px 10px" }}
           ></div>{" "}
           <div>
-            <Text font="proto_mono">{value}</Text>
+            <Text font="macan-font">{value}</Text>
           </div>
         </div>
       </div>
       <div className={styles.votingInfoRow2}>
         <div className={styles.infoRow1First}>
-          <Text font="proto_mono">{percentage}%</Text>
+          <Text font="macan-font">{percentage}%</Text>
         </div>
         <div className={styles.infoRow1First}>
           <Container
@@ -94,7 +94,7 @@ export function VotingInfoBox({
               vertical: true,
             }}
           >
-            <Text font="proto_mono" opacity={0.4} size="x-sm">
+            <Text font="macan-font" opacity={0.4} size="x-sm">
               {displayAmount(amount, 0, {
                 commify: true,
                 short: false,
@@ -102,7 +102,7 @@ export function VotingInfoBox({
             </Text>
             <Icon
               icon={{
-                url: "/tokens/canto.svg",
+                url: "/althea.png",
                 size: 16,
               }}
               themed={true}

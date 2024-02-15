@@ -52,7 +52,7 @@ export const HoverPositions = ({ dexType, positions }: HoverPositionProps) => (
               >
                 <Text
                   size="x-sm"
-                  font="proto_mono"
+                  font="macan-font"
                   style={{
                     lineBreak: "anywhere",
                   }}
@@ -72,7 +72,7 @@ export const HoverPositions = ({ dexType, positions }: HoverPositionProps) => (
             >
               <Text
                 size="x-sm"
-                font="proto_mono"
+                font="macan-font"
                 style={{
                   lineBreak: "anywhere",
                 }}
@@ -86,7 +86,7 @@ export const HoverPositions = ({ dexType, positions }: HoverPositionProps) => (
               </Text>
               <Text
                 size="x-sm"
-                font="proto_mono"
+                font="macan-font"
                 style={{
                   lineBreak: "anywhere",
                 }}

@@ -25,14 +25,14 @@ const Item = ({ name, value, theme, symbol, color }: ItemProps) => (
         theme={theme}
         size="sm"
         opacity={0.5}
-        font="proto_mono"
+        font="macan-font"
       >
         {name}
       </Text>
     ) : (
       name
     )}
-    <Text color={color} theme={theme} size="x-lg" font="proto_mono">
+    <Text color={color} theme={theme} size="x-lg" font="macan-font">
       {symbol && (
         <span className={styles.symbol}>
           {

@@ -4,7 +4,7 @@ import styles from "./table.module.scss";
 interface Props {
   title?: string | React.ReactNode;
   secondary?: React.ReactNode;
-  headerFont: "proto_mono" | "rm_mono";
+  headerFont: "macan" | "macan-font";
   headers: {
     value: string | React.ReactNode;
     ratio: number;
@@ -18,7 +18,7 @@ const Table = (props: Props) => {
   return (
     <div className={styles.container} style={{ fontSize: props.textSize }}>
       <div className={styles.title}>
-        <Text font="proto_mono" size="lg" opacity={0.7}>
+        <Text font="macan" size="lg" opacity={0.7}>
           {props.title}
         </Text>
         {props.secondary}
@@ -27,6 +27,7 @@ const Table = (props: Props) => {
         <div
           className={styles.header}
           style={{
+            color: "var(--althea-blue)",
             gridTemplateColumns: props.headers
               .map((header) => {
                 return `${header.ratio}fr`;

@@ -21,7 +21,7 @@ import {
 import {
   areEqualAddresses,
   checkCantoPubKey,
-  ethToCantoAddress,
+  ethToAltheaAddress,
   isValidEthAddress,
 } from "@/utils/address";
 import { validateWeiUserInputTokenAmount } from "@/utils/math";
@@ -59,7 +59,7 @@ export async function gravityBridgeInTx(
 
     /** convert sender address to canto address */
     const { data: cantoReceiver, error: ethToCantoError } =
-      await ethToCantoAddress(txParams.ethSender);
+      await ethToAltheaAddress(txParams.ethSender);
     if (ethToCantoError) throw ethToCantoError;
 
     /** check if user has public key */

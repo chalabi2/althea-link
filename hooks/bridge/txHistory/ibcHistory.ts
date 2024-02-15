@@ -4,7 +4,7 @@ import {
   PromiseWithError,
   ReturnWithError,
 } from "@/config/interfaces";
-import { ethToCantoAddress } from "@/utils/address";
+import { ethToAltheaAddress } from "@/utils/address";
 import { tryFetch } from "@/utils/async";
 import { getCosmosAPIEndpoint } from "@/utils/networks";
 
@@ -23,7 +23,7 @@ export async function getAllIBCTransactions(
   chainId: number,
   ethAccount: string
 ): PromiseWithError<UserIBCTransactionHistory> {
-  const { data: cantoAccount, error: addressError } = await ethToCantoAddress(
+  const { data: cantoAccount, error: addressError } = await ethToAltheaAddress(
     ethAccount
   );
   if (addressError) {

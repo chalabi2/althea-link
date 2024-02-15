@@ -158,7 +158,7 @@ export const StakingModal = (props: StakingModalParams) => {
               justifyContent: "center",
             }}
           >
-            <Icon themed icon={{ url: "/tokens/canto.svg", size: 16 }} />
+            <Icon themed icon={{ url: "/althea.png", size: 24 }} />
           </div>
         </div>
       </div>
@@ -182,7 +182,7 @@ export const StakingModal = (props: StakingModalParams) => {
               justifyContent: "center",
             }}
           >
-            <Icon themed icon={{ url: "/tokens/canto.svg", size: 16 }} />
+            <Icon themed icon={{ url: "/althea.png", size: 24 }} />
           </div>
         </div>
       </div>
@@ -243,9 +243,9 @@ export const StakingModal = (props: StakingModalParams) => {
       </div>
       <div>
         <Amount
-          IconUrl={"/canto.svg"}
-          title={"CANTO"}
-          symbol={"CANTO"}
+          IconUrl={"/althea.png"}
+          title={"ALTG"}
+          symbol={"ALTG"}
           onChange={(val) => {
             setInputAmount(val.target.value);
           }}
@@ -263,13 +263,13 @@ export const StakingModal = (props: StakingModalParams) => {
       </div>
       <Spacer height="20px" />
       <div>
-        <Text size="x-sm" font="proto_mono">
+        <Text size="x-sm" font="macan-font">
           GAS FEES :{" "}
           {displayAmount(feeMap(selectedTx), 18, {
             short: false,
             commify: false,
           })}{" "}
-          CANTO
+          ALTG
         </Text>
       </div>
       <Spacer height="20px"></Spacer>

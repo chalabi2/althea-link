@@ -20,13 +20,12 @@ export default function Home() {
         <Icon
           className={styles["hero-logo"]}
           icon={{
-            url: "/cantoo.svg",
+            url: "/altheaMenu.svg",
             size: {
               width: 300,
               height: 80,
             },
           }}
-          themed
         />
         <Glitch>
           <Icon
@@ -126,7 +125,7 @@ export default function Home() {
       </section>
 
       {/* <section className={styles.ecosystem} id="ecosystem">
-        <Text font="proto_mono" size="title">
+        <Text font="macan-font" size="title">
           Ecosystem
         </Text>
 

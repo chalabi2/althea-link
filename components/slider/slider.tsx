@@ -13,7 +13,7 @@ interface Props {
 const Slider = (props: Props) => {
   return (
     <div className={styles.container}>
-      <Text className={styles.label} font="proto_mono" size="sm">
+      <Text className={styles.label} font="macan-font" size="sm">
         {props.label}
       </Text>
 

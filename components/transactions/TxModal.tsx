@@ -59,7 +59,7 @@ const TransactionModal = () => {
         height="36rem"
         width="32rem"
       >
-        <Text size="lg" font="proto_mono">
+        <Text size="lg" font="macan-font">
           Activity
         </Text>
         {transactionFlows == undefined ||
@@ -76,7 +76,7 @@ const TransactionModal = () => {
             <Container height="300px">
               <Splash height="300px" width="300px" themed />
             </Container>
-            <Text size="lg" font="proto_mono">
+            <Text size="lg" font="macan-font">
               loading...
             </Text>
           </Container>
@@ -139,7 +139,7 @@ const TransactionModal = () => {
                     width={"fill"}
                     color="secondary"
                     height={"small"}
-                    fontFamily="proto_mono"
+                    fontFamily="macan-font"
                     onClick={() =>
                       txStore?.clearTransactions(signer?.account.address ?? "")
                     }
@@ -183,7 +183,7 @@ const TransactionModal = () => {
                       }}
                     />
                   </div>
-                  <Text size="sm" font="proto_mono">
+                  <Text size="sm" font="macan-font">
                     Back
                   </Text>
                 </Container>
@@ -221,7 +221,7 @@ const TransactionModal = () => {
               horizontal: true,
             }}
           >
-            <Text size="lg" font="proto_mono">
+            <Text size="lg" font="macan-font">
               no recent transactions
             </Text>
           </Container>

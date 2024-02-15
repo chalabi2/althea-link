@@ -98,7 +98,7 @@ export default function LendingPage() {
 
   return (
     <div className={clsx(styles.container, "separator")}>
-      <Text size="x-lg" font="proto_mono" className={styles.title}>
+      <Text size="x-lg" font="macan-font" className={styles.title}>
         Lending
       </Text>
       <Spacer height="20px" />
@@ -225,12 +225,12 @@ export default function LendingPage() {
         )}
         {(!isMobile || currentToggle === "Supply") && (
           <Container gap={12} width="100%">
-            <Text size="x-lg" font="proto_mono">
+            <Text size="x-lg" font="macan-font">
               SUPPLY
             </Text>
             <Table
               title="Canto Lending Market"
-              headerFont="proto_mono"
+              headerFont="macan-font"
               headers={[
                 {
                   value: "Asset",
@@ -283,7 +283,7 @@ export default function LendingPage() {
                         alignItems: "flex-start",
                       }}
                     >
-                      <Text font="proto_mono">
+                      <Text font="macan-font">
                         {cStableCoin.underlying.symbol}
                       </Text>
                       <Text theme="secondary-dark" size="x-sm">
@@ -318,12 +318,12 @@ export default function LendingPage() {
         )}
         {(!isMobile || currentToggle === "Borrow") && (
           <Container gap={12} width="100%">
-            <Text size="x-lg" font="proto_mono">
+            <Text size="x-lg" font="macan-font">
               Borrow
             </Text>
             <Table
               title="Canto Lending Market"
-              headerFont="proto_mono"
+              headerFont="macan-font"
               headers={[
                 {
                   value: "Asset",
@@ -371,7 +371,7 @@ export default function LendingPage() {
                         alignItems: "flex-start",
                       }}
                     >
-                      <Text font="proto_mono">
+                      <Text font="macan-font">
                         {borrowedToken.underlying.symbol}
                       </Text>
                       <Text theme="secondary-dark" size="x-sm">
