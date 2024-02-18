@@ -8,7 +8,9 @@ import CantoWalletProvider from "@/provider/rainbowProvider";
 import localFont from "next/font/local";
 import DesktopOnly from "@/components/desktop-only/desktop-only";
 import { ReactQueryClientProvider } from "@/provider/reactQueryProvider";
-import { ToastContainer } from "@/components/toast";
+import ToastWizard from "@/components/walletWizard/wizardToast";
+import { WalletWizardModal } from "@/components/walletWizard/wizardModal";
+import { useState } from "react";
 
 const rm_mono = localFont({
   src: "../fonts/rm-mono-regular.ttf",
@@ -29,6 +31,20 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
+  const [isWalletWizardOpen, setIsWalletWizardOpen] = useState(false);
+
+  const [showToast, setShowToast] = useState(true);
+
+  const openWalletWizard = () => {
+    setIsWalletWizardOpen(true);
+    setShowToast(false);
+  };
+
+  const closeWalletWizard = () => {
+    setIsWalletWizardOpen(false);
+    setShowToast(true);
+  };
+
   return (
     <html lang="en">
       {/* <head>
@@ -40,30 +56,30 @@ export default function RootLayout({
         />
       </head> */}
       {/* <!-- Primary Meta Tags --> */}
-      <title>Canto.io - Layer-1 Blockchain</title>
-      <meta name="title" content="Canto.io - Layer-1 Blockchain" />
+      <title>Althea.app</title>
+      <meta name="title" content="Althea.app" />
       <meta
         name="description"
-        content="canto is a layer-1 blockchain built to deliver on the promise of defi. as a post-traditional financial movement, canto enables accessibility, transparency, and freedom for new systems. driven by a loosely organized collective of chain-native builders, canto provides a new commons powered by free public infrastructure_"
+        content="Althea is your gateway to crosschain liquid infrastrucute_"
       />
 
       {/* <!-- Open Graph / Facebook --> */}
       <meta property="og:type" content="website" />
       <meta property="og:url" content="https://canto.io" />
-      <meta property="og:title" content="Canto.io - Layer-1 Blockchain" />
+      <meta property="og:title" content="Althea.app" />
       <meta
         property="og:description"
-        content="canto is a layer-1 blockchain built to deliver on the promise of defi. as a post-traditional financial movement, canto enables accessibility, transparency, and freedom for new systems. driven by a loosely organized collective of chain-native builders, canto provides a new commons powered by free public infrastructure_"
+        content="Althea is your gateway to crosschain liquid infrastrucute_"
       />
-      <meta property="og:image" content="https://beta.canto.io/meta.jpg" />
+      <meta property="og:image" content="https://althea.app/meta.jpg" />
 
       {/* <!-- Twitter --> */}
       <meta property="twitter:card" content="summary_large_image" />
-      <meta property="twitter:url" content="https://canto.io" />
-      <meta property="twitter:title" content="Canto.io - Layer-1 Blockchain" />
+      <meta property="twitter:url" content="https://althea.app" />
+      <meta property="twitter:title" content="Althea.app" />
       <meta
         property="twitter:description"
-        content="canto is a layer-1 blockchain built to deliver on the promise of defi. as a post-traditional financial movement, canto enables accessibility, transparency, and freedom for new systems. driven by a loosely organized collective of chain-native builders, canto provides a new commons powered by free public infrastructure_"
+        content="Althea is your gateway to crosschain liquid infrastrucute_"
       />
       <meta property="twitter:image" content="https://beta.canto.io/meta.jpg" />
 
@@ -111,11 +127,23 @@ export default function RootLayout({
               /> */}
                 <NavBar />
 
-                {children}
-                <div id="modal-root"></div>
-                <Footer />
+              {children}
+              <div id="modal-root">
+                {showToast && (
+                  <ToastWizard
+                    isVisible={showToast}
+                    onOpenModal={openWalletWizard}
+                  />
+                )}
+                <WalletWizardModal
+                  balance={10}
+                  isOpen={isWalletWizardOpen}
+                  onOpen={setIsWalletWizardOpen}
+                  onClose={closeWalletWizard}
+                />
               </div>
-            </ToastContainer>
+              <Footer />
+            </div>
           </ReactQueryClientProvider>
         </CantoWalletProvider>
       </body>

@@ -1,0 +1,108 @@
+/* Add to your CSS file */
+
+.modalContent {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-around;
+  padding: 20px;
+}
+
+.buttonGroup {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-around;
+  padding: 20px;
+  gap: 20px;
+}
+
+.button {
+  width: 100%;
+  padding: 10px;
+  margin: 10px 0;
+  transition:
+    background-color 0.3s,
+    transform 0.2s;
+  font-size: 16px;
+  text-align: center;
+  cursor: pointer;
+  border: 1px solid #000;
+  border-radius: 5px;
+  background-color: #f0f0f0;
+}
+
+.addressBlocks {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 10px 0;
+  width: 100%;
+}
+
+.addressBlocks:first-of-type {
+  margin-bottom: 80rem;
+}
+
+.addressBlocks:last-of-type {
+  margin-top: 20px;
+}
+
+.parentContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.button:hover {
+  background-color: #e0e0e0;
+}
+
+.button:active {
+  transform: translateY(2px);
+}
+
+.toastButton {
+  width: 100%;
+  padding: 10px;
+  margin: 10px 0;
+  margin-top: 100px;
+  font-size: 16px;
+  text-align: center;
+  cursor: pointer;
+  border: 1px solid #000;
+  border-radius: 5px;
+  background-color: #f0f0f0;
+}
+
+.wallet-connect {
+  display: flex;
+  justify-content: flex-end;
+  * {
+    font-weight: 400 !important;
+  }
+}
+
+.toastContainer {
+  position: fixed;
+  bottom: 50px;
+  right: 50px;
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  margin: 0 auto;
+  padding: 32px;
+  border-radius: var(--border-radius);
+  border: 1px solid var(--althea-blue);
+  background: var(--card-sub-surface-color, #dfdfdf);
+  box-shadow: 6px 6px 0px 0px rgba(17, 17, 17, 0.15);
+  padding: 20px;
+
+  &::after {
+    height: 9px;
+    border-right: 1px solid var(--primary-90-color);
+    position: absolute;
+    left: 58.6%;
+  }
+}

@@ -13,10 +13,15 @@ const getCosmosTransactionLink = (explorerUrl: string) => (txnId: string) =>
 const checkCosmosAddress = (prefix: string) => (address: string) =>
   address.startsWith(prefix);
 
+const truncateAddress = (address: string) => {
+  return address.slice(0, 4) + "..." + address.slice(-4);
+};
+
 export {
   getEthAddressLink,
   getEthTransactionLink,
   getCosmosAddressLink,
   getCosmosTransactionLink,
   checkCosmosAddress,
+  truncateAddress,
 };
