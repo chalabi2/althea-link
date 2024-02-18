@@ -43,7 +43,7 @@ const Tabs = (props: Props) => {
             className={clsx(styles.tab, activeTab === index && styles.active)}
             style={isMobile && tab.hideOnMobile ? { display: "none" } : {}}
           >
-            <Text font="macan-font" size="sm" theme={"primary-dark"}>
+            <Text font="proto_mono" size="sm" theme={"primary-dark"}>
               {tab.title}
             </Text>
             {tab.extraTitle}

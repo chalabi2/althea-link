@@ -160,7 +160,7 @@ const ProposalTable = ({ proposals }: TableProps) => {
                 />
               </Container>
             }
-            headerFont="rm_mono"
+            headerFont="macan-font"
             headers={
               filteredProposals.length != 0 || filteredProposals
                 ? proposalTableHeaders
