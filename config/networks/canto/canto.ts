@@ -94,3 +94,58 @@ export const CANTO_TESTNET_COSMOS: CosmosNetwork = {
     getTransactionLink: getCosmosTransactionLink(cantoMainBlockExplorerCosmos),
   },
 };
+
+export const metamaskChainConfig = {
+  chainId: `0x${parseInt(CANTO_MAINNET_EVM.chainId.toString()).toString(16)}`, // Convert to hex
+  chainName: CANTO_MAINNET_EVM.name,
+  nativeCurrency: CANTO_MAINNET_EVM.nativeCurrency,
+  rpcUrls: [CANTO_MAINNET_EVM.rpcUrl],
+  blockExplorerUrls: [CANTO_MAINNET_EVM.blockExplorer?.url],
+};
+
+export const chainConfig = {
+  chainId: "althea_417834-3",
+  chainName: "Althea Testnet",
+  rpc: "https://nodes.chandrastation.com/testnet/rpc/althea/",
+  rest: "https://nodes.chandrastation.com/testnet/api/althea/",
+
+  bip44: {
+    coinType: 118,
+  },
+  bech32Config: {
+    bech32PrefixAccAddr: "althea",
+    bech32PrefixAccPub: "altheapub",
+    bech32PrefixValAddr: "altheavaloper",
+    bech32PrefixValPub: "altheasvaloperpub",
+    bech32PrefixConsAddr: "altheavalcons",
+    bech32PrefixConsPub: "altheavalconspub",
+  },
+  currencies: [
+    {
+      coinDenom: "ALTHEA",
+      coinMinimalDenom: "aalthea",
+      coinDecimals: 18,
+      coinGeckoId: "althea",
+    },
+  ],
+  feeCurrencies: [
+    {
+      coinDenom: "ALTHEA",
+      coinMinimalDenom: "aalthea",
+      coinDecimals: 18,
+      coinGeckoId: "althea",
+    },
+  ],
+  stakeCurrency: {
+    coinDenom: "ALTHEA",
+    coinMinimalDenom: "aalthea",
+    coinDecimals: 18,
+    coinGeckoId: "althea",
+  },
+  coinType: 118,
+  gasPriceStep: {
+    low: 0.0,
+    average: 0.015,
+    high: 0.03,
+  },
+};

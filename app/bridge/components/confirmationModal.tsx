@@ -262,7 +262,7 @@ const ConfirmationModal = (props: Props) => {
           Confirm Bridge{" "}
           {props.type.slice(0, 1).toUpperCase() + props.type.slice(1)}
         </Button>
-        {/* <Text size="x-sm" font="rm_mono" theme="secondary-dark">
+        {/* <Text size="x-sm" font="macan-font" theme="secondary-dark">
         By completing bridge in, you are transferring your assets from Ethereum
         (
         {props.addresses.from?.slice(0, 6) +
