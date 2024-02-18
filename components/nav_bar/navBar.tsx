@@ -14,6 +14,8 @@ import useCantoSigner from "@/hooks/helpers/useCantoSigner";
 import { useBalance } from "wagmi";
 import { useAutoConnect } from "@/provider/useAutoConnect";
 import Icon from "../icon/icon";
+import Button from "@/components/button/button";
+import { WalletWizardModal } from "../walletWizard/wizardModal";
 
 const NavBar = () => {
   // This is used to connect safe as wallet,
@@ -24,6 +26,7 @@ const NavBar = () => {
   const { signer } = useCantoSigner();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isMoreModalOpen, setIsMoreModalOpen] = useState(false);
+  const [isWalletWizardOpen, setIsWalletWizardOpen] = useState(false);
 
   useEffect(() => {
     if (signer?.account.address) {
@@ -64,6 +67,9 @@ const NavBar = () => {
     chainId: signer?.chain.id,
   });
 
+  const toggleWalletWizard = () => {
+    setIsWalletWizardOpen((prev) => !prev);
+  };
   return (
     <div className={styles.container}>
       <div className={styles.logo}>
@@ -233,9 +239,18 @@ const NavBar = () => {
         <div className={styles.activity}>
           <TransactionModal />
         </div>
+
         <div className={styles["wallet-connect"]}>
+          {/* <Button height={34} onClick={toggleWalletWizard}>
+            Connect Wallet
+          </Button> */}
           <ConnectButton key={balance.data?.formatted} chainStatus={"none"} />
         </div>
+        {/* <WalletWizardModal
+          isOpen={isWalletWizardOpen}
+          onOpen={setIsWalletWizardOpen}
+          balance={balance}
+        /> */}
       </div>
     </div>
   );

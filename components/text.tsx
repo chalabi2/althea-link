@@ -1,7 +1,13 @@
 import styled from "styled-components";
 
 interface Props {
-  font?: "macan" | "macan-font";
+  font?:
+    | "macan"
+    | "macan-font"
+    | "undefined"
+    | "proto_mono"
+    | "rm_mono"
+    | "modeseven";
   weight?: "normal" | "bold";
   size?: "xx-sm" | "x-sm" | "sm" | "md" | "lg" | "x-lg" | "title";
   opacity?: number;

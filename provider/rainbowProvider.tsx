@@ -107,7 +107,7 @@ const CustomAvatar: AvatarComponent = ({ ensImage }) => {
   }, [chainId]);
   return (
     <Image
-      src={chainIcon ?? "networks/canto.svg"}
+      src={chainIcon ?? "/althea.png"}
       style={{
         width: "100%",
         height: "100%",

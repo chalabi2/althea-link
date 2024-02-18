@@ -94,7 +94,7 @@ const ProposalTable = ({ proposals }: TableProps) => {
                 />
               </Container>
             }
-            headerFont="rm_mono"
+            headerFont="macan-font"
             headers={
               filteredProposals.length != 0 || filteredProposals
                 ? [
@@ -132,7 +132,7 @@ const ProposalTable = ({ proposals }: TableProps) => {
                       return [
                         <Text
                           key={`name_${index}`}
-                          font="rm_mono"
+                          font="macan-font"
                           className={styles.tableData}
                         >
                           {proposal.proposal_id}
@@ -140,7 +140,7 @@ const ProposalTable = ({ proposals }: TableProps) => {
 
                         <Text
                           key={`tokens_${index}`}
-                          font="rm_mono"
+                          font="macan-font"
                           size="sm"
                           className={styles.rowTitle}
                         >
@@ -149,7 +149,7 @@ const ProposalTable = ({ proposals }: TableProps) => {
 
                         <Text
                           key={`commission_${index}`}
-                          font="rm_mono"
+                          font="macan-font"
                           className={styles.tableData}
                         >
                           {formatProposalStatus(proposal.status)}
@@ -157,7 +157,7 @@ const ProposalTable = ({ proposals }: TableProps) => {
 
                         <Text
                           key={`participation_${index}`}
-                          font="rm_mono"
+                          font="macan-font"
                           className={styles.tableData}
                         >
                           {formatProposalType(proposal.type_url)}
@@ -165,7 +165,7 @@ const ProposalTable = ({ proposals }: TableProps) => {
 
                         <Text
                           key={`delegators_${index}`}
-                          font="rm_mono"
+                          font="macan-font"
                           className={styles.tableData}
                         >
                           {new Date(proposal.voting_end_time).toDateString()}

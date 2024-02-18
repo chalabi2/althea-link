@@ -12,7 +12,7 @@ const DesktopOnly = () => {
         vertical: true,
       }}
     >
-      <Text font="macan-font">
+      <Text font="proto_mono">
         This site is not available on mobile yet.
         <br /> Please visit on a desktop browser.
       </Text>

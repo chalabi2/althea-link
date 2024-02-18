@@ -116,7 +116,7 @@ export const StakingModal = (props: StakingModalParams) => {
 
   const txValidation = useMemo(
     () => props.txValidation(inputAmount, selectedTx, validatorToRedelegate),
-    [inputAmount, selectedTx, validatorToRedelegate]
+    [inputAmount, selectedTx, validatorToRedelegate, props]
   );
 
   if (!props.validator) {
