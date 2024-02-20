@@ -56,14 +56,14 @@ const ConfirmationModal = (props: Props) => {
       onClose={props.onClose}
     >
       <div className={styles["confirmation-container"]}>
-        <Text size="lg" font="macan-font">
+        <Text size="lg" font="proto_mono">
           Confirmation
         </Text>
 
         <Image src={props.imgUrl} alt={"props"} width={60} height={60} />
 
         <Container direction="row" gap={10}>
-          <Text size="md" font="macan-font">
+          <Text size="md" font="proto_mono">
             {`Bridge ${props.token?.name} ${props.type} ${
               props.type === "in"
                 ? "from " + props.fromNetwork
@@ -262,7 +262,7 @@ const ConfirmationModal = (props: Props) => {
           Confirm Bridge{" "}
           {props.type.slice(0, 1).toUpperCase() + props.type.slice(1)}
         </Button>
-        {/* <Text size="x-sm" font="macan-font" theme="secondary-dark">
+        {/* <Text size="x-sm" font="rm_mono" theme="secondary-dark">
         By completing bridge in, you are transferring your assets from Ethereum
         (
         {props.addresses.from?.slice(0, 6) +

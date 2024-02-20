@@ -67,7 +67,7 @@ export function VotingInfoBox({
               vertical: true,
             }}
           >
-            <Text font="macan-font" opacity={0.4} size="x-sm">
+            <Text font="proto_mono" opacity={0.4} size="x-sm">
               {displayAmount(amount, 0, {
                 commify: true,
                 short: true,
