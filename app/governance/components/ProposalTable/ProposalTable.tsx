@@ -68,7 +68,7 @@ const ProposalTable = ({ proposals }: TableProps) => {
   if (proposals.length == 0) {
     return (
       <div>
-        <Text font="macan-font">Loading Proposals...</Text>
+        <Text font="proto_mono">Loading Proposals...</Text>
       </div>
     );
   }
@@ -94,7 +94,7 @@ const ProposalTable = ({ proposals }: TableProps) => {
                 />
               </Container>
             }
-            headerFont="macan-font"
+            headerFont="rm_mono"
             headers={
               filteredProposals.length != 0 || filteredProposals
                 ? [
@@ -132,7 +132,7 @@ const ProposalTable = ({ proposals }: TableProps) => {
                       return [
                         <Text
                           key={`name_${index}`}
-                          font="macan-font"
+                          font="rm_mono"
                           className={styles.tableData}
                         >
                           {proposal.proposal_id}
@@ -140,7 +140,7 @@ const ProposalTable = ({ proposals }: TableProps) => {
 
                         <Text
                           key={`tokens_${index}`}
-                          font="macan-font"
+                          font="rm_mono"
                           size="sm"
                           className={styles.rowTitle}
                         >
@@ -149,7 +149,7 @@ const ProposalTable = ({ proposals }: TableProps) => {
 
                         <Text
                           key={`commission_${index}`}
-                          font="macan-font"
+                          font="rm_mono"
                           className={styles.tableData}
                         >
                           {formatProposalStatus(proposal.status)}
@@ -157,7 +157,7 @@ const ProposalTable = ({ proposals }: TableProps) => {
 
                         <Text
                           key={`participation_${index}`}
-                          font="macan-font"
+                          font="rm_mono"
                           className={styles.tableData}
                         >
                           {formatProposalType(proposal.type_url)}
@@ -165,7 +165,7 @@ const ProposalTable = ({ proposals }: TableProps) => {
 
                         <Text
                           key={`delegators_${index}`}
-                          font="macan-font"
+                          font="rm_mono"
                           className={styles.tableData}
                         >
                           {new Date(proposal.voting_end_time).toDateString()}
@@ -181,7 +181,7 @@ const ProposalTable = ({ proposals }: TableProps) => {
                   ]
                 : [
                     <div key="noData" className={styles.noProposalContainer}>
-                      <Text font="macan-font" size="lg">
+                      <Text font="proto_mono" size="lg">
                         NO {currentFilter} FOUND
                       </Text>
                     </div>,

@@ -173,7 +173,7 @@ const Bridging = ({ props }: { props: BridgeComboReturn }) => {
                       width={30}
                       height={30}
                     />
-                    <Text size="md" font="macan-font">
+                    <Text size="md" font="proto_mono">
                       {fromNetwork?.name}
                     </Text>
                   </div>
@@ -223,7 +223,7 @@ const Bridging = ({ props }: { props: BridgeComboReturn }) => {
                     width={30}
                     height={30}
                   />
-                  <Text size="md" font="macan-font">
+                  <Text size="md" font="proto_mono">
                     {toNetwork?.name}
                   </Text>
                 </div>
@@ -457,7 +457,7 @@ function LoadingTextAnim() {
     return () => clearInterval(interval);
   });
   return (
-    <Text font="macan-font" size="x-sm" className={styles.blink}>
+    <Text font="proto_mono" size="x-sm" className={styles.blink}>
       {value}
     </Text>
   );
@@ -482,7 +482,7 @@ const FeesSection = ({
   return props.isLoading ? (
     <LoadingTextAnim />
   ) : props.error !== null ? (
-    <Text font="macan-font" size="x-sm">
+    <Text font="proto_mono" size="x-sm">
       error loading fees {props.error}
     </Text>
   ) : (
@@ -490,7 +490,7 @@ const FeesSection = ({
       {props.method === BridgingMethod.LAYER_ZERO &&
         props.direction === "out" && (
           <Text
-            font="macan-font"
+            font="proto_mono"
             size="x-sm"
             color={
               notEnoughNativeBalance
@@ -566,7 +566,7 @@ const FeesSection = ({
                 active={fees.selected === props.bridgeFeeOptions.fast.fee}
               />
             </Container>
-            <Text font="macan-font" size="x-sm">
+            <Text font="proto_mono" size="x-sm">
               Gas Fee:{" "}
               {displayAmount(
                 Object.values(props.gasFees).reduce(
@@ -580,7 +580,7 @@ const FeesSection = ({
           </>
         )}
       {props.method === BridgingMethod.IBC && props.direction === "out" && (
-        <Text font="macan-font" size="x-sm">
+        <Text font="proto_mono" size="x-sm">
           Gas Fee:{" "}
           {displayAmount(
             Object.values(props.gasFees).reduce(
