@@ -9,8 +9,9 @@ import { getEVMTokenBalanceList } from "@/utils/tokens";
 import { getCosmosTokenBalanceList } from "@/utils/cosmos";
 import { useQuery } from "react-query";
 import { getCosmosEIPChainObject } from "@/utils/networks";
-import { ethToAltheaAddress } from "@/utils/address";
+
 import { addTokenBalances } from "@/utils/math";
+import { ethToAlthea } from "@gravity-bridge/address-converter";
 
 /**
  * @notice hook to get an object of token balances for a given address and available tokens
@@ -58,15 +59,13 @@ export default function useTokenBalances(
             if (chainError) throw chainError;
 
             // get canto address
-            const { data: cantoAddress, error: cantoAddressError } =
-              await ethToAltheaAddress(userEthAddress);
-            if (cantoAddressError) throw cantoAddressError;
+            const altheaAddress = ethToAlthea(userEthAddress);
 
             // get native balances
             const { data: nativeBalances, error: nativeError } =
               await getCosmosTokenBalanceList(
                 chainObject.cosmosChainId,
-                cantoAddress
+                altheaAddress
               );
             if (nativeError) throw nativeError;
 

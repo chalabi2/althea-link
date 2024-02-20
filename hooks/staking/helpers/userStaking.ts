@@ -5,11 +5,12 @@ import {
   errMsg,
 } from "@/config/interfaces";
 import { UserStakingReturn } from "../interfaces/validators";
-import { ethToAltheaAddress } from "@/utils/address";
+
 import { tryFetch } from "@/utils/async";
 import * as NETWORKS from "@/config/networks";
+import { ethToAlthea } from "@gravity-bridge/address-converter";
 
-const cantoMainnetUserAPIEndpoint = "https://mainnet-user-api.plexnode.wtf"; //process.env.NEXT_PUBLIC_CANTO_USER_API_URL;
+const cantoMainnetUserAPIEndpoint = "http://localhost:3003"; //process.env.NEXT_PUBLIC_CANTO_USER_API_URL;
 const cantoTestnetUserAPIEndpoint = "https://localhost:9000";
 
 function getUserAPIEndPoint(chainId: number | string) {
@@ -34,12 +35,15 @@ function getUserAPIEndPoint(chainId: number | string) {
   }
 }
 
-const endpointUserStaking = (chainId: number, cantoAddress: string): string => {
+const endpointUserStaking = (
+  chainId: number,
+  altheaAddress: string
+): string => {
   // get cosmos endpoint
   const { data: endpoint, error } = getUserAPIEndPoint(chainId);
   if (error) throw error;
   // get suffix based on endpoint type
-  const suffix = "/v1/user/native/" + cantoAddress;
+  const suffix = "/v1/staking/delegations/" + altheaAddress;
   // return endpoint with suffix
   return endpoint + suffix;
 };
@@ -60,9 +64,8 @@ export async function getAllUserStakingData(
           total: [],
         },
       });
-    const { data: cantoAddress, error: cantoAddressError } =
-      await ethToAltheaAddress(userEthAddress);
-    if (cantoAddressError) throw cantoAddressError;
+
+    const cantoAddress = ethToAlthea(userEthAddress);
 
     const userStakingData = await tryFetch<UserStakingReturn>(
       endpointUserStaking(chainId, cantoAddress)
