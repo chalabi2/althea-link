@@ -4,10 +4,11 @@ import Text from "@/components/text";
 import Button from "@/components/button/button";
 import styles from "./wizardModal.module.scss";
 import Image from "next/image";
-import { chainConfig } from "@/config/networks/canto";
+import { chainConfig, metamaskChainConfig } from "@/config/networks/canto";
 import { truncateAddress } from "@/config/networks/helpers";
-import { Keplr } from "@keplr-wallet/types";
-import { metamaskChainConfig } from "@/config/networks/canto";
+import { BroadcastMode, Keplr } from "@keplr-wallet/types";
+import { ethToAlthea } from "@gravity-bridge/address-converter";
+import { SigningStargateClient, coins } from "@cosmjs/stargate";
 
 interface WalletWizardModalProps {
   isOpen: boolean;
@@ -24,6 +25,10 @@ export const WalletWizardModal: React.FC<WalletWizardModalProps> = ({
 }) => {
   const [keplrAddress, setKeplrAddress] = useState("");
   const [metamaskAddress, setMetamaskAddress] = useState("");
+
+  const chainId = "althea_417834-3";
+
+  const metamaskToCosmosAddress = ethToAlthea(metamaskAddress);
 
   const getKeplr = async (): Promise<Keplr | undefined> => {
     if (window.keplr) {
@@ -46,7 +51,7 @@ export const WalletWizardModal: React.FC<WalletWizardModalProps> = ({
     });
   };
 
-  const connectToKeplr = async () => {
+  const sendTokens = async () => {
     try {
       const keplr = await getKeplr();
       if (!keplr) {
@@ -55,8 +60,45 @@ export const WalletWizardModal: React.FC<WalletWizardModalProps> = ({
       }
 
       await keplr.experimentalSuggestChain(chainConfig);
-      await keplr.enable(chainConfig.chainId);
-      const signer = window.getOfflineSigner(chainConfig.chainId);
+      await keplr.enable(chainId);
+
+      const signer = window.keplr.getOfflineSigner(chainId);
+
+      const amountInMicroDenom = coins(100000000, "aalthea");
+
+      const fee = {
+        amount: coins(5000, "aalthea"),
+        gas: "200000",
+      };
+
+      const cosmJS = await SigningStargateClient.connectWithSigner(
+        chainConfig.rpc,
+        signer
+      );
+      const result = await cosmJS.sendTokens(
+        keplrAddress,
+        metamaskToCosmosAddress,
+        amountInMicroDenom,
+        fee,
+        "Transfer via Keplr"
+      );
+
+      console.log("Transaction result:", result);
+    } catch (error) {
+      console.error("Failed to send tokens:", error);
+    }
+  };
+
+  const connectToKeplr = async () => {
+    try {
+      const keplr = await getKeplr();
+      if (!keplr) {
+        return;
+      }
+
+      await keplr.experimentalSuggestChain(chainConfig);
+      await keplr.enable(chainId);
+      const signer = window.getOfflineSigner(chainId);
       const accounts = await signer.getAccounts();
       setKeplrAddress(accounts[0].address);
     } catch (error) {
@@ -82,7 +124,7 @@ export const WalletWizardModal: React.FC<WalletWizardModalProps> = ({
               method: "wallet_switchEthereumChain",
               params: [{ chainId: metamaskChainConfig.chainId }],
             });
-          } catch (switchError) {
+          } catch (switchError: any) {
             if (switchError.code === 4902) {
               try {
                 await window.ethereum.request({
@@ -157,29 +199,31 @@ export const WalletWizardModal: React.FC<WalletWizardModalProps> = ({
         )}
         {showNextStep && (
           <>
-            <Text className="text" size="lg" font="proto_mono">
-              Migrating your ALTHEA tokens
-            </Text>
+            <div className="migration">
+              <Text className="text" size="lg" font="proto_mono">
+                Migrating your ALTHEA tokens
+              </Text>
 
-            <div className="parentContainer">
-              <div className="addressBlocks">
-                <Text className="addressLabel" size="sm" font="proto_mono">
-                  From:
-                </Text>
-                <Text className="addressText" size="sm" font="proto_mono">
-                  {keplrAddress}
-                </Text>
+              <div className="parentContainer">
+                <div className="addressBlocks">
+                  <Text className="addressLabel" size="sm" font="proto_mono">
+                    From:
+                  </Text>
+                  <Text className="addressText" size="sm" font="proto_mono">
+                    {keplrAddress}
+                  </Text>
+                </div>
+                <div className="addressBlocks">
+                  <Text className="addressLabel" size="sm" font="proto_mono">
+                    To:
+                  </Text>
+                  <Text className="addressText" size="sm" font="proto_mono">
+                    {metamaskAddress}
+                  </Text>
+                </div>
+                <Text>Amount: </Text>
+                <Button onClick={sendTokens}>Migrate</Button>
               </div>
-              <div className="addressBlocks">
-                <Text className="addressLabel" size="sm" font="proto_mono">
-                  To:
-                </Text>
-                <Text className="addressText" size="sm" font="proto_mono">
-                  {metamaskAddress}
-                </Text>
-              </div>
-              <Text>Amount: </Text>
-              <Button>Migrate</Button>
             </div>
           </>
         )}

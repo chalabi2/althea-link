@@ -131,6 +131,7 @@ export default function RootLayout({
                   <ToastWizard
                     isVisible={showToast}
                     onOpenModal={openWalletWizard}
+                    onClose={() => setShowToast(false)}
                   />
                 )}
                 <WalletWizardModal
