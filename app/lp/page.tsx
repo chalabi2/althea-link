@@ -78,7 +78,7 @@ export default function Page() {
       </Modal>
 
       <Container direction="row" gap={"auto"} width="100%">
-        <Text size="x-lg" font="macan-font" className={styles.title}>
+        <Text size="x-lg" font="proto_mono" className={styles.title}>
           Pools
         </Text>
         <Rewards
@@ -93,7 +93,7 @@ export default function Page() {
         <>
           <Table
             title="Your Pairs"
-            headerFont="macan-font"
+            headerFont="proto_mono"
             headers={[
               { value: "Pair", ratio: 2 },
               { value: "APR", ratio: 1 },
@@ -149,7 +149,7 @@ export default function Page() {
             />
           </Container>
         }
-        headerFont="macan-font"
+        headerFont="proto_mono"
         headers={[
           { value: "Pair", ratio: 2 },
           { value: "APR", ratio: 1 },

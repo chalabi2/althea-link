@@ -459,10 +459,10 @@ const AprBlock = ({ pool }: { pool: AmbientPool }) => {
       <InfoPop>
         <Container gap={6}>
           <Container gap={"auto"} direction="row">
-            <Text font="macan-font" size="x-sm">
+            <Text font="proto_mono" size="x-sm">
               pool incentive:
             </Text>
-            <Text font="macan-font" size="x-sm">
+            <Text font="proto_mono" size="x-sm">
               {Number(pool.totals.apr.poolApr).toFixed(2)}%
             </Text>
           </Container>
@@ -470,20 +470,20 @@ const AprBlock = ({ pool }: { pool: AmbientPool }) => {
             <>
               {Number(baseApr.supply) !== 0 && (
                 <Container gap={"auto"} direction="row">
-                  <Text font="macan-font" size="x-sm">
+                  <Text font="proto_mono" size="x-sm">
                     {pool.base.symbol} supply apr:
                   </Text>
-                  <Text font="macan-font" size="x-sm">
+                  <Text font="proto_mono" size="x-sm">
                     {baseApr.supply}%
                   </Text>
                 </Container>
               )}
               {Number(baseApr.dist) !== 0 && (
                 <Container gap={"auto"} direction="row">
-                  <Text font="macan-font" size="x-sm">
+                  <Text font="proto_mono" size="x-sm">
                     {pool.base.symbol} dist apr:
                   </Text>
-                  <Text font="macan-font" size="x-sm">
+                  <Text font="proto_mono" size="x-sm">
                     {baseApr.dist}%
                   </Text>
                 </Container>
@@ -494,20 +494,20 @@ const AprBlock = ({ pool }: { pool: AmbientPool }) => {
             <>
               {Number(quoteApr.supply) !== 0 && (
                 <Container gap={"auto"} direction="row">
-                  <Text font="macan-font" size="x-sm">
+                  <Text font="proto_mono" size="x-sm">
                     {pool.quote.symbol} supply apr:
                   </Text>
-                  <Text font="macan-font" size="x-sm">
+                  <Text font="proto_mono" size="x-sm">
                     {quoteApr.supply}%
                   </Text>
                 </Container>
               )}
               {Number(quoteApr.dist) !== 0 && (
                 <Container gap={"auto"} direction="row">
-                  <Text font="macan-font" size="x-sm">
+                  <Text font="proto_mono" size="x-sm">
                     {pool.quote.symbol} dist apr:
                   </Text>
-                  <Text font="macan-font" size="x-sm">
+                  <Text font="proto_mono" size="x-sm">
                     {quoteApr.dist}%
                   </Text>
                 </Container>

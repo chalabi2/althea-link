@@ -8,7 +8,11 @@ import { chainConfig, metamaskChainConfig } from "@/config/networks/canto";
 import { truncateAddress } from "@/config/networks/helpers";
 import { BroadcastMode, Keplr } from "@keplr-wallet/types";
 import { ethToAlthea } from "@gravity-bridge/address-converter";
-import { SigningStargateClient, coins } from "@cosmjs/stargate";
+import { Account, SigningStargateClient, coins } from "@cosmjs/stargate";
+import { EthAccount } from "@gravity-bridge/proto/dist/proto/ethermint/types/v1/account_pb";
+import { Any } from "@bufbuild/protobuf";
+import { useBalance } from "@/hooks/wizard/useQueries";
+import { shiftDigits } from "../utils/shiftDigits";
 
 interface WalletWizardModalProps {
   isOpen: boolean;
@@ -29,6 +33,9 @@ export const WalletWizardModal: React.FC<WalletWizardModalProps> = ({
   const chainId = "althea_417834-3";
 
   const metamaskToCosmosAddress = ethToAlthea(metamaskAddress);
+
+  const balanceData = useBalance(keplrAddress);
+  const keplrBalance = balanceData.data?.balances[0].amount;
 
   const getKeplr = async (): Promise<Keplr | undefined> => {
     if (window.keplr) {
@@ -82,8 +89,6 @@ export const WalletWizardModal: React.FC<WalletWizardModalProps> = ({
         fee,
         "Transfer via Keplr"
       );
-
-      console.log("Transaction result:", result);
     } catch (error) {
       console.error("Failed to send tokens:", error);
     }
@@ -221,7 +226,7 @@ export const WalletWizardModal: React.FC<WalletWizardModalProps> = ({
                     {metamaskAddress}
                   </Text>
                 </div>
-                <Text>Amount: </Text>
+                <Text>Amount: {shiftDigits(keplrBalance, -18)} </Text>
                 <Button onClick={sendTokens}>Migrate</Button>
               </div>
             </div>

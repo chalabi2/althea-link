@@ -126,18 +126,18 @@ export const StableCoinRow = ({
     <InfoPop>
       <Container gap={6}>
         <Container gap={"auto"} direction="row">
-          <Text font="macan-font" size="x-sm">
+          <Text font="proto_mono" size="x-sm">
             supply apr:
           </Text>
-          <Text font="macan-font" size="x-sm">
+          <Text font="proto_mono" size="x-sm">
             {`${Number(cStableCoin.supplyApr).toFixed(2)}%`}
           </Text>
         </Container>
         <Container gap={"auto"} direction="row">
-          <Text font="macan-font" size="x-sm">
+          <Text font="proto_mono" size="x-sm">
             distribution apr:
           </Text>
-          <Text font="macan-font" size="x-sm">
+          <Text font="proto_mono" size="x-sm">
             {`${Number(cStableCoin.distApr).toFixed(2)}%`}
           </Text>
         </Container>
