@@ -8,7 +8,7 @@ import { StakingTransactionParams, StakingTxTypes } from "./types";
 import { createMsgsDelegate } from "@/transactions/cosmos/messages/staking/delegate";
 import { createMsgsRedelegate } from "@/transactions/cosmos/messages/staking/redelegate";
 import { createMsgsClaimStakingRewards } from "@/transactions/cosmos/messages/staking/claimRewards";
-import { ethToAltheaAddress } from "@/utils/address/conversion.utils";
+
 import { displayAmount } from "@/utils/formatting/balances.utils";
 import {
   CantoFETxType,
@@ -22,17 +22,13 @@ import {
 import { isValidEthAddress } from "@/utils/address";
 import { TX_PARAM_ERRORS } from "@/config/consts/errors";
 import { validateWeiUserInputTokenAmount } from "@/utils/math";
+import { ethToAlthea } from "@gravity-bridge/address-converter";
 
 export async function stakingTx(
   txParams: StakingTransactionParams
 ): PromiseWithError<TxCreatorFunctionReturn> {
   // convert user eth address into canto address
-  const { data: altheaAddress, error } = await ethToAltheaAddress(
-    txParams.ethAccount
-  );
-  if (error) {
-    return NEW_ERROR("stakingTx", error);
-  }
+  const altheaAddress = ethToAlthea(txParams.ethAccount);
   // switch based on tx type
   switch (txParams.txType) {
     case StakingTxTypes.DELEGATE:
@@ -193,7 +189,7 @@ export function validateStakingTxParams(
         txParams.amount,
         "1",
         txParams.nativeBalance,
-        "ALTHEA",
+        "CANTO",
         18
       );
     case StakingTxTypes.UNDELEGATE:
@@ -202,7 +198,7 @@ export function validateStakingTxParams(
         txParams.amount,
         "1",
         txParams.validator.userDelegation.balance,
-        "ALTHEA",
+        "CANTO",
         18
       );
     case StakingTxTypes.REDELEGATE: {
@@ -218,7 +214,7 @@ export function validateStakingTxParams(
         txParams.amount,
         "1",
         txParams.validator.userDelegation.balance,
-        "ALTHEA",
+        "CANTO",
         18
       );
     }

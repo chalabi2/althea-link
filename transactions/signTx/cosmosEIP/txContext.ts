@@ -1,10 +1,10 @@
 import { NEW_ERROR, NO_ERROR, PromiseWithError } from "@/config/interfaces";
 import { GRAVITY_BRIDGE, GRAVITY_BRIGDE_EVM } from "@/config/networks";
 import { Chain, Sender } from "@/transactions/interfaces";
-import { ethToAltheaAddress } from "@/utils/address";
+
 import { getCantoSenderObj, getGravitySenderObj } from "@/utils/cosmos";
 import { getCosmosEIPChainObject, isCantoChainId } from "@/utils/networks";
-import { ethToGravity } from "@gravity-bridge/address-converter";
+import { ethToAlthea, ethToGravity } from "@gravity-bridge/address-converter";
 
 type Context = {
   chainObj: Chain;
@@ -28,9 +28,7 @@ async function generateCantoEIP712TxContext(
 ): PromiseWithError<Context> {
   try {
     /** convert eth address to address on cosmos chain */
-    const { data: cantoAddress, error: ethToCantoError } =
-      await ethToAltheaAddress(ethAddress);
-    if (ethToCantoError) throw ethToCantoError;
+    const altheaAddress = ethToAlthea(ethAddress);
 
     /** chain object */
     const { data: chainObj, error: chainObjError } =
@@ -39,7 +37,7 @@ async function generateCantoEIP712TxContext(
 
     /** sender object */
     const { data: senderObj, error: senderObjError } = await getCantoSenderObj(
-      cantoAddress,
+      altheaAddress,
       chainId
     );
     if (senderObjError) throw senderObjError;

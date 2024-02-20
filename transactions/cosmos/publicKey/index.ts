@@ -87,7 +87,7 @@ const _generatePubKeyTx = (
     fromAddress: cantoSender,
     destinationAddress: PUB_KEY_BOT_ADDRESS,
     amount: "1",
-    denom: "acanto",
+    denom: "aalthea",
   });
   return {
     chainId,
