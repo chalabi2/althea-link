@@ -8,7 +8,7 @@ import {
 import { createMsgsVote } from "@/transactions/cosmos/messages/voting/vote";
 import { voteOptionToNumber } from "./voteOptions";
 import { ProposalVoteTxParams } from "./voteTxParams";
-import { ethToAltheaAddress } from "@/utils/address/conversion.utils";
+
 import {
   Transaction,
   TransactionDescription,
@@ -20,16 +20,13 @@ import {
 } from "@/transactions/interfaces/txDescriptions";
 import { isValidEthAddress } from "@/utils/address";
 import { TX_PARAM_ERRORS } from "@/config/consts/errors";
+import { ethToAlthea } from "@gravity-bridge/address-converter";
 
 export async function proposalVoteTx(
   params: ProposalVoteTxParams
 ): PromiseWithError<TxCreatorFunctionReturn> {
   // convert eth address to canto address
-  const { data: cantoAddress, error: ethToCantoError } =
-    await ethToAltheaAddress(params.ethAccount);
-  if (ethToCantoError) {
-    return NEW_ERROR("proposalVoteTx::" + errMsg(ethToCantoError));
-  }
+  const altheaAddress = ethToAlthea(params.ethAccount);
   // get voting option as a number
   const numVoteOption = voteOptionToNumber(params.voteOption);
   if (numVoteOption === 0) {
@@ -41,7 +38,7 @@ export async function proposalVoteTx(
       _voteTx(
         params.ethAccount,
         params.chainId,
-        cantoAddress,
+        altheaAddress,
         params.proposalId,
         numVoteOption,
         TX_DESCRIPTIONS.VOTE(params.proposalId, params.voteOption)
