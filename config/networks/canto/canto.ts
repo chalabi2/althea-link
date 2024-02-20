@@ -105,7 +105,7 @@ export const metamaskChainConfig = {
 
 export const chainConfig = {
   chainId: "althea_417834-3",
-  chainName: "Althea Testnet",
+  chainName: "Althea",
   rpc: "https://nodes.chandrastation.com/testnet/rpc/althea/",
   rest: "https://nodes.chandrastation.com/testnet/api/althea/",
 
