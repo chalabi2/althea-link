@@ -73,7 +73,7 @@ const ProposalTable = ({ proposals }: TableProps) => {
   if (proposals.length == 0) {
     return (
       <div>
-        <Text font="macan-font">Loading Proposals...</Text>
+        <Text font="proto_mono">Loading Proposals...</Text>
       </div>
     );
   }
@@ -160,7 +160,7 @@ const ProposalTable = ({ proposals }: TableProps) => {
                 />
               </Container>
             }
-            headerFont="macan-font"
+            headerFont="rm_mono"
             headers={
               filteredProposals.length != 0 || filteredProposals
                 ? proposalTableHeaders
@@ -195,7 +195,7 @@ const ProposalTable = ({ proposals }: TableProps) => {
                   ]
                 : [
                     <div key="noData" className={styles.noProposalContainer}>
-                      <Text font="macan-font" size="lg">
+                      <Text font="proto_mono" size="lg">
                         NO {currentFilter} FOUND
                       </Text>
                     </div>,

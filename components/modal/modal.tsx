@@ -82,7 +82,7 @@ const Modal = ({
 
           {title && (
             <div className={styles.header}>
-              <Text font="macan-font" size="lg" className={styles.title}>
+              <Text font="proto_mono" size="lg" className={styles.title}>
                 {title}
               </Text>
             </div>

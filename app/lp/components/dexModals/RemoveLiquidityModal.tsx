@@ -114,7 +114,7 @@ export const RemoveLiquidityModal = ({
     <Container margin="sm">
       <div className={styles.iconTitle}>
         <Icon icon={{ url: pair.logoURI, size: 60 }} />
-        <Text size="lg" font="macan-font">
+        <Text size="lg" font="proto_mono">
           {pair.symbol}
         </Text>
       </div>
@@ -192,7 +192,7 @@ export const RemoveLiquidityModal = ({
         <Spacer height="6px" />
 
         <Text
-          font="macan-font"
+          font="proto_mono"
           size="xx-sm"
           style={{
             marginLeft: "16px",

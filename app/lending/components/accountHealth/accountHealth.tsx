@@ -25,7 +25,7 @@ const AccountHealth = (props: Props) => {
 
   return (
     <div className={styles.container}>
-      <Text size="x-lg" font="macan-font" color="#ddd">
+      <Text size="x-lg" font="proto_mono" color="#ddd">
         {props.title}
       </Text>
       <div className={styles.separator}></div>

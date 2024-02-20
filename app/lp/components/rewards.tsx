@@ -16,7 +16,7 @@ const Rewards = (props: Props) => {
     <section className={styles.rewards}>
       <div>
         <Text
-          font="macan-font"
+          font="proto_mono"
           size="lg"
           style={{
             color: "#000",
@@ -33,7 +33,7 @@ const Rewards = (props: Props) => {
           }}
         >
           <Text
-            font="macan-font"
+            font="proto_mono"
             size="x-lg"
             style={{
               fontSize: "36px",
