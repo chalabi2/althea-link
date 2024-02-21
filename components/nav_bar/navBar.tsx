@@ -87,9 +87,9 @@ const NavBar = () => {
             themed
           />
         </button>
-        {/* <Link href="/">
-          <Image src="/althea.png" width={80} height={80} alt="althea" />
-        </Link> */}
+        <Link href="/">
+          <Image src="/altheaMenu.svg" width={30} height={30} alt="althea" />
+        </Link>
       </div>
 
       <div className={styles["nav-links"]} data-menu-open={isMenuOpen}>
@@ -124,7 +124,7 @@ const NavBar = () => {
         >
           <Text size="sm">Pools</Text>
         </Link>
-        <Link
+        {/* <Link
           href="/explore"
           className={clsx(
             styles["nav-link"],
@@ -133,7 +133,7 @@ const NavBar = () => {
           onClick={() => Analytics.actions.events.clickedNavLink("Explore")}
         >
           <Text size="sm">Explore</Text>
-        </Link>
+        </Link> */}
         <Link
           href="/staking"
           className={clsx(
