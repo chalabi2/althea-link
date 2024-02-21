@@ -6,13 +6,20 @@ import styles from "./wizardModal.module.scss";
 import Image from "next/image";
 import { chainConfig, metamaskChainConfig } from "@/config/networks/canto";
 import { truncateAddress } from "@/config/networks/helpers";
-import { BroadcastMode, Keplr } from "@keplr-wallet/types";
+import { Keplr } from "@keplr-wallet/types";
 import { ethToAlthea } from "@gravity-bridge/address-converter";
-import { Account, SigningStargateClient, coins } from "@cosmjs/stargate";
-import { EthAccount } from "@gravity-bridge/proto/dist/proto/ethermint/types/v1/account_pb";
-import { Any } from "@bufbuild/protobuf";
-import { useBalance } from "@/hooks/wizard/useQueries";
+import {
+  Account,
+  SignerData,
+  SigningStargateClient,
+  StdFee,
+  coins,
+} from "@cosmjs/stargate";
+
+import { TxRaw } from "cosmjs-types/cosmos/tx/v1beta1/tx";
+import { useAccountInfo, useBalance } from "@/hooks/wizard/useQueries";
 import { shiftDigits } from "../utils/shiftDigits";
+import { cosmos } from "interchain";
 
 interface WalletWizardModalProps {
   isOpen: boolean;
@@ -35,7 +42,10 @@ export const WalletWizardModal: React.FC<WalletWizardModalProps> = ({
   const metamaskToCosmosAddress = ethToAlthea(metamaskAddress);
 
   const balanceData = useBalance(keplrAddress);
-  const keplrBalance = balanceData.data?.balances[0].amount;
+  const accountInfoData = useAccountInfo(keplrAddress);
+  const keplrBalance = (
+    balanceData.data?.balances[0].amount - 1000000
+  ).toString();
 
   const getKeplr = async (): Promise<Keplr | undefined> => {
     if (window.keplr) {
@@ -67,27 +77,44 @@ export const WalletWizardModal: React.FC<WalletWizardModalProps> = ({
       }
 
       await keplr.experimentalSuggestChain(chainConfig);
-      await keplr.enable(chainId);
+      await keplr.enable(chainConfig.chainId);
 
-      const signer = window.keplr.getOfflineSigner(chainId);
+      const signer = window.keplr.getOfflineSigner(chainConfig.chainId);
 
-      const amountInMicroDenom = coins(100000000, "aalthea");
-
-      const fee = {
-        amount: coins(5000, "aalthea"),
-        gas: "200000",
+      const fee: StdFee = {
+        amount: coins(10000, "aalthea"),
+        gas: "2000000",
       };
 
       const cosmJS = await SigningStargateClient.connectWithSigner(
         chainConfig.rpc,
         signer
       );
-      const result = await cosmJS.sendTokens(
+
+      const { send } = cosmos.bank.v1beta1.MessageComposer.withTypeUrl;
+
+      const msgSend = send({
+        fromAddress: keplrAddress,
+        toAddress: metamaskToCosmosAddress,
+        amount: coins(keplrBalance, "aalthea"),
+      });
+
+      const explicitSignerData: SignerData = {
+        accountNumber: accountInfoData.data?.account_number,
+        sequence: accountInfoData.data?.sequence,
+        chainId: chainId,
+      };
+
+      const signed = await cosmJS.sign(
         keplrAddress,
-        metamaskToCosmosAddress,
-        amountInMicroDenom,
+        [msgSend],
         fee,
-        "Transfer via Keplr"
+        "",
+        explicitSignerData
+      );
+
+      const result = await cosmJS.broadcastTx(
+        Uint8Array.from(TxRaw.encode(signed).finish())
       );
     } catch (error) {
       console.error("Failed to send tokens:", error);
@@ -102,8 +129,8 @@ export const WalletWizardModal: React.FC<WalletWizardModalProps> = ({
       }
 
       await keplr.experimentalSuggestChain(chainConfig);
-      await keplr.enable(chainId);
-      const signer = window.getOfflineSigner(chainId);
+      await keplr.enable(chainConfig.chainId);
+      const signer = window.getOfflineSigner(chainConfig.chainId);
       const accounts = await signer.getAccounts();
       setKeplrAddress(accounts[0].address);
     } catch (error) {

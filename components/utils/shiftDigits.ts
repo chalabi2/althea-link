@@ -7,6 +7,6 @@ export const shiftDigits = (
 ) => {
   return new BigNumber(num)
     .shiftedBy(places)
-    .decimalPlaces(decimalPlaces || 6)
+    .toFixed(decimalPlaces || 6, BigNumber.ROUND_DOWN)
     .toString();
 };

@@ -194,8 +194,8 @@ a {
 body {
   background: linear-gradient(
     90deg,
-    var(--background-color-start) 0%,
-    var(--background-color-end) 100%
+    var(--background-color-end) 0%,
+    var(--background-color-start) 100%
   );
   color: var(--text-dark-color);
   min-height: 100vh;
