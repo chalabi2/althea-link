@@ -31,13 +31,13 @@ const Footer = () => {
   return (
     <div className={styles.container}>
       <div className={styles.links}>
-        <FooterLink href="https://docs.canto.io/" text="docs" />
         <FooterLink
-          href="https://discord.com/invite/63GmEXZsVf"
-          text="Discord"
+          href="https://github.com/althea-net/althea-whitepaper/blob/master/whitepaper.pdf"
+          text="docs"
         />
-        <FooterLink href="https://twitter.com/CantoPublic" text="twitter" />
-        <FooterLink href="https://canto.mirror.xyz/" text="Blog" />
+        <FooterLink href="https://discord.gg/CmdEA2ArVJ" text="Discord" />
+        <FooterLink href="https://twitter.com/altheanetwork" text="twitter" />
+        <FooterLink href="https://medium.com/althea-mesh" text="Blog" />
         {/* <FooterButton text="theme" /> */}
       </div>
       <div className={styles.links}>
@@ -60,26 +60,6 @@ const Footer = () => {
             }}
           />{" "}
           ${cantoPrice}
-        </Text>
-        <Text
-          className={styles.item}
-          size="x-sm"
-          font="proto_mono"
-          style={{
-            padding: "0 14px",
-          }}
-        >
-          <Image
-            src="/tokens/note.svg"
-            alt=""
-            height={16}
-            width={16}
-            style={{
-              margin: "8px",
-              filter: "invert(var(--dark-mode))",
-            }}
-          />
-          ${notePrice}
         </Text>
       </div>
     </div>

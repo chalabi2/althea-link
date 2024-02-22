@@ -22,31 +22,14 @@ export default function Home() {
           icon={{
             url: "/altheaMenu.svg",
             size: {
-              width: 300,
-              height: 80,
+              width: 600,
+              height: 160,
             },
           }}
         />
-        <Glitch>
-          <Icon
-            className={styles["hero-orb"]}
-            style={{
-              opacity: 0.5,
-              height: "47vh",
-            }}
-            icon={{
-              url: "/orb.svg",
-              size: {
-                width: 800,
-                height: 330,
-              },
-            }}
-            themed
-          />
-        </Glitch>
         <Container direction="row" gap={30}>
           <Link href="/bridge">
-            <Button width={280}>Bridge To Canto</Button>
+            <Button width={280}>Bridge To Althea</Button>
           </Link>
           {/* <a href="#ecosystem">
             {" "}
