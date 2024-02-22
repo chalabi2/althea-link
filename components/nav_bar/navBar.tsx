@@ -87,7 +87,7 @@ const NavBar = () => {
           />
         </button>
         <Link href="/">
-          <Image src="/altheaMenu.svg" width={30} height={30} alt="althea" />
+          <Image src="/althea.png" width={30} height={30} alt="althea" />
         </Link>
       </div>
 
