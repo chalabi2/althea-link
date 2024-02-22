@@ -80,7 +80,7 @@ a {
   --border-radius: 0px;
   --text-dark-color: #111111;
   --card-sub-surface-color: white;
-  --card-surface-color: #f1f1f1;
+  --card-surface-color: #6fb2ff;
   --althea-blue: #0077ff;
   --dark-mode: 0;
   --light-mode: 1;
@@ -143,7 +143,7 @@ a {
   --border-radius: 5;
   --text-dark-color: #ececec;
   --card-sub-surface-color: black;
-  --card-surface-color: #1e1e1e;
+  --card-surface-color: #1c508c;
   --dark-mode: 1;
   --light-mode: 0;
   --box-shadow: 0;
@@ -193,7 +193,7 @@ a {
 // }
 body {
   background: linear-gradient(
-    90deg,
+    270deg,
     var(--background-color-end) 0%,
     var(--background-color-start) 100%
   );
