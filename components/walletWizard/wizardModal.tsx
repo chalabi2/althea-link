@@ -95,7 +95,7 @@ export const WalletWizardModal: React.FC<WalletWizardModalProps> = ({
       const msgSend = send({
         fromAddress: keplrAddress,
         toAddress: metamaskToCosmosAddress,
-        amount: coins(keplrBalance - 100000, "aalthea"),
+        amount: coins((keplrBalance - 100000).toString(), "aalthea"),
       });
 
       const explicitSignerData: SignerData = {
@@ -305,7 +305,12 @@ export const WalletWizardModal: React.FC<WalletWizardModalProps> = ({
                 />
               </div>
 
-              <Button onClick={sendTokens}>Migrate</Button>
+              <Button
+                disabled={keplrBalance <= 50000000000000000}
+                onClick={sendTokens}
+              >
+                Migrate
+              </Button>
             </div>
           </>
         )}
