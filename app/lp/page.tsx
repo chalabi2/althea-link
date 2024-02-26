@@ -137,18 +137,6 @@ export default function Page() {
       <Table
         //@ts-ignore
         title={pairNames[filteredPairs]}
-        secondary={
-          <Container width="400px">
-            <ToggleGroup
-              options={["all", "stable", "volatile"]}
-              selected={filteredPairs}
-              setSelected={(value) => {
-                Analytics.actions.events.liquidityPool.tabSwitched(value);
-                setFilteredPairs(value);
-              }}
-            />
-          </Container>
-        }
         headerFont="proto_mono"
         headers={[
           { value: "Pair", ratio: 2 },
