@@ -260,8 +260,6 @@ export const WalletWizardModal: React.FC<WalletWizardModalProps> = ({
               </Text>
               <Text className="text" size="sm" font="proto_mono">
                 Please review the details below before migrating your tokens.
-                Included below are the addresses and the amount of tokens to be
-                migrated.
               </Text>
 
               <div className={styles["address-blocks"]}>
