@@ -35,7 +35,7 @@ export default function GovernancePage() {
             Governance
           </Text>
           <Text size="sm" opacity={0.4} className={styles.middleText}>
-            Stake your $CANTO to participate in governance
+            Stake your $ALTHEA to participate in governance
           </Text>
           <Link href="/staking">
             <Button>Go to Staking</Button>
