@@ -75,8 +75,8 @@ export function VotingInfoBox({
             </Text>
             <Icon
               icon={{
-                url: "/tokens/canto.svg",
-                size: 14,
+                url: "/althea.png",
+                size: 16,
               }}
               themed={true}
             />
