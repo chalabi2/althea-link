@@ -35,15 +35,12 @@ export default function GovernancePage() {
           <Text font="macan" className={styles.title}>
             Governance
           </Text>
-          <Container
-            direction="column"
-            className={styles.middleText}
-            center={{ vertical: true }}
-          >
-            <Text size="sm" color="#7B7B7B">
-              Stake your $CANTO to participate in governance
-            </Text>
-          </Container>
+          <Text size="sm" opacity={0.4} className={styles.middleText}>
+            Stake your $ALTHEA to participate in governance
+          </Text>
+          <Link href="/staking">
+            <Button>Go to Staking</Button>
+          </Link>
         </div>
 
         <Spacer height="40px" />
