@@ -10,7 +10,8 @@ import { tryFetch } from "@/utils/async";
 import * as NETWORKS from "@/config/networks";
 import { ethToAlthea } from "@gravity-bridge/address-converter";
 
-const cantoMainnetUserAPIEndpoint = "http://localhost:3003"; //process.env.NEXT_PUBLIC_CANTO_USER_API_URL;
+const cantoMainnetUserAPIEndpoint =
+  process.env.NEXT_PUBLIC_CANTO_MAINNET_API_URL; //process.env.NEXT_PUBLIC_CANTO_USER_API_URL;
 const cantoTestnetUserAPIEndpoint = "https://localhost:9000";
 
 function getUserAPIEndPoint(chainId: number | string) {

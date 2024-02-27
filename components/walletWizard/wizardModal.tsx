@@ -20,6 +20,7 @@ import { TxRaw } from "cosmjs-types/cosmos/tx/v1beta1/tx";
 import { useAccountInfo, useBalance } from "@/hooks/wizard/useQueries";
 import { shiftDigits } from "../utils/shiftDigits";
 import { cosmos } from "interchain";
+import Icon from "../icon/icon";
 
 interface WalletWizardModalProps {
   isOpen: boolean;
@@ -43,9 +44,7 @@ export const WalletWizardModal: React.FC<WalletWizardModalProps> = ({
 
   const balanceData = useBalance(keplrAddress);
   const accountInfoData = useAccountInfo(keplrAddress);
-  const keplrBalance = (
-    balanceData.data?.balances[0].amount - 1000000
-  ).toString();
+  const keplrBalance = balanceData.data?.balances[0].amount;
 
   const getKeplr = async (): Promise<Keplr | undefined> => {
     if (window.keplr) {
@@ -96,7 +95,7 @@ export const WalletWizardModal: React.FC<WalletWizardModalProps> = ({
       const msgSend = send({
         fromAddress: keplrAddress,
         toAddress: metamaskToCosmosAddress,
-        amount: coins(keplrBalance, "aalthea"),
+        amount: coins((keplrBalance - 100000).toString(), "aalthea"),
       });
 
       const explicitSignerData: SignerData = {
@@ -191,11 +190,27 @@ export const WalletWizardModal: React.FC<WalletWizardModalProps> = ({
           <>
             {/* Migration source wallets */}
             <Text size="lg" font="proto_mono">
-              Migrate from
+              Wallet Wizard
             </Text>
+            <Text size="sm" font="proto_mono">
+              The wallet wizard is a tool to help you migrate your Althea tokens
+              from a wallet with an incorrect key type to another wallet with
+              the correct key type.
+            </Text>
+            <Text size="sm" font="proto_mono">
+              Ethermint chains, like Althea, use the Ethermint key type while
+              non Ethermint enabled Cosmos chains use the Cosmos key type. When
+              attempting to utilize the Cosmos key type on Althea you will get
+              errors.
+            </Text>
+
             <div className={styles["buttonGroup"]}>
               {/* Keplr Connect Button */}
+
               <div className={styles["wallet-connect"]}>
+                <Text size="md" font="proto_mono">
+                  Migrate From
+                </Text>
                 <Button width={200} height={34} onClick={connectToKeplr}>
                   <Image
                     src="/icons/keplr.png"
@@ -203,16 +218,25 @@ export const WalletWizardModal: React.FC<WalletWizardModalProps> = ({
                     width={24}
                     height={24}
                   />
-                  {keplrAddress ? truncateAddress(keplrAddress) : "Keplr"}
+                  {keplrAddress ? truncateAddress(keplrAddress) : "Connect"}
                 </Button>
               </div>
-            </div>
-            {/* Metamask Connect Button */}
-            <Text size="lg" font="proto_mono">
-              Migrate to
-            </Text>
-            <div className={styles["buttonGroup"]}>
+
+              <Icon
+                className={styles["pagination"]}
+                icon={{
+                  url: "/paginationRight.svg",
+                  size: {
+                    width: 30,
+                    height: 15,
+                  },
+                }}
+              />
+
               <div className={styles["wallet-connect"]}>
+                <Text size="md" font="proto_mono">
+                  Migrate to
+                </Text>
                 <Button width={200} height={34} onClick={connectToMetamask}>
                   <Image
                     src="/icons/metamask.png"
@@ -222,40 +246,71 @@ export const WalletWizardModal: React.FC<WalletWizardModalProps> = ({
                   />
                   {metamaskAddress
                     ? truncateAddress(metamaskAddress)
-                    : "Metamask"}
+                    : "Connect"}
                 </Button>
               </div>
-              {/* Other wallets... */}
             </div>
           </>
         )}
         {showNextStep && (
           <>
-            <div className="migration">
+            <div className={styles["migration"]}>
               <Text className="text" size="lg" font="proto_mono">
                 Migrating your ALTHEA tokens
               </Text>
+              <Text className="text" size="sm" font="proto_mono">
+                Please review the details below before migrating your tokens.
+                Included below are the addresses and the amount of tokens to be
+                migrated.
+              </Text>
 
-              <div className="parentContainer">
-                <div className="addressBlocks">
-                  <Text className="addressLabel" size="sm" font="proto_mono">
-                    From:
-                  </Text>
-                  <Text className="addressText" size="sm" font="proto_mono">
-                    {keplrAddress}
-                  </Text>
-                </div>
-                <div className="addressBlocks">
-                  <Text className="addressLabel" size="sm" font="proto_mono">
-                    To:
-                  </Text>
-                  <Text className="addressText" size="sm" font="proto_mono">
-                    {metamaskAddress}
-                  </Text>
-                </div>
-                <Text>Amount: {shiftDigits(keplrBalance, -18)} </Text>
-                <Button onClick={sendTokens}>Migrate</Button>
+              <div className={styles["address-blocks"]}>
+                <Text weight="bold" size="sm" font="proto_mono">
+                  From:
+                </Text>
+                <Text size="sm" font="proto_mono">
+                  {keplrAddress}
+                </Text>
               </div>
+              <div className={styles["address-blocks"]}>
+                <Text weight="bold" size="sm" font="proto_mono">
+                  To:
+                </Text>
+                <Text size="sm" font="proto_mono">
+                  {metamaskAddress}
+                </Text>
+              </div>
+              <div className={styles["amount"]}>
+                <Text
+                  weight="bold"
+                  size="sm"
+                  font="proto_mono"
+                  className={styles["amount-label"]}
+                >
+                  Amount:
+                </Text>
+
+                <Text size="sm" font="proto_mono">
+                  {shiftDigits(keplrBalance, -18)}
+                </Text>
+                <Icon
+                  className={styles["amountIcon"]}
+                  icon={{
+                    url: "/althea.png",
+                    size: {
+                      width: 20,
+                      height: 20,
+                    },
+                  }}
+                />
+              </div>
+
+              <Button
+                disabled={keplrBalance <= 50000000000000000}
+                onClick={sendTokens}
+              >
+                Migrate
+              </Button>
             </div>
           </>
         )}
