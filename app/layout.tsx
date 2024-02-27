@@ -11,6 +11,7 @@ import { ReactQueryClientProvider } from "@/provider/reactQueryProvider";
 import ToastWizard from "@/components/walletWizard/wizardToast";
 import { WalletWizardModal } from "@/components/walletWizard/wizardModal";
 import { useState } from "react";
+import { ToastContainer } from "@/components/toast";
 
 const rm_mono = localFont({
   src: "../fonts/rm-mono-regular.ttf",
@@ -127,24 +128,25 @@ export default function RootLayout({
               /> */}
                 <NavBar />
 
-              {children}
-              <div id="modal-root">
-                {showToast && (
-                  <ToastWizard
-                    isVisible={showToast}
-                    onOpenModal={openWalletWizard}
-                    onClose={() => setShowToast(false)}
+                {children}
+                <div id="modal-root">
+                  {showToast && (
+                    <ToastWizard
+                      isVisible={showToast}
+                      onOpenModal={openWalletWizard}
+                      onClose={() => setShowToast(false)}
+                    />
+                  )}
+                  <WalletWizardModal
+                    balance={10}
+                    isOpen={isWalletWizardOpen}
+                    onOpen={setIsWalletWizardOpen}
+                    onClose={closeWalletWizard}
                   />
-                )}
-                <WalletWizardModal
-                  balance={10}
-                  isOpen={isWalletWizardOpen}
-                  onOpen={setIsWalletWizardOpen}
-                  onClose={closeWalletWizard}
-                />
+                </div>
+                <Footer />
               </div>
-              <Footer />
-            </div>
+            </ToastContainer>
           </ReactQueryClientProvider>
         </CantoWalletProvider>
       </body>
