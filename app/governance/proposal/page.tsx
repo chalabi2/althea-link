@@ -103,7 +103,6 @@ export default function Page() {
     return (
       <div className={styles.noProposalContainer}>
         <Text font="macan-font">
-        <Text font="macan-font">
           No proposal found with the ID {proposalId}{" "}
         </Text>
       </div>
