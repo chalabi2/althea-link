@@ -6,6 +6,7 @@ interface Props {
   title?: string | React.ReactNode;
   secondary?: React.ReactNode;
   headerFont: "macan" | "macan-font" | "undefined" | "proto_mono" | "rm_mono";
+  headerFont: "macan" | "macan-font" | "undefined" | "proto_mono" | "rm_mono";
   headers: {
     value: string | React.ReactNode;
     ratio: number;
