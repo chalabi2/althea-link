@@ -1,17 +1,19 @@
-/* Add to your CSS file */
-
 .modalContent {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: space-around;
   padding: 20px;
+  gap: 20px;
 }
 
 .buttonGroup {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   align-items: center;
+  align-content: center;
+  margin-top: auto;
+  margin-bottom: auto;
   justify-content: space-around;
   padding: 20px;
   gap: 20px;
@@ -36,8 +38,8 @@
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  padding: 10px 0;
-  width: 100%;
+  justify-content: flex-start;
+  gap: 20px;
 }
 
 .addressBlocks:first-of-type {
@@ -67,12 +69,6 @@
   margin-top: 20px;
 }
 
-.parentContainer {
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-}
-
 .button:hover {
   background-color: #e0e0e0;
 }
@@ -94,8 +90,17 @@
   background-color: #f0f0f0;
 }
 
+.pagination {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0;
+  margin-top: 24px;
+}
+
 .wallet-connect {
   display: flex;
+  flex-direction: column;
   justify-content: flex-end;
   * {
     font-weight: 400 !important;
@@ -105,10 +110,27 @@
 .migration {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-  padding: 20px;
+  align-items: flex-start;
+  text-align: left;
+  margin-top: auto;
+  margin-bottom: auto;
+  justify-content: flex-start;
+
+  gap: 30px;
+}
+
+.amount-label {
+  margin-right: 8px;
+}
+.amountIcon {
+  margin-left: 8px;
+  margin-top: auto;
+  margin-bottom: auto;
+}
+
+.amount {
+  display: flex;
+  flex-direction: row;
 }
 
 .toastContainer {
