@@ -244,8 +244,8 @@ export const StakingModal = (props: StakingModalParams) => {
       <div>
         <Amount
           IconUrl={"/althea.png"}
-          title={"ALTG"}
-          symbol={"ALTG"}
+          title={"Althea"}
+          symbol={"ALTHEA"}
           onChange={(val) => {
             setInputAmount(val.target.value);
           }}
@@ -269,7 +269,7 @@ export const StakingModal = (props: StakingModalParams) => {
             short: false,
             commify: false,
           })}{" "}
-          ALTG
+          ALTHEA
         </Text>
       </div>
       <Spacer height="20px"></Spacer>

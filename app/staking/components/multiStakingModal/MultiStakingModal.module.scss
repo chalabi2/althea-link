@@ -1,0 +1,32 @@
+.modalContainer {
+  display: flex;
+}
+
+.spacer {
+  border-bottom: 1px solid gray;
+}
+
+.modalInfoRow {
+  display: flex;
+  //padding: auto;
+  height: 7%;
+  flex-direction: row !important;
+  justify-content: space-between;
+  .modalInfoRow2 {
+    display: flex;
+    flex-direction: row !important;
+  }
+}
+.buttonContainer {
+  display: flex;
+  justify-content: center;
+}
+
+.validatorsListContainer {
+  max-height: 200px;
+  overflow-y: auto;
+  margin: 10px 0;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}

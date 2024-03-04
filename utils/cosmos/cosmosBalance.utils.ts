@@ -21,7 +21,7 @@ export async function getCantoBalance(
   chainId: string,
   cantoAddress: string
 ): PromiseWithError<string> {
-  return await getCosmosTokenBalance(chainId, cantoAddress, "aaltg");
+  return await getCosmosTokenBalance(chainId, cantoAddress, "aalthea");
 }
 
 /**

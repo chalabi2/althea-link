@@ -8,6 +8,8 @@ export interface Validator {
   jailed: boolean;
   status: BondStatus;
   tokens: string;
+  consensus_pubkey: string;
+  token_ratio: string;
   description: {
     moniker: string;
     identity?: string;

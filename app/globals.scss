@@ -46,7 +46,7 @@ a {
 
 .light {
   --graph-fill: #868686;
-  --text-blue-color: #0038d2;
+  --text-blue-color: #0077ff;
   --graph-filled: #141414;
   --anim-bg-color: #dddddd;
   --canto-color: var(--extra-success-color, #06fc99);
@@ -80,7 +80,7 @@ a {
   --border-radius: 0px;
   --text-dark-color: #111111;
   --card-sub-surface-color: white;
-  --card-surface-color: #6fb2ff;
+  --card-surface-color: #0077ff;
   --althea-blue: #0077ff;
   --dark-mode: 0;
   --light-mode: 1;
@@ -91,17 +91,16 @@ a {
   --proposal-status-stroke-color: #d4d4d4;
   --graph-fill-color: #d0d0d0;
   --graph-stroke-color: #b3b3b3;
-  --vote-box-yes-color: #A1DCC3;
-  --vote-box-yes-stroke-color: #12D481;
-  --vote-box-no-color: #E4B0B0;
-  --vote-box-no-stroke-color: #EF4444;
-  --vote-box-veto-color: #CDAADD;
-  --vote-box-veto-stroke-color: #B76FD7;
-  --vote-box-abstain-color: #E6E2C5;
-  --vote-box-abstain-stroke-color: #CFBB1D;
-  --no-active-proposal-color: rgba(223,223,223, 0.4);
-  --toast-secondary-text-color: rgba(36, 36, 36, 0.50);
-
+  --vote-box-yes-color: #a1dcc3;
+  --vote-box-yes-stroke-color: #12d481;
+  --vote-box-no-color: #e4b0b0;
+  --vote-box-no-stroke-color: #ef4444;
+  --vote-box-veto-color: #cdaadd;
+  --vote-box-veto-stroke-color: #b76fd7;
+  --vote-box-abstain-color: #e6e2c5;
+  --vote-box-abstain-stroke-color: #cfbb1d;
+  --no-active-proposal-color: rgba(223, 223, 223, 0.4);
+  --toast-secondary-text-color: rgba(36, 36, 36, 0.5);
 }
 
 .dark {
@@ -143,26 +142,25 @@ a {
   --border-radius: 5;
   --text-dark-color: #ececec;
   --card-sub-surface-color: black;
-  --card-surface-color: #1c508c;
+  --card-surface-color: #0077ff;
   --dark-mode: 1;
   --light-mode: 0;
   --box-shadow: 0;
   ---temp-opacity: 1;
-  --graph-fill-color: rgb(75,75,75,50%);
+  --graph-fill-color: rgb(75, 75, 75, 50%);
   --graph-stroke-color: #4b4b4b;
   --proposal-status-color: #383838;
   --proposal-status-stroke-color: #3d3d3d;
   --vote-box-yes-color: #303831;
-  --vote-box-yes-stroke-color: #589C5B;
+  --vote-box-yes-stroke-color: #589c5b;
   --vote-box-no-color: #643131;
-  --vote-box-no-stroke-color: #EF4444;
-  --vote-box-veto-color: #4D2A5E;
-  --vote-box-veto-stroke-color: #A22ED8;
+  --vote-box-no-stroke-color: #ef4444;
+  --vote-box-veto-color: #4d2a5e;
+  --vote-box-veto-stroke-color: #a22ed8;
   --vote-box-abstain-color: #666346;
-  --vote-box-abstain-stroke-color: #F5E98A;
+  --vote-box-abstain-stroke-color: #f5e98a;
   --no-active-proposal-color: #101010;
-  --toast-secondary-text-color: rgba(253, 253, 253, 0.50);
-
+  --toast-secondary-text-color: rgba(253, 253, 253, 0.5);
 }
 
 * {

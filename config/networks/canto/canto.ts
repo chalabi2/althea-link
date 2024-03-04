@@ -20,8 +20,8 @@ const cantoMainnetBaseInfo = {
   rpcUrl: "https://nodes.chandrastation.com/testnet/evm/althea/",
   nativeCurrency: {
     name: "Althea",
-    baseName: "aaltg",
-    symbol: "ALTG",
+    baseName: "aalthea",
+    symbol: "ALTHEA",
     decimals: 18,
   },
 };

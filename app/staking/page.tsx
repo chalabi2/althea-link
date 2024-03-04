@@ -7,6 +7,7 @@ import Spacer from "@/components/layout/spacer";
 import Container from "@/components/container/container";
 import Button from "@/components/button/button";
 import Icon from "@/components/icon/icon";
+import { MultiStakingModal } from "./components/multiStakingModal/MultiStakingModal";
 import {
   convertToBigNumber,
   displayAmount,
@@ -262,6 +263,12 @@ export default function StakingPage() {
     selection.setValidator(validator.operator_address);
   }
 
+  const [isMultiStakeModalOpen, setIsMultiStakeModalOpen] = useState(false);
+
+  const openMultiStakeModal = () => {
+    setIsMultiStakeModalOpen(true);
+  };
+
   return isLoading ? (
     <Splash themed />
   ) : (
@@ -504,6 +511,15 @@ export default function StakingPage() {
             >
               Claim Rewards
             </Button>
+            <Spacer height="20px" />
+            <Button
+              width={"fill"}
+              height="large"
+              onClick={openMultiStakeModal}
+              disabled={!signer}
+            >
+              Multi Stake
+            </Button>
           </Container>
         </Container>
       </Container>
@@ -519,6 +535,26 @@ export default function StakingPage() {
       >
         <StakingModal
           validator={selection.validator}
+          cantoBalance={userStaking?.cantoBalance ?? "0"}
+          validators={validators}
+          onConfirm={(amount, selectedTx, validatorToRedelegate) =>
+            handleStakingTxClick(amount, selectedTx, validatorToRedelegate)
+          }
+          txValidation={(amount, selectedTx, validatorToRedelegate) =>
+            canConfirmTx(amount, selectedTx, validatorToRedelegate)
+          }
+        />
+      </Modal>
+      <Modal
+        width="32rem"
+        onClose={() => {
+          setIsMultiStakeModalOpen(false);
+        }}
+        title="MULTI STAKE"
+        closeOnOverlayClick={false}
+        open={isMultiStakeModalOpen}
+      >
+        <MultiStakingModal
           cantoBalance={userStaking?.cantoBalance ?? "0"}
           validators={validators}
           onConfirm={(amount, selectedTx, validatorToRedelegate) =>
