@@ -12,6 +12,7 @@ import {
   convertToBigNumber,
   displayAmount,
   formatBalance,
+  truncateNumber,
 } from "@/utils/formatting/balances.utils";
 import { formatPercent } from "@/utils/formatting";
 import Table from "@/components/table/table";
@@ -454,10 +455,7 @@ export default function StakingPage() {
               <Container direction="row" center={{ vertical: true }}>
                 <div style={{ marginRight: "5px" }}>
                   <Text font="macan-font" size="title">
-                    {displayAmount(
-                      totalStaked ? totalStaked.toFixed(2) : "0",
-                      0
-                    )}
+                    {totalStaked}
                   </Text>
                 </div>
                 <p> </p>
