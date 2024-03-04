@@ -57,20 +57,20 @@ export default function RootLayout({
         />
       </head> */}
       {/* <!-- Primary Meta Tags --> */}
-      <title>Althea.app</title>
-      <meta name="title" content="Althea.app" />
+      <title>althea app</title>
+      <meta name="title" content="althea app" />
       <meta
         name="description"
-        content="Althea is your gateway to crosschain liquid infrastrucute_"
+        content="Althea is your gateway to cross-chain liquid infrastructure"
       />
 
       {/* <!-- Open Graph / Facebook --> */}
       <meta property="og:type" content="website" />
-      <meta property="og:url" content="https://canto.io" />
+      <meta property="og:url" content="https://althea.app" />
       <meta property="og:title" content="Althea.app" />
       <meta
         property="og:description"
-        content="Althea is your gateway to crosschain liquid infrastrucute_"
+        content="Althea is your gateway to cross-chain liquid infrastrucute_"
       />
       <meta property="og:image" content="https://althea.app/meta.jpg" />
 
@@ -80,9 +80,9 @@ export default function RootLayout({
       <meta property="twitter:title" content="Althea.app" />
       <meta
         property="twitter:description"
-        content="Althea is your gateway to crosschain liquid infrastrucute_"
+        content="Althea is your gateway to cross-chain liquid infrastrucute_"
       />
-      <meta property="twitter:image" content="https://beta.canto.io/meta.jpg" />
+      <meta property="twitter:image" content="https://althea.app/meta.jpg" />
 
       <body
         className={"dark"}
