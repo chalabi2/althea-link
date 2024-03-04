@@ -10,7 +10,7 @@ import Text from "@/components/text";
 import Icon from "@/components/icon/icon";
 import { displayAmount } from "@/utils/formatting/balances.utils";
 import Button from "@/components/button/button";
-import { useMemo, useState } from "react";
+import { useMemo, useState, useCallback } from "react";
 import { StakingTxTypes } from "@/transactions/staking";
 import { StakingTabs } from "../stakingTab/MultiStakeTabs";
 import Selector from "@/components/selector/selector";
@@ -42,6 +42,54 @@ interface StakingModalParams {
     validatorToRedelegate: Validator | null | undefined
   ) => void;
 }
+
+interface ValidatorRowProps {
+  validator: Validator;
+  isSelected: boolean;
+  onSelectionChange: (validatorAddress: string) => void;
+}
+
+const ValidatorRow: React.FC<ValidatorRowProps> = ({
+  validator,
+  isSelected,
+  onSelectionChange,
+}) => {
+  return (
+    <tr
+      key={validator.operator_address}
+      className={isSelected ? "selected" : ""}
+      onClick={() => onSelectionChange(validator.operator_address)}
+      style={{ cursor: "pointer" }}
+    >
+      <td>{validator.description.moniker}</td>
+      <td>
+        {displayAmount(
+          BigNumber(validator.commission).multipliedBy(10000).toFixed(2),
+          2,
+          {
+            short: true,
+            commify: true,
+            precision: 2,
+          }
+        )}
+        %
+      </td>
+      <td>
+        {displayAmount(
+          BigNumber(validator.token_ratio).multipliedBy(10000).toFixed(2),
+          2,
+          {
+            short: true,
+            commify: true,
+            precision: 2,
+          }
+        )}
+        %
+      </td>
+    </tr>
+  );
+};
+
 export const MultiStakingModal = (props: StakingModalParams) => {
   const [inputAmount, setInputAmount] = useState("");
 
@@ -74,103 +122,47 @@ export const MultiStakingModal = (props: StakingModalParams) => {
     }
   };
 
-  const handleValidatorSelection = (validatorAddress: string) => {
+  const handleValidatorSelection = useCallback((validatorAddress: string) => {
     setSelectedValidators((prev) => {
       if (prev.includes(validatorAddress)) {
         return prev.filter((address) => address !== validatorAddress);
       }
       return [...prev, validatorAddress];
     });
-  };
+  }, []);
 
   const handleAmountChange = (validatorAddress: string, amount: string) => {
     setInputAmounts((prev) => ({ ...prev, [validatorAddress]: amount }));
   };
 
-  const ValidatorTable = styled.div`
-    width: 100%;
-    max-height: 200px;
-    overflow-y: auto;
-    margin: 10px 0;
-    padding: 10px;
-    border: 1px solid var(--card-surface-color);
-    border-radius: 4px;
-
-    table {
-      width: 100%;
-      border-collapse: collapse;
-    }
-
-    thead {
-      background-color: #f4f4f4;
-    }
-
-    th,
-    td {
-      padding: 8px;
-      border: 1px solid #ccc;
-      text-align: left;
-    }
-
-    th {
-      background-color: #f4f4f4;
-    }
-
-    tbody tr:hover {
-      background-color: var(--card-surface-color);
-    }
-  `;
-
   const validatorOptions = (
     <ValidatorTable>
-      <thead>
-        <tr>
-          <th>Moniker</th>
-          <th>Commission</th>
-          <th>Voting Power</th>
-        </tr>
-      </thead>
-      <tbody>
-        {props.validators
-          .filter(
-            (validator) =>
-              validator.status === "BOND_STATUS_BONDED" && !validator.jailed
-          )
-          .map((validator) => (
-            <tr key={validator.operator_address}>
-              <td>{validator.description.moniker}</td>
-              <td>
-                {" "}
-                {displayAmount(
-                  BigNumber(validator.commission)
-                    .multipliedBy(10000)
-                    .toFixed(2),
-                  2,
-                  {
-                    short: true,
-                    commify: true,
-                    precision: 2,
-                  }
+      <table>
+        <thead>
+          <tr>
+            <th>Moniker</th>
+            <th>Commission</th>
+            <th>Voting Power</th>
+          </tr>
+        </thead>
+        <tbody>
+          {props.validators
+            .filter(
+              (validator) =>
+                validator.status === "BOND_STATUS_BONDED" && !validator.jailed
+            )
+            .map((validator) => (
+              <ValidatorRow
+                key={validator.operator_address}
+                validator={validator}
+                isSelected={selectedValidators.includes(
+                  validator.operator_address
                 )}
-                %
-              </td>
-              <td>
-                {displayAmount(
-                  BigNumber(validator.token_ratio)
-                    .multipliedBy(10000)
-                    .toFixed(2),
-                  2,
-                  {
-                    short: true,
-                    commify: true,
-                    precision: 2,
-                  }
-                )}
-                %
-              </td>
-            </tr>
-          ))}
-      </tbody>
+                onSelectionChange={handleValidatorSelection}
+              />
+            ))}
+        </tbody>
+      </table>
     </ValidatorTable>
   );
 
@@ -200,6 +192,7 @@ export const MultiStakingModal = (props: StakingModalParams) => {
       <Spacer height="20px"></Spacer>
 
       <StakingTabs handleTabChange={handleTabChange} activeTab={activeTab} />
+      <Spacer height="20px"></Spacer>
       {validatorOptions}
 
       <Spacer height="20px"></Spacer>
@@ -255,3 +248,50 @@ export const MultiStakingModal = (props: StakingModalParams) => {
     </Container>
   );
 };
+
+const ValidatorTable = styled.div`
+  width: 100%;
+  max-height: 250px;
+  overflow-y: auto;
+  margin: 10px 0;
+  border-radius: 4px;
+
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+
+  table {
+    font:
+      400 14px/20px "Macan",
+      sans-serif;
+    width: 100%;
+    color: var(--darken-color);
+    border-collapse: collapse;
+
+    table-layout: fixed;
+  }
+
+  thead {
+    text-align: center;
+    background-color: var(--primary-light-color);
+    position: sticky;
+    top: 0;
+    z-index: 10;
+  }
+
+  th,
+  td {
+    padding: 12px 15px;
+    text-align: center;
+    border-bottom: 1px solid var(--highlights);
+  }
+
+  th {
+    font-weight: 600;
+  }
+
+  tbody tr:hover {
+  }
+
+  tbody tr.selected {
+    background-color: var(--background-color-start);
+  }
+`;

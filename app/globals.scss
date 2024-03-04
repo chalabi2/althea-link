@@ -59,6 +59,7 @@ a {
   --primary-dark-color: #222;
   --primary-light-color: #eee;
   --text-only-dark: #212121;
+
   --text-only-light: #ffffff;
   --primary-90-color: #222222;
   --primary-10-color: #22222220;
@@ -77,6 +78,7 @@ a {
   --border-optional-color: #ffffff00;
   --extra-shadow: #cdcdcd;
   --border-stroke-color: black;
+  --button-highlight: #6fb2ff;
   --border-radius: 0px;
   --text-dark-color: #111111;
   --card-sub-surface-color: white;
@@ -101,15 +103,18 @@ a {
   --vote-box-abstain-stroke-color: #cfbb1d;
   --no-active-proposal-color: rgba(223, 223, 223, 0.4);
   --toast-secondary-text-color: rgba(36, 36, 36, 0.5);
+  --highlights: rgba(0, 0, 0, 0.1);
 }
 
 .dark {
   --card-primary-color-opp: #111111;
   --text-blue-color: #0038d2;
+  --highlights: rgba(255, 255, 255, 0.1);
   --althea-blue: #0077ff;
   --graph-fill: #969696;
   //   --graph-filled: #dcdcdc;
   --graph-filled: #06fc99;
+  --button-highlight: #1c508c;
   --temp-bg-brightness: 0.24;
   --lighten-color: black;
   --darken-color: white;
