@@ -74,6 +74,11 @@ export function displayAmount(
   return formatBalance(amount, decimals, { ...defaultOptions, ...options });
 }
 
+export function truncateNumber(number: number, decimalPlaces: number) {
+  const factor = Math.pow(10, decimalPlaces);
+  return Math.floor(number * factor) / factor;
+}
+
 /**
  * @notice formats a balance to a string
  * @param {string | BigNumber} amount amount to format

@@ -1,3 +1,4 @@
+import LoadingComponent from "../animated/loader";
 import LoadingIcon from "../loader/loading";
 import Icon from "./icon";
 
@@ -10,7 +11,7 @@ interface Props {
 
 const StatusIcon = (props: Props) => {
   if (["PENDING", "SIGNING", "POPULATING", "NONE"].includes(props.status))
-    return <LoadingIcon size={props.size} />;
+    return <LoadingComponent size={"sm"} />;
   return (
     <Icon
       themed
