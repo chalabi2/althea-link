@@ -155,11 +155,12 @@ export default function StakingPage() {
   const [searchQuery, setSearchQuery] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
 
-  const allUserValidatorsAddresses: string[] = userStaking
-    ? userStaking.validators.map((validator) => {
-        return validator.operator_address;
-      })
-    : [];
+  const allUserValidatorsAddresses: string[] =
+    userStaking && Array.isArray(userStaking.validators)
+      ? userStaking.validators.map((validator) => {
+          return validator.operator_address;
+        })
+      : [];
 
   const { activeValidators, inActiveValidators } = useMemo(() => {
     const unsortedActiveValidators: Validator[] = [];
@@ -270,8 +271,6 @@ export default function StakingPage() {
   const openMultiStakeModal = () => {
     setIsMultiStakeModalOpen(true);
   };
-
-  console.log(userStaking);
 
   return isLoading ? (
     <div className={styles.loaderContainer}>
@@ -490,7 +489,9 @@ export default function StakingPage() {
               <Container direction="row" center={{ vertical: true }}>
                 <div style={{ marginRight: "5px" }}>
                   <Text font="macan-font" size="title">
-                    {totalRewards?.toFixed(5)}{" "}
+                    {displayAmount(userStaking.rewards?.total[0]?.amount, 18, {
+                      precision: 2,
+                    })}{" "}
                   </Text>
                   <Text> </Text>
                 </div>

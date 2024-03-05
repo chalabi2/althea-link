@@ -63,13 +63,12 @@ interface DelegationResponse {
 interface UnbondingDelegationResponse {
   delegator_address: string;
   validator_address: string;
-  entries: {
-    creation_height: string;
-    completion_time: string;
-    initial_balance: string;
-    balance: string;
-  }[];
+  creation_height: number;
+  completion_time: string;
+  initial_balance: string;
+  balance: string;
 }
+[];
 
 /**
  * @notice Response type for querying user rewards
