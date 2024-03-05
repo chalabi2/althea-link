@@ -64,6 +64,18 @@ export const TX_DESCRIPTIONS = {
       undelegate ? "from" : "to"
     } ${validatorName}`,
   }),
+  MULTI_STAKE: (
+    validatorAmount: string,
+    amount: string,
+    undelegate: boolean
+  ) => ({
+    title: `${
+      undelegate ? "Undelegate from" : "Delegating to"
+    } ${validatorAmount} validators`,
+    description: `${undelegate ? "Undelegate" : "Delegate"} ${amount} CANTO ${
+      undelegate ? "from" : "to"
+    } ${validatorAmount} validators`,
+  }),
   REDELEGATE: (
     validatorName: string,
     newValidatorName: string,
@@ -152,6 +164,8 @@ export enum CantoFETxType {
   // STAKING
   DELEGATE = "delegate",
   UNDELEGATE = "undelegate",
+  MULTI_UNSTAKE = "undelegate",
+  MULTI_STAKE = "undelegate",
   REDELEGATE = "redelegate",
   CLAIM_STAKING_REWARDS = "claimStakingRewards",
 }

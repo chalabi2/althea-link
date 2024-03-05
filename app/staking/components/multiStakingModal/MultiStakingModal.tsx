@@ -93,6 +93,8 @@ const ValidatorRow: React.FC<ValidatorRowProps> = ({
 export const MultiStakingModal = (props: StakingModalParams) => {
   const [inputAmount, setInputAmount] = useState("");
 
+  const maxAmount = props.cantoBalance;
+
   const [inputAmounts, setInputAmounts] = useState<{ [key: string]: string }>(
     {}
   );
@@ -100,7 +102,7 @@ export const MultiStakingModal = (props: StakingModalParams) => {
   const [selectedValidators, setSelectedValidators] = useState<string[]>([]);
 
   const [selectedTx, setSelectedTx] = useState<StakingTxTypes>(
-    StakingTxTypes.DELEGATE
+    StakingTxTypes.MULTI_STAKE
   );
   const [activeTab, setActiveTab] = useState<"delegate" | "undelegate">(
     "delegate"
@@ -111,9 +113,9 @@ export const MultiStakingModal = (props: StakingModalParams) => {
 
   const feeMap = (txType: StakingTxTypes) => {
     switch (txType) {
-      case StakingTxTypes.DELEGATE:
+      case StakingTxTypes.MULTI_STAKE:
         return DELEGATE_FEE.amount;
-      case StakingTxTypes.UNDELEGATE:
+      case StakingTxTypes.MULTI_UNSTAKE:
         return UNDELEGATE_FEE.amount;
       case StakingTxTypes.CLAIM_REWARDS:
         return CLAIM_STAKING_REWARD_FEE.amount;
@@ -170,10 +172,10 @@ export const MultiStakingModal = (props: StakingModalParams) => {
     setActiveTab(tab);
     setInputAmount("");
     if (tab == "delegate") {
-      setSelectedTx(StakingTxTypes.DELEGATE);
+      setSelectedTx(StakingTxTypes.MULTI_STAKE);
     }
     if (tab == "undelegate") {
-      setSelectedTx(StakingTxTypes.UNDELEGATE);
+      setSelectedTx(StakingTxTypes.MULTI_UNSTAKE);
     }
   };
 
@@ -213,7 +215,7 @@ export const MultiStakingModal = (props: StakingModalParams) => {
           decimals={18}
           value={inputAmount}
           min={"0"}
-          max={"100000000000000000000"}
+          max={maxAmount}
         />
       </div>
       <Spacer height="10px" />
@@ -240,7 +242,9 @@ export const MultiStakingModal = (props: StakingModalParams) => {
           onClick={() => {
             props.onConfirm(inputAmount, selectedTx, validatorToRedelegate);
           }}
-          disabled={txValidation.error}
+          disabled={
+            selectedValidators.length === 0 || props.cantoBalance === "0"
+          }
         >
           {selectedTx}
         </Button>
