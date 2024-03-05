@@ -1,6 +1,7 @@
 "use client";
 
 import Rive from "@rive-app/react-canvas";
+import LoadingComponent from "../animated/loader";
 
 interface Props {
   height?: string;
@@ -20,15 +21,7 @@ const Splash = (props: Props) => {
           alignItems: "center",
         }}
       >
-        <Rive
-          src="anims/loading.riv"
-          stateMachines={["loop"]}
-          style={{
-            filter: props.themed ? "invert(var(--dark-mode))" : "",
-            height: "400px",
-            width: "400px",
-          }}
-        />
+        <LoadingComponent size="lg" />
       </div>
     );
   }
@@ -43,16 +36,7 @@ const Splash = (props: Props) => {
         alignItems: "center",
       }}
     >
-      <Rive
-        // src="anims/hey-ho.riv"
-        src="anims/loading.riv"
-        stateMachines={["loop"]}
-        style={{
-          filter: props.themed ? "invert(var(--dark-mode))" : "",
-          height: props.height || "800px",
-          width: props.width || "800px",
-        }}
-      />
+      <LoadingComponent size="lg" />
     </div>
   );
 };

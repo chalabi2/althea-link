@@ -10,6 +10,7 @@ import Spacer from "@/components/layout/spacer";
 import clsx from "clsx";
 import LoadingIcon from "../loader/loading";
 import Input from "../input/input";
+import LoadingComponent from "../animated/loader";
 
 export interface Item {
   id: string;
@@ -274,7 +275,7 @@ const Selector = (props: Props) => {
             </Text>
           )}
           {props.activeItem?.icon == "loader.svg" ? (
-            <LoadingIcon />
+            <LoadingComponent size="lg" />
           ) : (
             props.activeItem?.icon && (
               <Image

@@ -26,6 +26,7 @@ import {
 import Spacer from "@/components/layout/spacer";
 import useStaking from "@/hooks/staking/useStaking";
 import { VoteBarGraph } from "../components/votingChart/voteGraph";
+import LoadingComponent from "@/components/animated/loader";
 
 const VOTE_OPTION_COLORS = {
   [VoteOption.YES]: [
@@ -85,7 +86,11 @@ export default function Page() {
   const [selectedVote, setSelectedVote] = useState<VoteOption | null>(null);
 
   if (isProposalsLoading) {
-    return <Splash themed />;
+    return (
+      <div className={styles.loaderContainer}>
+        <LoadingComponent size="lg" />
+      </div>
+    );
   }
 
   if (!id) {
@@ -126,7 +131,9 @@ export default function Page() {
   );
 
   return isProposalsLoading ? (
-    <Splash themed />
+    <div className={styles.loaderContainer}>
+      <LoadingComponent size="lg" />
+    </div>
   ) : (
     <div className={styles.proposalContainer}>
       <div className={styles.proposalHeaderContainer}>

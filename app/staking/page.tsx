@@ -40,6 +40,7 @@ import { levenshteinDistance } from "@/utils/staking/searchUtils";
 import { WalletClient } from "wagmi";
 import Analytics from "@/provider/analytics";
 import clsx from "clsx";
+import LoadingComponent from "@/components/animated/loader";
 
 export default function StakingPage() {
   // connected user info
@@ -271,7 +272,9 @@ export default function StakingPage() {
   };
 
   return isLoading ? (
-    <Splash themed />
+    <div className={styles.loaderContainer}>
+      <LoadingComponent size="lg" />
+    </div>
   ) : (
     <div className={styles.container}>
       <div>
