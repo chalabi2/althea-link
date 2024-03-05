@@ -12,6 +12,20 @@ export interface StakingHookInputParams {
   userEthAddress?: string;
 }
 
+interface DelegationRewards {
+  rewards: {
+    validator_address: string;
+    reward: {
+      denom: string;
+      amount: string;
+    }[];
+  }[];
+  total: {
+    denom: string;
+    amount: string;
+  }[];
+}
+
 export interface StakingHookReturn {
   isLoading: boolean;
   validators: Validator[];
@@ -28,5 +42,6 @@ export interface StakingHookReturn {
     validators: ValidatorWithDelegations[];
     unbonding: UnbondingDelegation[];
     cantoBalance: string;
+    rewards: DelegationRewards;
   };
 }

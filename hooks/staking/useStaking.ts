@@ -103,29 +103,28 @@ export default function useStaking(
                 return acc;
               }
 
-              const entries = unbondingEntry.entries
-                ? unbondingEntry.entries.map((entry) => ({
-                    delegator_address: unbondingEntry.delegator_address,
-                    validator_address: unbondingEntry.validator_address,
-                    creation_height: unbondingEntry.creation_height,
-                    completion_date: entry.completion_time,
-                    initial_balance: entry.initial_balance,
-                    balance: entry.balance,
-                  }))
-                : [];
+              // Directly create an UnbondingDelegation object from unbondingEntry
+              const unbondingDelegation: UnbondingDelegation = {
+                delegator_address: unbondingEntry.delegator_address,
+                validator_address: validator.description.moniker, // Keep the address for data integrity
+                creation_height: unbondingEntry.creation_height,
+                completion_date: unbondingEntry.completion_time, // Make sure this is the correct field
+                initial_balance: unbondingEntry.initial_balance,
+                balance: unbondingEntry.balance,
+              };
 
-              return acc.concat(entries);
+              return [...acc, unbondingDelegation];
             },
             [] as UnbondingDelegation[]
           )
         : [];
-
       return {
         validators: allValidators.data,
         apr: stakingApr.data ?? "0",
         userStaking: {
           validators: userValidators,
           unbonding: userUnbondingDelegations,
+          rewards: userStaking.data.rewards,
         },
       };
     },
@@ -181,9 +180,9 @@ export default function useStaking(
     },
     userStaking: {
       validators: staking?.userStaking?.validators ?? [],
-      unbonding:
-        (staking?.userStaking?.unbonding as UnbondingDelegation[]) ?? [],
-      cantoBalance: userCantoBalance?.value.toString() ?? "0",
+      unbonding: staking?.userStaking?.unbonding as UnbondingDelegation[],
+      cantoBalance: userCantoBalance?.value.toString() ?? "",
+      rewards: staking?.userStaking.rewards ?? [],
     },
   };
 }

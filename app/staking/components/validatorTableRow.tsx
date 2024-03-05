@@ -139,7 +139,7 @@ export const GenerateUnbondingDelegationsTableRow = (
   index: number
 ) => [
   <Container key={`name_${index}`}>
-    <Text font="macan-font">{userStakedValidator.name}</Text>
+    <Text font="macan-font">{userStakedValidator.validator_address}</Text>
   </Container>,
   <Container
     key={`mystake_${index}`}
@@ -148,7 +148,7 @@ export const GenerateUnbondingDelegationsTableRow = (
     gap="auto"
   >
     <Text font="macan-font">
-      {displayAmount(userStakedValidator.undelegation, 18, {
+      {displayAmount(userStakedValidator.balance, 18, {
         short: false,
       })}{" "}
     </Text>
