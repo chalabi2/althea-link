@@ -271,6 +271,8 @@ export default function StakingPage() {
     setIsMultiStakeModalOpen(true);
   };
 
+  console.log(userStaking);
+
   return isLoading ? (
     <div className={styles.loaderContainer}>
       <LoadingComponent size="lg" />

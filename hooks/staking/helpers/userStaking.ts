@@ -66,10 +66,10 @@ export async function getAllUserStakingData(
         },
       });
 
-    const cantoAddress = ethToAlthea(userEthAddress);
+    const altheaAddress = ethToAlthea(userEthAddress);
 
     const userStakingData = await tryFetch<UserStakingReturn>(
-      endpointUserStaking(chainId, cantoAddress)
+      endpointUserStaking(chainId, altheaAddress)
     );
     if (userStakingData.error) throw userStakingData.error;
 

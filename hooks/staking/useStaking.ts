@@ -51,7 +51,8 @@ export default function useStaking(
           apr: stakingApr.data ?? "0",
           userStaking: {
             validators: [],
-            unbonding: [],
+            unbonding: userStaking.data.unbondingDelegations ?? [],
+            rewards: userStaking.data.rewards ?? [],
           },
         };
       }
@@ -88,22 +89,35 @@ export default function useStaking(
           }
         });
       }
-
       const userUnbondingDelegations: UnbondingDelegation[] = userStaking.data
         .unbondingDelegations
-        ? userStaking.data.unbondingDelegations
-            .map((unbondingEntry) => {
-              const validatorName = allValidators.data.find(
+        ? userStaking.data.unbondingDelegations.reduce<UnbondingDelegation[]>(
+            (acc, unbondingEntry) => {
+              const validator = allValidators.data.find(
                 (val) =>
                   val.operator_address === unbondingEntry.validator_address
-              )?.description.moniker;
-              return unbondingEntry.entries.map((entry) => ({
-                name: validatorName ?? "",
-                completion_date: entry.completion_time,
-                undelegation: entry.balance,
-              }));
-            })
-            .flat()
+              );
+
+              // If validator is not found, skip this entry
+              if (!validator) {
+                return acc;
+              }
+
+              const entries = unbondingEntry.entries
+                ? unbondingEntry.entries.map((entry) => ({
+                    delegator_address: unbondingEntry.delegator_address,
+                    validator_address: unbondingEntry.validator_address,
+                    creation_height: unbondingEntry.creation_height,
+                    completion_date: entry.completion_time,
+                    initial_balance: entry.initial_balance,
+                    balance: entry.balance,
+                  }))
+                : [];
+
+              return acc.concat(entries);
+            },
+            [] as UnbondingDelegation[]
+          )
         : [];
 
       return {
@@ -167,7 +181,8 @@ export default function useStaking(
     },
     userStaking: {
       validators: staking?.userStaking?.validators ?? [],
-      unbonding: staking?.userStaking?.unbonding ?? [],
+      unbonding:
+        (staking?.userStaking?.unbonding as UnbondingDelegation[]) ?? [],
       cantoBalance: userCantoBalance?.value.toString() ?? "0",
     },
   };

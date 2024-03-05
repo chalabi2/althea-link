@@ -48,8 +48,8 @@ export function NEW_ERROR<T>(
 }
 
 export const errMsg = (error: any): string => {
-  if(error instanceof BaseError){
-    return error.details
+  if (error instanceof BaseError) {
+    return error.details;
   }
   if (error.message) {
     return error.message;

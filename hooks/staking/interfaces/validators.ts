@@ -28,9 +28,12 @@ export interface ValidatorWithDelegations extends Validator {
 }
 
 export interface UnbondingDelegation {
-  name: string;
-  undelegation: string;
+  delegator_address: string;
+  validator_address: string;
+  creation_height: number;
   completion_date: string;
+  initial_balance: string;
+  balance: string;
 }
 
 export interface UserStakingReturn {
