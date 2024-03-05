@@ -5,6 +5,8 @@ export enum StakingTxTypes {
   UNDELEGATE = "Undelegate",
   REDELEGATE = "Redelegate",
   CLAIM_REWARDS = "Claim Rewards",
+  MULTI_STAKE = "Multi Stake",
+  MULTI_UNSTAKE = "Multi Unstake",
 }
 
 export type StakingTransactionParams = {
@@ -27,5 +29,11 @@ export type StakingTransactionParams = {
   | {
       txType: StakingTxTypes.CLAIM_REWARDS;
       validatorAddresses: string[];
+    }
+  | {
+      txType: StakingTxTypes.MULTI_STAKE | StakingTxTypes.MULTI_UNSTAKE;
+      validators: string[];
+      amount: string;
+      nativeBalance: string;
     }
 );

@@ -5,7 +5,10 @@ import {
   Validation,
 } from "@/config/interfaces";
 import { StakingTransactionParams, StakingTxTypes } from "./types";
-import { createMsgsDelegate } from "@/transactions/cosmos/messages/staking/delegate";
+import {
+  createMsgsDelegate,
+  createMultiMsgsDelegate,
+} from "@/transactions/cosmos/messages/staking/delegate";
 import { createMsgsRedelegate } from "@/transactions/cosmos/messages/staking/redelegate";
 import { createMsgsClaimStakingRewards } from "@/transactions/cosmos/messages/staking/claimRewards";
 
@@ -97,6 +100,24 @@ export async function stakingTx(
           ),
         ],
       });
+    case StakingTxTypes.MULTI_STAKE:
+      return NO_ERROR({
+        transactions: [
+          _delegateMultipleTx(
+            txParams.ethAccount,
+            txParams.chainId,
+            altheaAddress,
+            txParams.validators,
+            txParams.amount,
+            false,
+            TX_DESCRIPTIONS.MULTI_STAKE(
+              txParams.validators.length.toString(),
+              displayAmount(txParams.amount, 18),
+              false
+            )
+          ),
+        ],
+      });
     default:
       return NEW_ERROR("stakingTx::tx type not found");
   }
@@ -123,6 +144,31 @@ const _delegateTx = (
   msg: createMsgsDelegate({
     delegatorCantoAddress,
     validatorAddress,
+    amount,
+    denom: "aalthea",
+    undelegate,
+  }),
+});
+
+const _delegateMultipleTx = (
+  ethAddress: string,
+  chainId: number,
+  delegatorCantoAddress: string,
+  multiValidatorAddress: string[],
+  amount: string,
+  undelegate: boolean,
+  description: TransactionDescription
+): Transaction => ({
+  fromAddress: ethAddress,
+  feTxType: undelegate
+    ? CantoFETxType.MULTI_UNSTAKE
+    : CantoFETxType.MULTI_STAKE,
+  description,
+  chainId: chainId,
+  type: "COSMOS",
+  msg: createMultiMsgsDelegate({
+    delegatorCantoAddress,
+    multiValidatorAddress,
     amount,
     denom: "aalthea",
     undelegate,
@@ -184,6 +230,15 @@ export function validateStakingTxParams(
   // switch depending on tx type
   switch (txParams.txType) {
     case StakingTxTypes.DELEGATE:
+      // amount just has to be less than canto balance
+      return validateWeiUserInputTokenAmount(
+        txParams.amount,
+        "1",
+        txParams.nativeBalance,
+        "CANTO",
+        18
+      );
+    case StakingTxTypes.MULTI_STAKE:
       // amount just has to be less than canto balance
       return validateWeiUserInputTokenAmount(
         txParams.amount,

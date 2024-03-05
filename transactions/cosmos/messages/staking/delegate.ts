@@ -37,6 +37,14 @@ interface MessageDelegateParams {
   undelegate: boolean;
 }
 
+interface MessageMultiDelegateParams {
+  delegatorCantoAddress: string;
+  validatorAddress: string[];
+  amount: string;
+  denom: string;
+  undelegate: boolean;
+}
+
 /**
  * @notice creates eip712 and cosmos proto messages for delegating
  * @param {MessageDelegateParams} params delegate parameters
@@ -54,6 +62,27 @@ export function createMsgsDelegate(
     fee: params.undelegate ? UNDELEGATE_FEE : DELEGATE_FEE,
     typesObject: generateCosmosEIPTypes(MSG_DELEGATE_TYPES),
   };
+}
+
+/**
+ * @notice creates eip712 and cosmos proto messages for multiple delegations or undelegations
+ * @param {MessageMultiDelegateParams[]} paramsArray Array of delegate parameters
+ * @returns {UnsignedCosmosMessages[]} Array of eip and cosmos messages along with types object and fee for each delegation
+ */
+export function createMultiMsgsDelegate(
+  paramsArray: MessageMultiDelegateParams[]
+): UnsignedCosmosMessages[] {
+  return paramsArray.map((params) => {
+    const eipMsg = eip712MultiMsgDelegate(params);
+    const cosmosMsg = protoMultiMsgDelegate(params);
+
+    return {
+      eipMsg,
+      cosmosMsg,
+      fee: params.undelegate ? UNDELEGATE_FEE : DELEGATE_FEE,
+      typesObject: generateCosmosEIPTypes(MSG_DELEGATE_TYPES),
+    };
+  });
 }
 
 function eip712MsgDelegate(params: MessageDelegateParams): EIP712Message {
@@ -92,4 +121,48 @@ function protoMsgDelegate(params: MessageDelegateParams): CosmosNativeMessage {
     },
     path: params.undelegate ? MsgUndelegate.typeName : MsgDelegate.typeName,
   };
+}
+
+function eip712MultiMsgDelegate(
+  params: MessageMultiDelegateParams
+): EIP712Message {
+  return {
+    type: params.undelegate
+      ? "cosmos-sdk/MsgUndelegate"
+      : "cosmos-sdk/MsgDelegate",
+    value: {
+      amount: {
+        amount: params.amount,
+        denom: params.denom,
+      },
+      delegator_address: params.delegatorCantoAddress,
+      validator_address: params.validatorAddress,
+    },
+  };
+}
+
+function protoMultiMsgDelegate(
+  params: MessageMultiDelegateParams
+): CosmosNativeMessage[] {
+  return params.validatorAddress.map((validatorAddress) => {
+    const value = new Coin({
+      amount: params.amount,
+      denom: params.denom,
+    });
+    const messageParams = {
+      amount: value,
+      delegatorAddress: params.delegatorCantoAddress,
+      validatorAddress: validatorAddress, // Use current validator address
+    };
+    const message = params.undelegate
+      ? new MsgUndelegate(messageParams)
+      : new MsgDelegate(messageParams);
+    return {
+      message: {
+        ...message,
+        serializeBinary: () => message.toBinary(),
+      },
+      path: params.undelegate ? MsgUndelegate.typeName : MsgDelegate.typeName,
+    };
+  });
 }
