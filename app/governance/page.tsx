@@ -12,6 +12,7 @@ import useCantoSigner from "@/hooks/helpers/useCantoSigner";
 import Splash from "@/components/splash/splash";
 import Link from "next/link";
 import Container from "@/components/container/container";
+import LoadingComponent from "@/components/animated/loader";
 
 export default function GovernancePage() {
   const { chainId } = useCantoSigner();
@@ -27,7 +28,9 @@ export default function GovernancePage() {
   );
 
   return isProposalsLoading ? (
-    <Splash themed />
+    <div className={styles.loaderContainer}>
+      <LoadingComponent size="lg" />
+    </div>
   ) : (
     <div>
       <div className={styles.container}>

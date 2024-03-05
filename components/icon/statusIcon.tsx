@@ -1,5 +1,5 @@
 import LoadingComponent from "../animated/loader";
-import LoadingIcon from "../loader/loading";
+
 import Icon from "./icon";
 
 interface Props {
