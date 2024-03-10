@@ -231,7 +231,7 @@ export const WalletWizardModal: React.FC<WalletWizardModalProps> = ({
         )}
         {showNextStep && (
           <>
-            <div className="migration">
+            <div className={styles["migration"]}>
               <Text className="text" size="lg" font="proto_mono">
                 Migrating your ALTHEA tokens
               </Text>

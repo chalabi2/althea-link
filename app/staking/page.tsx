@@ -269,7 +269,7 @@ export default function StakingPage() {
       <div>
         <Spacer height="20px" />
       </div>
-      <Text size="x-lg" font="macan" className={styles.title}>
+      <Text size="x-lg" font="macan-font" className={styles.title}>
         STAKING
       </Text>
       <Spacer height="20px" />
@@ -382,7 +382,7 @@ export default function StakingPage() {
                   </Container>
                 </Container>
               }
-              headerFont="macan"
+              headerFont="macan-font"
               headers={[
                 {
                   value: "Rank",

@@ -101,7 +101,9 @@ const NavBar = () => {
           )}
           onClick={() => Analytics.actions.events.clickedNavLink("Bridge")}
         >
-          <Text size="sm">Bridge</Text>
+          <Text font="macan-font" size="sm">
+            Bridge
+          </Text>
         </Link>
 
         {/* <Link
@@ -122,7 +124,9 @@ const NavBar = () => {
           )}
           onClick={() => Analytics.actions.events.clickedNavLink("Pools")}
         >
-          <Text size="sm">Pools</Text>
+          <Text font="macan-font" size="sm">
+            Pools
+          </Text>
         </Link>
         {/* <Link
           href="/explore"
@@ -142,7 +146,9 @@ const NavBar = () => {
           )}
           onClick={() => Analytics.actions.events.clickedNavLink("Staking")}
         >
-          <Text size="sm">Staking</Text>
+          <Text font="macan-font" size="sm">
+            Staking
+          </Text>
         </Link>
         <Link
           href="/governance"
@@ -152,7 +158,9 @@ const NavBar = () => {
           )}
           onClick={() => Analytics.actions.events.clickedNavLink("Governance")}
         >
-          <Text size="sm">Governance</Text>
+          <Text font="macan-font" size="sm">
+            Governance
+          </Text>
         </Link>
         {/* {currentPath == "/staking" && (
           <Link
@@ -241,7 +249,7 @@ const NavBar = () => {
         </div>
 
         <div className={styles["wallet-connect"]}>
-          {/* <Button height={34} onClick={toggleWalletWizard}>
+          {/* <Button height={34} onClick={toggleWalletWizard} font="macan-font">
             Connect Wallet
           </Button> */}
           <ConnectButton key={balance.data?.formatted} chainStatus={"none"} />

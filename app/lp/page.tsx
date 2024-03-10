@@ -77,7 +77,11 @@ export default function Page() {
         )}
       </Modal>
 
-      <Container direction="row" gap={"auto"} width="100%">
+      <Container
+        direction={isMobile ? "column" : "row"}
+        gap={isMobile ? 10 : "auto"}
+        width="100%"
+      >
         <Text size="x-lg" font="proto_mono" className={styles.title}>
           Pools
         </Text>
