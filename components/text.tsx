@@ -7,6 +7,9 @@ interface Props {
     | "undefined"
     | "proto_mono"
     | "rm_mono"
+    | "nm_plex"
+    | "nm_macan"
+    | "light_plex"
     | "modeseven";
   weight?: "normal" | "bold";
   size?: "xx-sm" | "x-sm" | "sm" | "md" | "lg" | "x-lg" | "title";
@@ -44,7 +47,7 @@ const themes = {
 
 const Text = styled.p<Props>`
   font-family: ${(props) =>
-    props.font == "macan-font" ? "var(--proto-mono)" : "var(--rm-mono)"};
+    props.font == "macan-font" ? "var(--nm-macan)" : "var(--nm-plex)"};
   font-weight: ${(props) => props.weight ?? "normal"};
   line-height: 140%;
   letter-spacing: -0.32px;

@@ -82,7 +82,7 @@ const TransactionModal = () => {
         height="36rem"
         width="32rem"
       >
-        <Text size="lg" font="proto_mono">
+        <Text size="lg" font="macan-font">
           Activity
         </Text>
         {transactionFlows == undefined ||
