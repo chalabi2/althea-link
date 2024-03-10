@@ -16,6 +16,8 @@
     "@cosmjs/encoding": "^0.32.2",
     "@cosmjs/stargate": "^0.31.3",
     "@crocswap-libs/sdk": "^0.2.75",
+    "@emotion/react": "^11.11.4",
+    "@emotion/styled": "^11.11.0",
     "@gravity-bridge/address-converter": "^0.0.1",
     "@gravity-bridge/eip712": "^0.0.6",
     "@gravity-bridge/proto": "^0.0.6",

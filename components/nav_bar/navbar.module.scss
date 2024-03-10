@@ -22,6 +22,7 @@
 
   a > img {
     width: auto;
+    height: auto;
   }
 }
 
@@ -42,14 +43,14 @@
 
 .nav-link {
   padding: 0 1rem;
-  opacity: 0.4;
+  opacity: 1;
   color: var(--text-blue-color);
   transition:
     opacity 0.1s,
     transform 0.3s;
 
   &:hover {
-    opacity: 1;
+    color: var(--text-hover-color);
     // transform: translateY(4.7px);
   }
 
@@ -119,6 +120,7 @@
   justify-content: flex-end;
   * {
     font-weight: 400 !important;
+    font-family: var(--nm-macan) !important;
   }
 }
 

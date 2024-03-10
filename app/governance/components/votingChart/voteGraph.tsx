@@ -44,10 +44,10 @@ const Bar = ({ amount, totalVotes, size }: BarProps) => {
         <div className={styles.icon}>
           <Icon
             icon={{
-              url: "/tokens/canto.svg",
+              url: "/tokens/althea.png",
               size: {
-                width: 12,
-                height: 12,
+                width: 19,
+                height: 19,
               },
             }}
             themed
@@ -79,7 +79,7 @@ const VoteInfo = ({
         <div className={styles.circle} style={{ backgroundColor: color }} />
       </div>
       <div className={styles.option}>
-        <Text font="proto_mono" size="xx-sm">
+        <Text font="macan" size="xx-sm">
           {name} ({percentage.toFixed(1)}%)
         </Text>
       </div>
@@ -98,7 +98,7 @@ export const VoteBarGraph = ({
   return (
     <div className={styles.statsContainer}>
       <div className={styles.statsHeader}>
-        <Text font="proto_mono">Voting Stats</Text>
+        <Text font="macan">Voting Stats</Text>
       </div>
       <div className={styles.graphContainer}>
         <Bar amount={yes} totalVotes={totalVotes} size={size} />

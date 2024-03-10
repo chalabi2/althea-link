@@ -143,13 +143,11 @@
   align-items: flex-end;
   margin: 0 auto;
   padding: 32px;
-  width: 20rem;
   height: 8rem;
   border-radius: var(--border-radius);
   border: 1px solid var(--althea-blue);
   background: var(--card-sub-surface-color, #dfdfdf);
   box-shadow: 6px 6px 0px 0px rgba(17, 17, 17, 0.15);
-  padding: 20px;
 
   &::after {
     height: 9px;
