@@ -40,28 +40,6 @@ const Footer = () => {
         <FooterLink href="https://medium.com/althea-mesh" text="Blog" />
         {/* <FooterButton text="theme" /> */}
       </div>
-      <div className={styles.links}>
-        <StatusText />
-        <Text
-          className={styles.item}
-          size="x-sm"
-          font="proto_mono"
-          style={{
-            padding: "0 14px",
-          }}
-        >
-          <Image
-            src="/althea.png"
-            alt=""
-            height={24}
-            width={24}
-            style={{
-              margin: "8px",
-            }}
-          />{" "}
-          ${cantoPrice}
-        </Text>
-      </div>
     </div>
   );
 };

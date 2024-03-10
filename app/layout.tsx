@@ -12,18 +12,18 @@ import ToastWizard from "@/components/walletWizard/wizardToast";
 import { WalletWizardModal } from "@/components/walletWizard/wizardModal";
 import { useState } from "react";
 
-const rm_mono = localFont({
-  src: "../fonts/rm-mono-regular.ttf",
+const nm_plex = localFont({
+  src: "../fonts/IBMPlexSans-Regular.ttf",
   weight: "400",
   style: "normal",
-  variable: "--rm-mono",
+  variable: "--nm-plex",
 });
 
-const proto_mono = localFont({
+const nm_macan = localFont({
   src: "../fonts/macan.ttf",
   weight: "400",
   style: "normal",
-  variable: "--proto-mono",
+  variable: "--nm-macan",
 });
 
 export default function RootLayout({
@@ -87,8 +87,8 @@ export default function RootLayout({
         className={"dark"}
         style={
           {
-            "--rm-mono": rm_mono.style.fontFamily,
-            "--proto-mono": proto_mono.style.fontFamily,
+            "--nm-plex": nm_plex.style.fontFamily,
+            "--nm-macan": nm_macan.style.fontFamily,
           } as React.CSSProperties
         }
       >
