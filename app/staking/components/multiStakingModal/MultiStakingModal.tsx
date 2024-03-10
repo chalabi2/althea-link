@@ -2,51 +2,57 @@
 import Container from "@/components/container/container";
 import Spacer from "@/components/layout/spacer";
 import {
+  UnbondingDelegation,
   Validator,
   ValidatorWithDelegations,
 } from "@/hooks/staking/interfaces/validators";
 import styles from "./MultiStakingModal.module.scss";
 import Text from "@/components/text";
-import Icon from "@/components/icon/icon";
+
 import { displayAmount } from "@/utils/formatting/balances.utils";
 import Button from "@/components/button/button";
-import { useMemo, useState, useCallback } from "react";
+import { useMemo, useState, useCallback, useEffect } from "react";
 import { StakingTxTypes } from "@/transactions/staking";
 import { StakingTabs } from "../stakingTab/MultiStakeTabs";
-import Selector from "@/components/selector/selector";
+
 import Amount from "@/components/amount/amount";
 import { Validation } from "@/config/interfaces";
-import { levenshteinDistance } from "@/utils/staking/searchUtils";
-import { Fee } from "@/transactions/interfaces";
+
 import {
   CLAIM_STAKING_REWARD_FEE,
   DELEGATE_FEE,
-  REDELEGATE_FEE,
   UNDELEGATE_FEE,
 } from "@/config/consts/fees";
 import BigNumber from "bignumber.js";
 
 import styled from "styled-components";
+import { DelegationRewards } from "@/hooks/staking/interfaces/hookParams";
 
-interface StakingModalParams {
+interface MultiStakingModalParams {
   validators: Validator[];
+  delegations: ValidatorWithDelegations[];
   cantoBalance: string;
   txValidation: (
     amount: string,
     selectedTx: StakingTxTypes,
-    validatorToRedelegate: Validator | null | undefined
+    validators: Validator[]
   ) => Validation;
   onConfirm: (
     amount: string,
     selectedTx: StakingTxTypes,
-    validatorToRedelegate: Validator | null | undefined
+    validators: Validator[]
   ) => void;
 }
-
 interface ValidatorRowProps {
   validator: Validator;
   isSelected: boolean;
-  onSelectionChange: (validatorAddress: string) => void;
+  onSelectionChange: (validator: Validator) => void;
+}
+
+interface UnbondigRowProps {
+  delegations: ValidatorWithDelegations;
+  isSelected: boolean;
+  onSelectionChange: (delegations: ValidatorWithDelegations) => void;
 }
 
 const ValidatorRow: React.FC<ValidatorRowProps> = ({
@@ -58,7 +64,7 @@ const ValidatorRow: React.FC<ValidatorRowProps> = ({
     <tr
       key={validator.operator_address}
       className={isSelected ? "selected" : ""}
-      onClick={() => onSelectionChange(validator.operator_address)}
+      onClick={() => onSelectionChange(validator)}
       style={{ cursor: "pointer" }}
     >
       <td>{validator.description.moniker}</td>
@@ -90,16 +96,48 @@ const ValidatorRow: React.FC<ValidatorRowProps> = ({
   );
 };
 
-export const MultiStakingModal = (props: StakingModalParams) => {
+const UnbondingRow: React.FC<UnbondigRowProps> = ({
+  delegations,
+  isSelected,
+  onSelectionChange,
+}) => {
+  return (
+    <>
+      <tr
+        key={delegations.operator_address}
+        className={isSelected ? "selected" : ""}
+        onClick={() => onSelectionChange(delegations)}
+        style={{ cursor: "pointer" }}
+      >
+        <td>{delegations.description.moniker}</td>
+        <td>
+          {displayAmount(
+            BigNumber(delegations.userDelegation.balance)
+              .multipliedBy(10000)
+              .toFixed(2),
+            2,
+            {
+              short: true,
+              commify: true,
+              precision: 2,
+            }
+          )}
+        </td>
+      </tr>
+    </>
+  );
+};
+
+export const MultiStakingModal = (props: MultiStakingModalParams) => {
   const [inputAmount, setInputAmount] = useState("");
 
   const maxAmount = props.cantoBalance;
 
-  const [inputAmounts, setInputAmounts] = useState<{ [key: string]: string }>(
-    {}
-  );
+  const [selectedValidators, setSelectedValidators] = useState<Validator[]>([]);
 
-  const [selectedValidators, setSelectedValidators] = useState<string[]>([]);
+  const [selectedUnbonding, setSelectedUnbonding] = useState<
+    ValidatorWithDelegations[]
+  >([]);
 
   const [selectedTx, setSelectedTx] = useState<StakingTxTypes>(
     StakingTxTypes.MULTI_STAKE
@@ -107,9 +145,6 @@ export const MultiStakingModal = (props: StakingModalParams) => {
   const [activeTab, setActiveTab] = useState<"delegate" | "undelegate">(
     "delegate"
   );
-  const [validatorToRedelegate, setValidatorToRedelegate] =
-    useState<Validator | null>();
-  const [searchQuery, setSearchQuery] = useState("");
 
   const feeMap = (txType: StakingTxTypes) => {
     switch (txType) {
@@ -124,20 +159,39 @@ export const MultiStakingModal = (props: StakingModalParams) => {
     }
   };
 
-  const handleValidatorSelection = useCallback((validatorAddress: string) => {
-    setSelectedValidators((prev) => {
-      if (prev.includes(validatorAddress)) {
-        return prev.filter((address) => address !== validatorAddress);
+  const handleValidatorSelection = useCallback((validator: Validator) => {
+    setSelectedValidators((prev: Validator[]) => {
+      if (prev.includes(validator)) {
+        return prev.filter(
+          (v) => v.operator_address !== validator.operator_address
+        );
       }
-      return [...prev, validatorAddress];
+      return [...prev, validator];
     });
   }, []);
 
-  const handleAmountChange = (validatorAddress: string, amount: string) => {
-    setInputAmounts((prev) => ({ ...prev, [validatorAddress]: amount }));
+  const handleConfirm = () => {
+    const amounts: { [key: string]: string } = selectedValidators.reduce(
+      (acc, validator) => {
+        acc[validator.operator_address as string] = new BigNumber(inputAmount)
+          .dividedBy(selectedValidators.length)
+          .toFixed(18)
+          .toString();
+        return acc;
+      },
+      {} as { [key: string]: string }
+    );
   };
 
-  const validatorOptions = (
+  const isValid = useMemo(() => {
+    return (
+      selectedValidators.length > 0 &&
+      parseFloat(inputAmount) > 0 &&
+      parseFloat(props.cantoBalance) >= parseFloat(inputAmount)
+    );
+  }, [props.cantoBalance, inputAmount, selectedValidators.length]);
+
+  const delegateTable = (
     <ValidatorTable>
       <table>
         <thead>
@@ -157,12 +211,41 @@ export const MultiStakingModal = (props: StakingModalParams) => {
               <ValidatorRow
                 key={validator.operator_address}
                 validator={validator}
-                isSelected={selectedValidators.includes(
-                  validator.operator_address
-                )}
+                isSelected={selectedValidators.includes(validator)}
                 onSelectionChange={handleValidatorSelection}
               />
             ))}
+        </tbody>
+      </table>
+    </ValidatorTable>
+  );
+
+  const undelegateTable = (
+    <ValidatorTable>
+      <table>
+        <thead>
+          <tr>
+            <th>Moniker</th>
+            <th>Staked</th>
+          </tr>
+        </thead>
+        <tbody>
+          {props.delegations && props.delegations.length > 0 ? (
+            props.delegations.map((delegation) => (
+              <UnbondingRow
+                key={delegation.operator_address}
+                delegations={delegation}
+                isSelected={selectedUnbonding.includes(delegation)}
+                onSelectionChange={handleValidatorSelection}
+              />
+            ))
+          ) : (
+            <tr>
+              <td colSpan={2} style={{ textAlign: "center" }}>
+                No Tokens Staked
+              </td>
+            </tr>
+          )}
         </tbody>
       </table>
     </ValidatorTable>
@@ -179,11 +262,6 @@ export const MultiStakingModal = (props: StakingModalParams) => {
     }
   };
 
-  const txValidation = useMemo(
-    () => props.txValidation(inputAmount, selectedTx, validatorToRedelegate),
-    [inputAmount, selectedTx, validatorToRedelegate, props]
-  );
-
   return (
     <Container className={styles.modalContainer}>
       <Spacer />
@@ -195,7 +273,8 @@ export const MultiStakingModal = (props: StakingModalParams) => {
 
       <StakingTabs handleTabChange={handleTabChange} activeTab={activeTab} />
       <Spacer height="20px"></Spacer>
-      {validatorOptions}
+      {activeTab === "delegate" ? delegateTable : null}
+      {activeTab === "undelegate" ? undelegateTable : null}
 
       <Spacer height="20px"></Spacer>
       <div className={styles.modalInfoRow}>
@@ -204,6 +283,7 @@ export const MultiStakingModal = (props: StakingModalParams) => {
         </div>
         <div className={styles.modalInfoRow2}></div>
       </div>
+
       <div>
         <Amount
           IconUrl={"/althea.png"}
@@ -240,11 +320,9 @@ export const MultiStakingModal = (props: StakingModalParams) => {
         <Button
           width="fill"
           onClick={() => {
-            props.onConfirm(inputAmount, selectedTx, validatorToRedelegate);
+            props.onConfirm(inputAmount, selectedTx, selectedValidators);
           }}
-          disabled={
-            selectedValidators.length === 0 || props.cantoBalance === "0"
-          }
+          disabled={!isValid}
         >
           {selectedTx}
         </Button>

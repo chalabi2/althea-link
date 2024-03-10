@@ -16,7 +16,7 @@ import {
 } from "@/utils/formatting/balances.utils";
 import { formatPercent } from "@/utils/formatting";
 import Table from "@/components/table/table";
-import Splash from "@/components/splash/splash";
+
 import {
   GenerateMyStakingTableRow,
   GenerateUnbondingDelegationsTableRow,
@@ -39,7 +39,7 @@ import { Pagination } from "@/components/pagination/Pagination";
 import { levenshteinDistance } from "@/utils/staking/searchUtils";
 import { WalletClient } from "wagmi";
 import Analytics from "@/provider/analytics";
-import clsx from "clsx";
+
 import LoadingComponent from "@/components/animated/loader";
 
 export default function StakingPage() {
@@ -77,49 +77,73 @@ export default function StakingPage() {
     signer: WalletClient,
     inputAmount: string,
     txType: StakingTxTypes,
-    validatorToRedelegate: Validator | null | undefined
+    selectedValidators?: Validator[],
+    validatorToRedelegate?: Validator | null | undefined
   ): StakingTransactionParams | null => {
-    return selection.validator
-      ? txType == StakingTxTypes.REDELEGATE
-        ? {
-            chainId: chainId,
-            ethAccount: signer.account.address,
-            txType: StakingTxTypes.REDELEGATE,
-            validator: selection.validator,
-            newValidatorAddress: validatorToRedelegate
-              ? validatorToRedelegate.operator_address
-              : "",
-            newValidatorName: validatorToRedelegate?.description.moniker,
-            amount: (
-              convertToBigNumber(inputAmount, 18).data ?? "0"
-            ).toString(),
-          }
-        : txType == StakingTxTypes.DELEGATE ||
-            txType == StakingTxTypes.UNDELEGATE
-          ? {
-              chainId: chainId,
-              ethAccount: signer.account.address,
-              txType: txType,
-              validator: selection.validator,
-              amount: (
-                convertToBigNumber(inputAmount, 18).data ?? "0"
-              ).toString(),
-              nativeBalance: userStaking?.cantoBalance ?? "0",
-            }
-          : null
-      : null;
-  };
+    switch (txType) {
+      case StakingTxTypes.REDELEGATE:
+        if (!selection.validator || !validatorToRedelegate) return null;
+        return {
+          chainId: chainId,
+          ethAccount: signer.account.address,
+          txType: StakingTxTypes.REDELEGATE,
+          validator: selection.validator,
+          newValidatorAddress: validatorToRedelegate.operator_address,
+          newValidatorName: validatorToRedelegate.description.moniker,
+          amount: (convertToBigNumber(inputAmount, 18).data ?? "0").toString(),
+        };
+      case StakingTxTypes.DELEGATE:
+      case StakingTxTypes.UNDELEGATE:
+        if (!selection.validator) return null;
+        return {
+          chainId: chainId,
+          ethAccount: signer.account.address,
+          txType: txType,
+          validator: selection.validator,
+          amount: (convertToBigNumber(inputAmount, 18).data ?? "0").toString(),
+          nativeBalance: userStaking?.cantoBalance ?? "0",
+        };
 
+      case StakingTxTypes.MULTI_STAKE:
+        console.log(
+          "Validators in stakingTxParams:",
+          selectedValidators,
+          inputAmount
+        );
+        if (!selectedValidators || selectedValidators.length === 0) {
+          return null; // Or handle this case as needed
+        }
+        return {
+          chainId: chainId,
+          ethAccount: signer.account.address,
+          txType: StakingTxTypes.MULTI_STAKE,
+          validators: selectedValidators.map((validator) => ({
+            validatorAddress: validator.operator_address,
+            amount:
+              convertToBigNumber(
+                (Number(inputAmount) / selectedValidators.length).toString(),
+                18
+              ).data ?? "0",
+          })),
+          undelegate: false,
+          nativeBalance: userStaking?.cantoBalance ?? "0",
+        };
+      default:
+        return null;
+    }
+  };
   function handleStakingTxClick(
     inputAmount: string,
     txType: StakingTxTypes,
-    validatorToRedelegate: Validator | null | undefined
+    validatorToRedelegate?: Validator | null,
+    selectedValidators?: Validator[]
   ) {
     if (signer) {
       const txParams = stakingTxParams(
         signer,
         inputAmount,
         txType,
+        txType === StakingTxTypes.MULTI_STAKE ? selectedValidators : undefined,
         validatorToRedelegate
       );
       if (txParams) {
@@ -131,16 +155,19 @@ export default function StakingPage() {
       }
     }
   }
+
   function canConfirmTx(
     inputAmount: string,
     txType: StakingTxTypes,
-    validatorToRedelegate: Validator | null | undefined
+    validatorToRedelegate?: Validator | null,
+    selectedValidators?: Validator[]
   ): Validation {
     if (signer) {
       const txParams = stakingTxParams(
         signer,
         inputAmount,
         txType,
+        txType === StakingTxTypes.MULTI_STAKE ? selectedValidators : undefined,
         validatorToRedelegate
       );
       if (txParams) {
@@ -250,14 +277,6 @@ export default function StakingPage() {
       }, 0)
     : 0;
 
-  const totalRewards: number | undefined = hasUserStaked
-    ? userStaking?.validators.reduce((sum, item) => {
-        const amountNumber = parseFloat(
-          formatBalance(item.userDelegation.rewards, 18)
-        );
-        return sum + amountNumber;
-      }, 0)
-    : 0;
   const handlePageClick = (index: number) => {
     setCurrentPage(index);
   };
@@ -489,9 +508,14 @@ export default function StakingPage() {
               <Container direction="row" center={{ vertical: true }}>
                 <div style={{ marginRight: "5px" }}>
                   <Text font="macan-font" size="title">
-                    {displayAmount(userStaking.rewards?.total[0]?.amount, 18, {
-                      precision: 2,
-                    })}{" "}
+                    {displayAmount(
+                      userStaking.rewards?.total[0]?.amount &&
+                        !isNaN(Number(userStaking.rewards?.total[0]?.amount))
+                        ? userStaking.rewards?.total[0]?.amount
+                        : "0.00",
+                      18,
+                      { precision: 2 }
+                    )}
                   </Text>
                   <Text> </Text>
                 </div>
@@ -542,10 +566,14 @@ export default function StakingPage() {
           cantoBalance={userStaking?.cantoBalance ?? "0"}
           validators={validators}
           onConfirm={(amount, selectedTx, validatorToRedelegate) =>
-            handleStakingTxClick(amount, selectedTx, validatorToRedelegate)
+            handleStakingTxClick(
+              amount,
+              selectedTx,
+              validatorToRedelegate ?? undefined
+            )
           }
           txValidation={(amount, selectedTx, validatorToRedelegate) =>
-            canConfirmTx(amount, selectedTx, validatorToRedelegate)
+            canConfirmTx(amount, selectedTx, validatorToRedelegate ?? undefined)
           }
         />
       </Modal>
@@ -561,11 +589,17 @@ export default function StakingPage() {
         <MultiStakingModal
           cantoBalance={userStaking?.cantoBalance ?? "0"}
           validators={validators}
-          onConfirm={(amount, selectedTx, validatorToRedelegate) =>
-            handleStakingTxClick(amount, selectedTx, validatorToRedelegate)
+          unbondings={userStaking?.unbonding}
+          onConfirm={(amount, selectedTx, selectedValidators) =>
+            handleStakingTxClick(
+              amount,
+              selectedTx,
+              undefined,
+              selectedValidators
+            )
           }
-          txValidation={(amount, selectedTx, validatorToRedelegate) =>
-            canConfirmTx(amount, selectedTx, validatorToRedelegate)
+          txValidation={(amount, selectedTx, selectedValidators) =>
+            canConfirmTx(amount, selectedTx, undefined, selectedValidators)
           }
         />
       </Modal>

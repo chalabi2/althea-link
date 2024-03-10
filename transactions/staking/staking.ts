@@ -18,6 +18,7 @@ import {
   TX_DESCRIPTIONS,
 } from "@/transactions/interfaces/txDescriptions";
 import {
+  MultiMessageTransaction,
   Transaction,
   TransactionDescription,
   TxCreatorFunctionReturn,
@@ -30,7 +31,7 @@ import { ethToAlthea } from "@gravity-bridge/address-converter";
 export async function stakingTx(
   txParams: StakingTransactionParams
 ): PromiseWithError<TxCreatorFunctionReturn> {
-  // convert user eth address into canto address
+  // convert user eth address into althea address
   const altheaAddress = ethToAlthea(txParams.ethAccount);
   // switch based on tx type
   switch (txParams.txType) {
@@ -101,18 +102,22 @@ export async function stakingTx(
         ],
       });
     case StakingTxTypes.MULTI_STAKE:
+      if (!txParams.validators || !txParams.validators.length) {
+        return NEW_ERROR("No validators provided for MULTI_STAKE transaction.");
+      }
       return NO_ERROR({
-        transactions: [
+        multiMessageTransactions: [
           _delegateMultipleTx(
             txParams.ethAccount,
             txParams.chainId,
             altheaAddress,
+            txParams.undelegate,
             txParams.validators,
-            txParams.amount,
-            false,
             TX_DESCRIPTIONS.MULTI_STAKE(
               txParams.validators.length.toString(),
-              displayAmount(txParams.amount, 18),
+              txParams.validators
+                .map((v) => displayAmount(v.amount, 18))
+                .join(", "),
               false
             )
           ),
@@ -154,25 +159,29 @@ const _delegateMultipleTx = (
   ethAddress: string,
   chainId: number,
   delegatorCantoAddress: string,
-  multiValidatorAddress: string[],
-  amount: string,
   undelegate: boolean,
+  validatorsInfo: {
+    validatorAddress: string;
+    amount: string;
+  }[],
   description: TransactionDescription
-): Transaction => ({
+): MultiMessageTransaction => ({
   fromAddress: ethAddress,
-  feTxType: undelegate
-    ? CantoFETxType.MULTI_UNSTAKE
-    : CantoFETxType.MULTI_STAKE,
+  feTxType: CantoFETxType.MULTI_STAKE,
   description,
   chainId: chainId,
   type: "COSMOS",
-  msg: createMultiMsgsDelegate({
-    delegatorCantoAddress,
-    multiValidatorAddress,
-    amount,
-    denom: "aalthea",
-    undelegate,
-  }),
+  msg: createMultiMsgsDelegate([
+    {
+      delegatorCantoAddress,
+      messages: validatorsInfo.map(({ validatorAddress, amount }) => ({
+        validatorAddress,
+        amount,
+        denom: "aalthea",
+        undelegate,
+      })),
+    },
+  ]),
 });
 
 const _redelegateTx = (
@@ -241,7 +250,7 @@ export function validateStakingTxParams(
     case StakingTxTypes.MULTI_STAKE:
       // amount just has to be less than canto balance
       return validateWeiUserInputTokenAmount(
-        txParams.amount,
+        txParams.validators?.map((v) => v.amount).join("") ?? "",
         "1",
         txParams.nativeBalance,
         "CANTO",

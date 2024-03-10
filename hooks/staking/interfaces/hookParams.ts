@@ -12,7 +12,7 @@ export interface StakingHookInputParams {
   userEthAddress?: string;
 }
 
-interface DelegationRewards {
+export interface DelegationRewards {
   rewards: {
     validator_address: string;
     reward: {

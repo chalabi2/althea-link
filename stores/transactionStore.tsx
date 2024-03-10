@@ -198,7 +198,7 @@ const useTransactionStore = create<TransactionStore>()(
             // create updated list
             const updatedTransactionList = [
               ...successfulTransactions,
-              ...newFlow.transactions.map((tx) => ({
+              ...(newFlow.transactions ?? []).map((tx) => ({
                 tx,
                 status: "NONE" as TransactionStatus,
               })),
@@ -305,7 +305,7 @@ const useTransactionStore = create<TransactionStore>()(
               // add these new transactions to this list and delete the extra flow
               const newFlowTxList = [
                 ...completedTxs,
-                ...extraFlow.transactions.map((tx) => ({
+                ...(extraFlow.transactions ?? []).map((tx) => ({
                   tx,
                   status: "NONE" as TransactionStatus,
                 })),

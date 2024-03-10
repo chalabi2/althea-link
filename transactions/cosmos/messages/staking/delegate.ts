@@ -39,10 +39,12 @@ interface MessageDelegateParams {
 
 interface MessageMultiDelegateParams {
   delegatorCantoAddress: string;
-  validatorAddress: string[];
-  amount: string;
-  denom: string;
-  undelegate: boolean;
+  messages: {
+    validatorAddress: string;
+    amount: string;
+    denom: string;
+    undelegate: boolean;
+  }[];
 }
 
 /**
@@ -79,7 +81,7 @@ export function createMultiMsgsDelegate(
     return {
       eipMsg,
       cosmosMsg,
-      fee: params.undelegate ? UNDELEGATE_FEE : DELEGATE_FEE,
+      fee: params.messages[0].undelegate ? UNDELEGATE_FEE : DELEGATE_FEE,
       typesObject: generateCosmosEIPTypes(MSG_DELEGATE_TYPES),
     };
   });
@@ -125,44 +127,44 @@ function protoMsgDelegate(params: MessageDelegateParams): CosmosNativeMessage {
 
 function eip712MultiMsgDelegate(
   params: MessageMultiDelegateParams
-): EIP712Message {
-  return {
-    type: params.undelegate
+): EIP712Message[] {
+  return params.messages.map((message) => ({
+    type: message.undelegate
       ? "cosmos-sdk/MsgUndelegate"
       : "cosmos-sdk/MsgDelegate",
     value: {
       amount: {
-        amount: params.amount,
-        denom: params.denom,
+        amount: message.amount,
+        denom: message.denom,
       },
       delegator_address: params.delegatorCantoAddress,
-      validator_address: params.validatorAddress,
+      validator_address: message.validatorAddress,
     },
-  };
+  }));
 }
 
 function protoMultiMsgDelegate(
   params: MessageMultiDelegateParams
 ): CosmosNativeMessage[] {
-  return params.validatorAddress.map((validatorAddress) => {
+  return params.messages.map((message) => {
     const value = new Coin({
-      amount: params.amount,
-      denom: params.denom,
+      amount: message.amount,
+      denom: message.denom,
     });
     const messageParams = {
       amount: value,
       delegatorAddress: params.delegatorCantoAddress,
-      validatorAddress: validatorAddress, // Use current validator address
+      validatorAddress: message.validatorAddress, // Use current validator address
     };
-    const message = params.undelegate
+    const messageType = message.undelegate
       ? new MsgUndelegate(messageParams)
       : new MsgDelegate(messageParams);
     return {
       message: {
-        ...message,
-        serializeBinary: () => message.toBinary(),
+        ...messageType,
+        serializeBinary: () => messageType.toBinary(),
       },
-      path: params.undelegate ? MsgUndelegate.typeName : MsgDelegate.typeName,
+      path: message.undelegate ? MsgUndelegate.typeName : MsgDelegate.typeName,
     };
   });
 }
