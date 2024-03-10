@@ -47,8 +47,38 @@ export type Transaction = {
     }
 );
 
+export type MultiMessageTransaction = {
+  // account address that will be used to sign the transaction
+  fromAddress: string;
+  // chainId the wallet must be on to perform the transaction
+  chainId: number | string;
+  description: TransactionDescription;
+  feTxType: CantoFETxType;
+  bridge?: BridgeProgress;
+  verifyTxComplete?: (txHash: string) => PromiseWithError<boolean>;
+} & (
+  | {
+      type: "EVM";
+      target: string;
+      abi: ContractAbi;
+      method: string;
+      params: unknown[];
+      value: string;
+    }
+  | {
+      type: "COSMOS";
+      msg: UnsignedCosmosMessages[];
+    }
+  | {
+      type: "KEPLR";
+      tx: () => PromiseWithError<unknown>;
+      getHash: (...args: any[]) => ReturnWithError<string>;
+    }
+);
+
 // interface to use for functions that return transactions ready for the txStore
 export interface TxCreatorFunctionReturn {
-  transactions: Transaction[];
+  transactions?: Transaction[];
+  multiMessageTransactions?: MultiMessageTransaction[];
   extraFlow?: NewTransactionFlowPlaceholder;
 }

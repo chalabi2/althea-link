@@ -1,3 +1,4 @@
+/* eslint-disable no-redeclare */
 import { BaseError } from "viem";
 ///
 /// Types for error handling

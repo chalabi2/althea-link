@@ -1,4 +1,5 @@
 import { ValidatorWithDelegations } from "@/hooks/staking/interfaces/validators";
+import BigNumber from "bignumber.js";
 
 export enum StakingTxTypes {
   DELEGATE = "Delegate",
@@ -32,8 +33,11 @@ export type StakingTransactionParams = {
     }
   | {
       txType: StakingTxTypes.MULTI_STAKE | StakingTxTypes.MULTI_UNSTAKE;
-      validators: string[];
-      amount: string;
+      validators?: {
+        validatorAddress: string;
+        amount: BigNumber;
+      }[];
+      undelegate: boolean;
       nativeBalance: string;
     }
 );

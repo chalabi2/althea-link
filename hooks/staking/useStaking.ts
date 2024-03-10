@@ -6,6 +6,7 @@ import {
 } from "./interfaces/validators";
 import { useQuery } from "react-query";
 import {
+  DelegationRewards,
   StakingHookInputParams,
   StakingHookReturn,
 } from "./interfaces/hookParams";
@@ -182,7 +183,7 @@ export default function useStaking(
       validators: staking?.userStaking?.validators ?? [],
       unbonding: staking?.userStaking?.unbonding as UnbondingDelegation[],
       cantoBalance: userCantoBalance?.value.toString() ?? "",
-      rewards: staking?.userStaking.rewards ?? [],
+      rewards: staking?.userStaking.rewards as DelegationRewards,
     },
   };
 }
