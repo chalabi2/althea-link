@@ -15,15 +15,16 @@ import { asyncCallWithRetry, sleep } from "@/utils/async";
 export async function generateCantoPublicKeyWithTx(
   chainId: number,
   ethAddress: string,
-  cantoAddress: string
+  altheaAddress: string
 ): PromiseWithError<Transaction[]> {
   try {
     // get canto cosmos network
     const cantoNetwork = getCantoCosmosNetwork(chainId);
+
     if (!cantoNetwork) throw new Error("invalid chainId");
     // get current canto balance to see if enough canto for public key gen
     const { data: cantoBalance, error: cantoBalanceError } =
-      await getCantoBalance(cantoNetwork.chainId, cantoAddress);
+      await getCantoBalance(cantoNetwork.chainId, altheaAddress);
     if (cantoBalanceError) throw cantoBalanceError;
 
     const enoughCanto = new BigNumber(cantoBalance).gte("300000000000000000");
@@ -38,7 +39,7 @@ export async function generateCantoPublicKeyWithTx(
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          canto_address: cantoAddress,
+          canto_address: altheaAddress,
           eth_address: ethAddress,
         }),
       });
@@ -49,7 +50,7 @@ export async function generateCantoPublicKeyWithTx(
         async (): PromiseWithError<boolean> => {
           const { data, error } = await getCantoBalance(
             cantoNetwork.chainId,
-            cantoAddress
+            altheaAddress
           );
           if (error) return NEW_ERROR("generateCantoPublicKeyWithTx", error);
           if (new BigNumber(data).lte("300000000000000000")) {
@@ -68,7 +69,7 @@ export async function generateCantoPublicKeyWithTx(
       _generatePubKeyTx(
         chainId,
         ethAddress,
-        cantoAddress,
+        altheaAddress,
         TX_DESCRIPTIONS.GENERATE_PUBLIC_KEY()
       ),
     ]);
@@ -80,11 +81,11 @@ export async function generateCantoPublicKeyWithTx(
 const _generatePubKeyTx = (
   chainId: number,
   ethSender: string,
-  cantoSender: string,
+  altheaSender: string,
   description: TransactionDescription
 ): Transaction => {
   const pubKeyTx = createMsgsSend({
-    fromAddress: cantoSender,
+    fromAddress: altheaSender,
     destinationAddress: PUB_KEY_BOT_ADDRESS,
     amount: "1",
     denom: "aalthea",

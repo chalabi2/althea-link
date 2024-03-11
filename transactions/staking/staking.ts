@@ -23,7 +23,11 @@ import {
   TransactionDescription,
   TxCreatorFunctionReturn,
 } from "@/transactions/interfaces";
-import { isValidEthAddress } from "@/utils/address";
+import {
+  checkCantoPubKey,
+  ethToAltheaAddress,
+  isValidEthAddress,
+} from "@/utils/address";
 import { TX_ERROR_TYPES, TX_PARAM_ERRORS } from "@/config/consts/errors";
 import { validateWeiUserInputTokenAmount } from "@/utils/math";
 import { ethToAlthea } from "@gravity-bridge/address-converter";
@@ -34,32 +38,60 @@ import {
   UNDELEGATE_FEE,
 } from "@/config/consts/fees";
 import BigNumber from "bignumber.js";
+import { CANTO_MAINNET_EVM } from "@/config/networks";
+import { generateCantoPublicKeyWithTx } from "../cosmos/publicKey";
 
 export async function stakingTx(
   txParams: StakingTransactionParams
 ): PromiseWithError<TxCreatorFunctionReturn> {
   // convert user eth address into althea address
   const altheaAddress = ethToAlthea(txParams.ethAccount);
+
+  /** create transaction list */
+  const txList: Transaction[] = [];
+
+  /** check if user has public key */
+  const { data: hasPubKey, error: checkPubKeyError } = await checkCantoPubKey(
+    altheaAddress,
+    CANTO_MAINNET_EVM.chainId
+  );
+
+  if (!txParams || !txParams.ethAccount) {
+    return NEW_ERROR(
+      "Invalid transaction parameters or Ethereum address is missing."
+    );
+  }
+
   // switch based on tx type
   switch (txParams.txType) {
     case StakingTxTypes.DELEGATE:
-      return NO_ERROR({
-        transactions: [
-          _delegateTx(
+      if (checkPubKeyError || !hasPubKey) {
+        // error getting account or no public key available, so make a public key
+        const { data: pubKeyTxs, error: pubKeyTxsError } =
+          await generateCantoPublicKeyWithTx(
+            CANTO_MAINNET_EVM.chainId,
             txParams.ethAccount,
-            txParams.chainId,
-            altheaAddress,
-            txParams.validator.operator_address,
-            txParams.amount,
-            false,
-            TX_DESCRIPTIONS.DELEGATE(
-              txParams.validator.description.moniker,
-              displayAmount(txParams.amount, 18),
-              false
-            )
-          ),
-        ],
-      });
+            altheaAddress
+          );
+        if (pubKeyTxsError) throw pubKeyTxsError;
+        txList.push(...pubKeyTxs);
+      }
+      txList.push(
+        _delegateTx(
+          txParams.ethAccount,
+          txParams.chainId,
+          altheaAddress,
+          txParams.validator.operator_address,
+          txParams.amount,
+          false,
+          TX_DESCRIPTIONS.DELEGATE(
+            txParams.validator.description.moniker,
+            displayAmount(txParams.amount, 18),
+            false
+          )
+        )
+      );
+      return NO_ERROR({ transactions: txList });
     case StakingTxTypes.UNDELEGATE:
       return NO_ERROR({
         transactions: [

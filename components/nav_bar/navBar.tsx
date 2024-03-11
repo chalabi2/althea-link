@@ -27,9 +27,6 @@ const NavBar = () => {
   const searchParams = useSearchParams();
   const { signer } = useCantoSigner();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-
-  const [isWalletWizardOpen, setIsWalletWizardOpen] = useState(false);
-
   useEffect(() => {
     if (signer?.account.address) {
       Analytics.actions.people.registerWallet(signer.account.address);
@@ -68,9 +65,6 @@ const NavBar = () => {
     chainId: signer?.chain.id,
   });
 
-  const toggleWalletWizard = () => {
-    setIsWalletWizardOpen((prev) => !prev);
-  };
   return (
     <div className={styles.container}>
       <div className={styles.logo}>

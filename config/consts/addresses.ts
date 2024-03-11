@@ -11,7 +11,7 @@ export const WETH_MAINNET_ADDRESS =
 export const USDT_ETH_MAINNET_ADDRESS =
   "0xdac17f958d2ee523a2206206994597c13d831ec7";
 export const PUB_KEY_BOT_ADDRESS =
-  "canto1efrhdukv096tmjs7r80m8pqkr3udp9g0uadjfv";
+  "althea10637femt0j6vz7xdxymjvgn68rp3hpk60swvdy";
 
 // Canto Core Addresses
 const CANTO_CORE_ADDRESSES = {

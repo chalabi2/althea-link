@@ -60,7 +60,7 @@ export default function RootLayout({
         />
       </head> */}
       {/* <!-- Primary Meta Tags --> */}
-      <title>Althea.zone | Althea L1 App</title>
+      <title>Althea.zone | Althea L1</title>
       <meta name="title" content="Althea.zone | liquid infrastructure " />
       <meta
         name="description"
