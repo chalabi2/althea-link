@@ -94,7 +94,9 @@ export async function gravityBridgeOutTx(
         verifyComplete: true,
       });
       if (ibcTxsError) throw ibcTxsError;
-      txList.push(...ibcTxs.transactions);
+      if (ibcTxs && ibcTxs.transactions) {
+        txList.push(...ibcTxs.transactions);
+      }
     }
 
     /** send to eth from gravity */

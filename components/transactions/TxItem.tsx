@@ -56,7 +56,7 @@ const TxItem = (props: TxItemProps) => {
     >
       <div className={styles.txImg}>
         {props.tx.status === "NONE" ? (
-          <Text font="proto_mono" opacity={0.5}>
+          <Text font="macan-font" opacity={0.5}>
             {props.idx}
           </Text>
         ) : (

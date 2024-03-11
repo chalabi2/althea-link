@@ -28,7 +28,7 @@ const TokenCard = ({ cToken, items, onClick }: Props) => {
             size: 24,
           }}
         />
-        <Text size="x-lg" font="proto_mono" color="#ddd">
+        <Text size="x-lg" font="macan-font" color="#ddd">
           {cToken.underlying.symbol}
         </Text>
       </header>
@@ -47,7 +47,7 @@ const TokenCard = ({ cToken, items, onClick }: Props) => {
             value={cToken.borrowApr + "%"}
           />
         </Container>
-        <Button fontFamily="proto_mono" onClick={onClick}>
+        <Button fontFamily="macan-font" onClick={onClick}>
           Get {cToken.underlying.symbol}
         </Button>
       </section>

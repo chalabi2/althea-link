@@ -109,7 +109,7 @@ export default function StakingPage() {
 
       case StakingTxTypes.MULTI_STAKE:
         if (!selectedValidators || selectedValidators.length === 0) {
-          return null; // Or handle this case as needed
+          return null;
         }
         return {
           chainId: chainId,
@@ -666,7 +666,7 @@ export default function StakingPage() {
           style={{
             position: isMobile ? "relative" : "sticky",
           }}
-          height={!isMobile ? "400px" : "320px"}
+          height={!isMobile ? "460px" : "400px"}
         >
           <Container
             className={styles.infoCard}
@@ -687,7 +687,7 @@ export default function StakingPage() {
             <Container style={{ padding: "16px" }}>
               <div className={styles.infoBox}>
                 <div style={{ marginBottom: "8px" }}>
-                  <Text font="rm_mono" size={isMobile ? "md" : "x-sm"}>
+                  <Text font="macan-font" size={isMobile ? "md" : "x-sm"}>
                     Rewards
                   </Text>
                 </div>
@@ -720,7 +720,7 @@ export default function StakingPage() {
                   style={{ width: isMobile ? "50%" : "" }}
                 >
                   <div style={{ marginBottom: "8px" }}>
-                    <Text font="rm_mono" size={isMobile ? "md" : "x-sm"}>
+                    <Text font="macan-font" size={isMobile ? "md" : "x-sm"}>
                       APR
                     </Text>
                   </div>
@@ -732,7 +732,7 @@ export default function StakingPage() {
                 </div>
                 <div className={styles.infoBox}>
                   <div style={{ marginBottom: "8px" }}>
-                    <Text font="rm_mono" size={isMobile ? "md" : "x-sm"}>
+                    <Text font="macan-font" size={isMobile ? "md" : "x-sm"}>
                       Total Staked{" "}
                     </Text>
                   </div>
@@ -772,17 +772,17 @@ export default function StakingPage() {
                 >
                   <Text font="macan">Claim Staking Rewards</Text>
                 </Button>
+                <Spacer height="20px" />
+                <Button
+                  width={"fill"}
+                  height="large"
+                  onClick={openMultiStakeModal}
+                  disabled={!signer}
+                >
+                  Multi Stake
+                </Button>
               </Container>
             </Container>
-            <Spacer height="20px" />
-            <Button
-              width={"fill"}
-              height="large"
-              onClick={openMultiStakeModal}
-              disabled={!signer}
-            >
-              Multi Stake
-            </Button>
           </Container>
         </Container>
       </Container>

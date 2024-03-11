@@ -79,7 +79,7 @@ const ProposalTable = ({ proposals, isMobile }: TableProps) => {
   if (proposals.length == 0) {
     return (
       <div>
-        <Text font="proto_mono">Loading Proposals...</Text>
+        <Text font="macan-font">Loading Proposals...</Text>
       </div>
     );
   }
@@ -112,7 +112,7 @@ const ProposalTable = ({ proposals, isMobile }: TableProps) => {
           {
             <Table
               title="Active Proposals"
-              headerFont="proto_mono"
+              headerFont="macan-font"
               headers={
                 activeProposals.length != 0 || activeProposals
                   ? proposalTableHeaders
@@ -143,9 +143,9 @@ const ProposalTable = ({ proposals, isMobile }: TableProps) => {
           </div>
           <div style={{ paddingLeft: "20px" }}>
             {isMobile ? (
-              <Text font="rm_mono">There are no active proposals</Text>
+              <Text font="macan-font">There are no active proposals</Text>
             ) : (
-              <Text font="rm_mono">
+              <Text font="macan-font">
                 There are currently no active proposals
               </Text>
             )}
@@ -187,7 +187,7 @@ const ProposalTable = ({ proposals, isMobile }: TableProps) => {
                 />
               </Container>
             }
-            headerFont="rm_mono"
+            headerFont="macan-font"
             headers={
               filteredProposals.length != 0 || filteredProposals
                 ? proposalTableHeaders
@@ -223,7 +223,7 @@ const ProposalTable = ({ proposals, isMobile }: TableProps) => {
                   ]
                 : [
                     <div key="noData" className={styles.noProposalContainer}>
-                      <Text font="proto_mono" size="lg">
+                      <Text font="macan-font" size="lg">
                         NO {currentFilter} FOUND
                       </Text>
                     </div>,

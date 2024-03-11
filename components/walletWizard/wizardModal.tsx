@@ -44,7 +44,7 @@ export const WalletWizardModal: React.FC<WalletWizardModalProps> = ({
 
   const balanceData = useBalance(keplrAddress);
   const accountInfoData = useAccountInfo(keplrAddress);
-  const keplrBalance = balanceData.data?.balances[0].amount;
+  const keplrBalance = balanceData.data?.balances[0]?.amount ?? "0";
 
   const getKeplr = async (): Promise<Keplr | undefined> => {
     if (window.keplr) {
@@ -189,15 +189,15 @@ export const WalletWizardModal: React.FC<WalletWizardModalProps> = ({
         {!showNextStep && (
           <>
             {/* Migration source wallets */}
-            <Text size="lg" font="proto_mono">
+            <Text size="lg" font="macan-font">
               Wallet Wizard
             </Text>
-            <Text size="sm" font="proto_mono">
+            <Text size="sm" font="macan-font">
               The wallet wizard is a tool to help you migrate your Althea tokens
               from a wallet with an incorrect key type to another wallet with
               the correct key type.
             </Text>
-            <Text size="sm" font="proto_mono">
+            <Text size="sm" font="macan-font">
               Ethermint chains, like Althea, use the Ethermint key type while
               non Ethermint enabled Cosmos chains use the Cosmos key type. When
               attempting to utilize the Cosmos key type on Althea you will get
@@ -208,7 +208,7 @@ export const WalletWizardModal: React.FC<WalletWizardModalProps> = ({
               {/* Keplr Connect Button */}
 
               <div className={styles["wallet-connect"]}>
-                <Text size="md" font="proto_mono">
+                <Text size="md" font="macan-font">
                   Migrate From
                 </Text>
                 <Button width={200} height={34} onClick={connectToKeplr}>
@@ -234,7 +234,7 @@ export const WalletWizardModal: React.FC<WalletWizardModalProps> = ({
               />
 
               <div className={styles["wallet-connect"]}>
-                <Text size="md" font="proto_mono">
+                <Text size="md" font="macan-font">
                   Migrate to
                 </Text>
                 <Button width={200} height={34} onClick={connectToMetamask}>
@@ -255,26 +255,26 @@ export const WalletWizardModal: React.FC<WalletWizardModalProps> = ({
         {showNextStep && (
           <>
             <div className={styles["migration"]}>
-              <Text className="text" size="lg" font="proto_mono">
+              <Text className="text" size="lg" font="macan-font">
                 Migrating your ALTHEA tokens
               </Text>
-              <Text className="text" size="sm" font="proto_mono">
+              <Text className="text" size="sm" font="macan-font">
                 Please review the details below before migrating your tokens.
               </Text>
 
               <div className={styles["address-blocks"]}>
-                <Text weight="bold" size="sm" font="proto_mono">
+                <Text weight="bold" size="sm" font="macan-font">
                   From:
                 </Text>
-                <Text size="sm" font="proto_mono">
+                <Text size="sm" font="macan-font">
                   {keplrAddress}
                 </Text>
               </div>
               <div className={styles["address-blocks"]}>
-                <Text weight="bold" size="sm" font="proto_mono">
+                <Text weight="bold" size="sm" font="macan-font">
                   To:
                 </Text>
-                <Text size="sm" font="proto_mono">
+                <Text size="sm" font="macan-font">
                   {metamaskAddress}
                 </Text>
               </div>
@@ -282,13 +282,13 @@ export const WalletWizardModal: React.FC<WalletWizardModalProps> = ({
                 <Text
                   weight="bold"
                   size="sm"
-                  font="proto_mono"
+                  font="macan-font"
                   className={styles["amount-label"]}
                 >
                   Amount:
                 </Text>
 
-                <Text size="sm" font="proto_mono">
+                <Text size="sm" font="macan-font">
                   {shiftDigits(keplrBalance, -18)}
                 </Text>
                 <Icon

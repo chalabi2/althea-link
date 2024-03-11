@@ -55,7 +55,7 @@ export const CantoDexLPModal = (props: ManageCantoDexLPProps) => {
         >
           <Icon icon={{ url: "/dropdown.svg", size: 24 }} themed />
         </div>
-        <Text font="proto_mono" size="lg">
+        <Text font="macan-font" size="lg">
           Liquidity
         </Text>
       </Container>
@@ -135,7 +135,7 @@ export const CantoDexLPModal = (props: ManageCantoDexLPProps) => {
         <Container gap={40} padding="md">
           <div className={styles.iconTitle}>
             <Icon icon={{ url: props.pair.logoURI, size: 100 }} />
-            <Text size="lg" font="proto_mono">
+            <Text size="lg" font="macan-font">
               {props.pair.symbol}
             </Text>
           </div>

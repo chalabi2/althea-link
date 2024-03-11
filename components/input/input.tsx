@@ -81,7 +81,7 @@ const Input = (props: InputProps) => {
         className={props.labelClassName}
         style={props.labelStyle}
       >
-        <Text font="rm_mono" size="sm">
+        <Text font="macan-font" size="sm">
           {props.label}
           {props.type === "amount" && (
             <span className={styles["balance"]}>

@@ -160,7 +160,7 @@ export const StakingModal = (props: StakingModalParams) => {
         {props.validator?.description.moniker}
       </Text>
       <Spacer height="20px"></Spacer>
-      <div font="macan-font" className={styles.modalInfoRow}>
+      <div className={styles.modalInfoRow}>
         <div>
           <Text font="macan-font">Available Balance</Text>
         </div>

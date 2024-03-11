@@ -45,7 +45,7 @@ const Footer = () => {
         <Text
           className={styles.item}
           size="x-sm"
-          font="proto_mono"
+          font="macan-font"
           style={{
             padding: "0 14px",
           }}
@@ -72,7 +72,7 @@ interface PropLink {
 }
 const FooterLink = ({ href, text }: PropLink) => {
   return (
-    <Text size="x-sm" font="proto_mono" className={styles.link}>
+    <Text size="x-sm" font="macan-font" className={styles.link}>
       <a
         href={href}
         target="_blank"
@@ -102,7 +102,7 @@ const StatusText = () => {
   return (
     <Text
       size="x-sm"
-      font="proto_mono"
+      font="macan-font"
       className={styles.item}
       style={{
         width: "160px",

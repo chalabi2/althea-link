@@ -60,7 +60,7 @@ const TxFlow = (props: Props) => {
           />
           <Spacer height="30px" />
 
-          <Text font="proto_mono" size="lg">
+          <Text font="macan-font" size="lg">
             {props.txFlow.title}
           </Text>
           <Spacer height="40px" />

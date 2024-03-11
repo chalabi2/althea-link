@@ -33,13 +33,17 @@ export async function claimDexRewardsComboTx(
         params.clmParams
       );
       if (clmError) throw clmError;
-      txList.push(...clmRewards.transactions);
+      if (clmRewards && clmRewards.transactions) {
+        txList.push(...clmRewards.transactions);
+      }
     }
     if (params.ambientParams && params.ambientParams?.rewards.length !== 0) {
       const { data: ambientRewards, error: ambientError } =
         claimAmbientRewardsTx(params.ambientParams);
       if (ambientError) throw ambientError;
-      txList.push(...ambientRewards.transactions);
+      if (ambientRewards && ambientRewards.transactions) {
+        txList.push(...ambientRewards.transactions);
+      }
     }
     // check that there are transactions to return
     if (txList.length === 0) throw Error("No transactions to return");

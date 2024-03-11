@@ -29,7 +29,7 @@ const FeeButton = ({
       className={clsx(style.container, active && style.active)}
       onClick={onClick}
     >
-      <Text font="proto_mono">{title}</Text>
+      <Text font="macan-font">{title}</Text>
       <Text
         size="x-sm"
         theme="secondary-dark"
@@ -50,7 +50,7 @@ const FeeButton = ({
       </Text>
       <div className={style.divider} />
       <Text
-        font="proto_mono"
+        font="macan-font"
         style={{ textAlign: "center" }}
       >{`${tokenAmount} ${tokenSymbol}`}</Text>
       <Text size="x-sm" theme="secondary-dark">

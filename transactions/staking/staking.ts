@@ -119,6 +119,7 @@ export async function stakingTx(
             txParams.chainId,
             altheaAddress,
             txParams.undelegate,
+            // @ts-ignore
             txParams.validators,
             TX_DESCRIPTIONS.MULTI_STAKE(
               txParams.validators.length.toString(),

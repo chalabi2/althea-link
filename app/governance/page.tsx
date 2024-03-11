@@ -45,21 +45,10 @@ export default function GovernancePage() {
           style={{ justifyContent: "space-between" }}
         >
           <div>
-            <Text font="proto_mono" className={styles.title}>
+            <Text font="macan-font" className={styles.title}>
               Governance
             </Text>
           </div>
-          <Container
-            direction="column"
-            className={styles.middleText}
-            center={{ vertical: true }}
-            style={{ marginTop: isMobile ? "16px" : "" }}
-          >
-            <Text size="sm" color="#7B7B7B">
-              Stake {isMobile ? "" : "your"} $ALTHEA to participate in
-              governance
-            </Text>
-          </Container>
         </Container>
 
         <Spacer height="32px" />

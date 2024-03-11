@@ -1,6 +1,6 @@
 import ReactDOM from "react-dom";
 import styles from "./modal.module.scss";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useScrollLock } from "../utils/scrollLock";
 import Icon from "../icon/icon";
 import Container from "../container/container";
@@ -27,6 +27,7 @@ const Modal = ({
   padded = true,
   closeOnOverlayClick = true,
 }: Props) => {
+  const [isClient, setIsClient] = useState(false);
   const ref = React.useRef<HTMLDivElement>(null);
 
   const { lockScroll, unlockScroll } = useScrollLock();
@@ -38,6 +39,10 @@ const Modal = ({
       onClose();
     }, 400);
   }
+
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
 
   useEffect(() => {
     if (open) {
@@ -82,7 +87,7 @@ const Modal = ({
 
           {title && (
             <div className={styles.header}>
-              <Text font="proto_mono" size="lg" className={styles.title}>
+              <Text font="macan-font" size="lg" className={styles.title}>
                 {title}
               </Text>
             </div>
@@ -92,12 +97,13 @@ const Modal = ({
       </div>
     </div>
   );
-  if (open) {
-    return ReactDOM.createPortal(
-      modalContent,
-      document.querySelector("#modal-root")!
-    );
+  if (open && isClient) {
+    const modalRoot = document.querySelector("#modal-root");
+    if (modalRoot) {
+      return ReactDOM.createPortal(modalContent, modalRoot);
+    }
   }
+
   return null;
 };
 

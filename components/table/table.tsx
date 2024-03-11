@@ -6,7 +6,12 @@ interface Props {
   title?: string | React.ReactNode;
   secondary?: React.ReactNode;
 
-  headerFont: "macan" | "macan-font" | "undefined" | "proto_mono" | "rm_mono";
+  headerFont:
+    | "macan"
+    | "macan-font"
+    | "undefined"
+    | "macan-font"
+    | "macan-font";
   headers: {
     value: string | React.ReactNode;
     ratio: number;
@@ -26,7 +31,7 @@ const Table = (props: Props) => {
     <div className={styles.container} style={{ fontSize: props.textSize }}>
       <div className={styles.title}>
         <Text
-          font="proto_mono"
+          font="macan-font"
           size="lg"
           opacity={!isMobile ? 0.7 : 1}
           className={isMobile ? styles.tableTitle : undefined}

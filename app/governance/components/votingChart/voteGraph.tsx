@@ -285,7 +285,7 @@ export const VoteGraphBox = ({
           }}
         >
           <Container height="100%" style={{ paddingRight: "4px" }}>
-            <Text font="proto_mono" size="x-sm">
+            <Text font="macan-font" size="x-sm">
               {maxPercentage.toFixed(1)}%{" "}
             </Text>
           </Container>
@@ -293,7 +293,7 @@ export const VoteGraphBox = ({
             height="100%"
             style={{ paddingRight: "4px", alignItems: "center" }}
           >
-            <Text opacity={0.4} font="rm_mono" size="x-sm">
+            <Text opacity={0.4} font="macan-font" size="x-sm">
               {" "}
               {getVoteOption(maxIndex)}
             </Text>
@@ -317,7 +317,7 @@ export const VoteGraphBox = ({
           />
         </div>
         <Container>
-          <Text font="rm_mono" className={styles.tableData} size="x-sm">
+          <Text font="macan-font" className={styles.tableData} size="x-sm">
             {"ACTIVE"}
           </Text>
         </Container>
