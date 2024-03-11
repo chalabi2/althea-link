@@ -659,10 +659,10 @@ export default function StakingPage() {
           height={!isMobile ? "400px" : "320px"}
         >
           <Container
+            className={styles.infoCard}
             direction="column"
             width="100%"
             height="100%"
-            backgroundColor="#222222"
           >
             <Container
               style={{
@@ -670,18 +670,14 @@ export default function StakingPage() {
                 padding: "16px",
               }}
             >
-              <Text font="macan" color="#FFFFFF" size={isMobile ? "lg" : "sm"}>
+              <Text font="macan" size={isMobile ? "lg" : "sm"}>
                 Staking Stats{" "}
               </Text>
             </Container>
             <Container style={{ padding: "16px" }}>
               <div className={styles.infoBox}>
                 <div style={{ marginBottom: "8px" }}>
-                  <Text
-                    font="rm_mono"
-                    color="#767676"
-                    size={isMobile ? "md" : "x-sm"}
-                  >
+                  <Text font="rm_mono" size={isMobile ? "md" : "x-sm"}>
                     Rewards
                   </Text>
                 </div>
@@ -692,14 +688,9 @@ export default function StakingPage() {
                       url: "/tokens/althea.png",
                       size: 20,
                     }}
-                    style={{ filter: "invert(1)" }}
                   />
                   <div style={{ margin: "0 4px 0 4px" }}>
-                    <Text
-                      font="macan"
-                      size={isMobile ? "title" : "x-lg"}
-                      color="#FFFFFF"
-                    >
+                    <Text font="macan" size={isMobile ? "title" : "x-lg"}>
                       {displayAmount(
                         userStaking.rewards?.total[0]?.amount &&
                           !isNaN(Number(userStaking.rewards?.total[0]?.amount))
@@ -719,31 +710,19 @@ export default function StakingPage() {
                   style={{ width: isMobile ? "50%" : "" }}
                 >
                   <div style={{ marginBottom: "8px" }}>
-                    <Text
-                      font="rm_mono"
-                      color="#767676"
-                      size={isMobile ? "md" : "x-sm"}
-                    >
+                    <Text font="rm_mono" size={isMobile ? "md" : "x-sm"}>
                       APR
                     </Text>
                   </div>
                   <Container direction="row" center={{ vertical: true }}>
-                    <Text
-                      font="macan"
-                      size={isMobile ? "x-lg" : "lg"}
-                      color="#FFFFFF"
-                    >
+                    <Text font="macan" size={isMobile ? "x-lg" : "lg"}>
                       {formatPercent((parseFloat(apr) / 100).toString())}
                     </Text>
                   </Container>
                 </div>
                 <div className={styles.infoBox}>
                   <div style={{ marginBottom: "8px" }}>
-                    <Text
-                      font="rm_mono"
-                      color="#767676"
-                      size={isMobile ? "md" : "x-sm"}
-                    >
+                    <Text font="rm_mono" size={isMobile ? "md" : "x-sm"}>
                       Total Staked{" "}
                     </Text>
                   </div>
@@ -753,15 +732,10 @@ export default function StakingPage() {
                         url: "/tokens/althea.png",
                         size: 18,
                       }}
-                      style={{ filter: "invert(1)" }}
                       //color="primary"
                     />
                     <div style={{ margin: "0 4px 0 4px" }}>
-                      <Text
-                        font="macan"
-                        size={isMobile ? "x-lg" : "lg"}
-                        color="#FFFFFF"
-                      >
+                      <Text font="macan" size={isMobile ? "x-lg" : "lg"}>
                         {displayAmount(
                           totalStaked ? totalStaked.toFixed(2) : "0",
                           0

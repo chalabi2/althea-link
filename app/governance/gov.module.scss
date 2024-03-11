@@ -21,21 +21,18 @@
   padding-top: 2rem;
 }
 
-
-
 .title {
   font-size: 32px !important;
   text-align: left;
 }
 .middleText {
   padding: 10px 16px 10px 16px;
-  background-color: var(--card-surface-color, #f1f1f1);
+  background-color: var(--text-dark-color) !important;
 }
-
 
 @media screen and (max-width: 768px) {
   .container {
-    border-top: 1px solid var(--border-stroke-color,#b3b3b3);
+    border-top: 1px solid var(--althea-blue, #0077ff);
     width: calc(100vw);
     //gap: 1rem;
     padding: 1rem;
@@ -46,10 +43,8 @@
       display: none;
     }
   }
-  .header{
+  .header {
     // justify-content: space-between;
     // width: 100%;
   }
-  
-
 }
