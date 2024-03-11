@@ -14,6 +14,7 @@ import useCantoSigner from "@/hooks/helpers/useCantoSigner";
 import { useBalance } from "wagmi";
 import { useAutoConnect } from "@/provider/useAutoConnect";
 import Icon from "../icon/icon";
+import useScreenSize from "@/hooks/helpers/useScreenSize";
 import Button from "@/components/button/button";
 import { WalletWizardModal } from "../walletWizard/wizardModal";
 
@@ -21,6 +22,7 @@ const NavBar = () => {
   // This is used to connect safe as wallet,
   // if the app is opened in the safe context.
   useAutoConnect();
+  const { isMobile } = useScreenSize();
   const currentPath = usePathname();
   const searchParams = useSearchParams();
   const { signer } = useCantoSigner();
@@ -161,20 +163,27 @@ const NavBar = () => {
             Governance
           </Text>
         </Link>
-        {/* {currentPath == "/staking" && (
+        {isMobile && (
           <Link
             href="/staking"
-            className={clsx(styles["nav-link"], styles.active)}
+            className={clsx(
+              styles["nav-link"],
+              currentPath == "/staking" && styles.active
+            )}
             onClick={() => Analytics.actions.events.clickedNavLink("Staking")}
           >
             <Text size="sm">Staking</Text>
           </Link>
         )}
-        {(currentPath == "/governance" ||
-          currentPath == "/governance/proposal") && (
+        {isMobile && (
           <Link
             href="/governance"
-            className={clsx(styles["nav-link"], styles.active)}
+            className={clsx(
+              styles["nav-link"],
+              (currentPath == "/governance" ||
+                currentPath == "/governance/proposal") &&
+                styles.active
+            )}
             onClick={() =>
               Analytics.actions.events.clickedNavLink("Governance")
             }
