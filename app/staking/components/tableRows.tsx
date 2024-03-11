@@ -19,7 +19,7 @@ export const GenerateValidatorTableRow = (
 ) => [
   !isMobile && (
     <Container key={`rank_${index}`}>
-      <Text font="rm_mono">{validator.rank}</Text>
+      <Text font="macan-font">{validator.rank}</Text>
     </Container>
   ),
   <Container
@@ -32,7 +32,7 @@ export const GenerateValidatorTableRow = (
   >
     <div>
       <Text
-        font="rm_mono"
+        font="macan-font"
         style={{
           overflow: "hidden",
           textOverflow: "ellipsis",
@@ -51,7 +51,7 @@ export const GenerateValidatorTableRow = (
     width={isMobile ? "100%" : ""}
     //gap="auto"
   >
-    <Text font="rm_mono" style={{ textAlign: isMobile ? "left" : "center" }}>
+    <Text font="macan-font" style={{ textAlign: isMobile ? "left" : "center" }}>
       {displayAmount(validator.tokens, 18)}{" "}
     </Text>
     <div> </div>
@@ -65,7 +65,7 @@ export const GenerateValidatorTableRow = (
     />
   </Container>,
   <Container key={`commission_${index}`} width={isMobile ? "100%" : ""}>
-    <Text font="rm_mono" style={{ textAlign: isMobile ? "left" : "center" }}>
+    <Text font="macan-font" style={{ textAlign: isMobile ? "left" : "center" }}>
       {displayAmount(validator.commission, -2, { precision: 2 })}%
     </Text>
   </Container>,
@@ -101,7 +101,7 @@ export const GenerateMyStakingTableRow = (
     }}
   >
     <Text
-      font="rm_mono"
+      font="macan-font"
       style={{
         overflow: "hidden",
         textOverflow: "ellipsis",
@@ -120,7 +120,7 @@ export const GenerateMyStakingTableRow = (
     gap="auto"
     style={{ justifyContent: isMobile ? "left" : "center" }}
   >
-    <Text font="rm_mono" style={{ textAlign: isMobile ? "left" : "center" }}>
+    <Text font="macan-font" style={{ textAlign: isMobile ? "left" : "center" }}>
       {displayAmount(userStakedValidator.userDelegation.balance, 18, {
         short: false,
         precision: 1,
@@ -143,7 +143,7 @@ export const GenerateMyStakingTableRow = (
       center={{ vertical: true }}
       gap="auto"
     >
-      <Text font="rm_mono">
+      <Text font="macan-font">
         {displayAmount(userStakedValidator?.tokens, 18, {})}
       </Text>
       <div> </div>
@@ -163,7 +163,7 @@ export const GenerateMyStakingTableRow = (
     center={{ vertical: true }}
     style={{ alignItems: isMobile ? "left" : "center" }}
   >
-    <Text font="rm_mono" style={{ textAlign: isMobile ? "left" : "center" }}>
+    <Text font="macan-font" style={{ textAlign: isMobile ? "left" : "center" }}>
       {displayAmount(userStakedValidator?.commission, -2, {
         precision: 2,
       })}
@@ -205,7 +205,7 @@ export const GenerateUnbondingDelegationsTableRow = (
       }}
     >
       <Text
-        font="rm_mono"
+        font="macan-font"
         style={{
           overflow: "hidden",
           textOverflow: "ellipsis",
@@ -213,7 +213,7 @@ export const GenerateUnbondingDelegationsTableRow = (
           maxWidth: !isMobile ? "300px" : "130px",
         }}
       >
-        {userStakedValidator.name}
+        {userStakedValidator.validator_address}
       </Text>
     </Container>,
     <Container
@@ -224,8 +224,8 @@ export const GenerateUnbondingDelegationsTableRow = (
       center={{ vertical: true }}
       style={{ justifyContent: isMobile ? "left" : "center" }}
     >
-      <Text font="rm_mono">
-        {displayAmount(userStakedValidator.undelegation, 18, {
+      <Text font="macan-font">
+        {displayAmount(userStakedValidator.balance, 18, {
           short: false,
         })}{" "}
       </Text>
@@ -233,7 +233,7 @@ export const GenerateUnbondingDelegationsTableRow = (
       <Icon
         style={{ marginLeft: "5px" }}
         icon={{
-          url: "/tokens/canto.svg",
+          url: "/tokens/althea.png",
           size: 16,
         }}
         themed={true}
@@ -247,7 +247,7 @@ export const GenerateUnbondingDelegationsTableRow = (
         paddingLeft: "16px",
       }}
     >
-      <Text font="rm_mono" style={{ textAlign: "left" }}>
+      <Text font="macan-font" style={{ textAlign: "left" }}>
         {!isMobile
           ? completionDate.toDateString() +
             ", " +

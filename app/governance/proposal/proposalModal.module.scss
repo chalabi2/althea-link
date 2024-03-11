@@ -4,7 +4,7 @@
   align-items: center;
   max-width: 1200px !important;
   margin: 10px auto;
-  border-top: 1px solid var(--primary-90-color);
+
   position: relative;
   padding-top: 2rem;
 
@@ -15,8 +15,6 @@
     left: 0;
     width: calc(100% - 1px);
     height: 10px;
-    border-left: 1px solid var(--primary-90-color);
-    border-right: 1px solid var(--primary-90-color);
   }
 
   .loaderContainer {
@@ -52,10 +50,12 @@
     border: 1px solid;
     padding: 10px 15px 10px 10px;
     width: fit-content;
+    cursor: pointer;
     //padding: 10px;
   }
   .backButton {
     height: 100%;
+    cursor: pointer;
     transform: rotate(90deg);
   }
   .backButtonContainer:hover {

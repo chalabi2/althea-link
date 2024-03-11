@@ -108,7 +108,7 @@ export default function Home() {
       </section>
 
       {/* <section className={styles.ecosystem} id="ecosystem">
-        <Text font="proto_mono" size="title">
+        <Text font="macan-font" size="title">
           Ecosystem
         </Text>
 

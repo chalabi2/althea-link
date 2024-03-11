@@ -92,12 +92,13 @@ export type AnalyticsStakingData = {
   stakingDelegation?: string;
   stakingWalletBalance?: string;
   stakingNewValidator?: string;
+  stakingDelegatedValidators?: string[];
 };
 
 export type AnalyticsGovernanceData = {
-  govProposalId?: Number,
-  govProposalTitle?: string,
-  govVoteOption?: VoteOption,
+  govProposalId?: Number;
+  govProposalTitle?: string;
+  govVoteOption?: VoteOption;
 };
 
 export type AnalyticsTransactionFlowData =
@@ -106,7 +107,7 @@ export type AnalyticsTransactionFlowData =
   | AnalyticsAmbientLPData
   | AnalyticsLMData
   | AnalyticsStakingData
-  | AnalyticsGovernanceData;;
+  | AnalyticsGovernanceData;
 
 // tx types (approve/mint/swap/...)
 type AnalyticsTransactionType = CantoFETxType;
@@ -169,7 +170,7 @@ class AnalyticsWrapper {
           }
         },
       },
-      clickedNavLink: (link : string)=>{
+      clickedNavLink: (link: string) => {
         posthog.capture("Clicked Nav Link", {
           link,
         });

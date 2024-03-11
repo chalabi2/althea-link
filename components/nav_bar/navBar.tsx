@@ -22,12 +22,12 @@ const NavBar = () => {
   // This is used to connect safe as wallet,
   // if the app is opened in the safe context.
   useAutoConnect();
-  const { isMobile } = useScreenSize();
+
   const currentPath = usePathname();
   const searchParams = useSearchParams();
   const { signer } = useCantoSigner();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [isMoreModalOpen, setIsMoreModalOpen] = useState(false);
+
   const [isWalletWizardOpen, setIsWalletWizardOpen] = useState(false);
 
   useEffect(() => {
@@ -163,34 +163,7 @@ const NavBar = () => {
             Governance
           </Text>
         </Link>
-        {isMobile && (
-          <Link
-            href="/staking"
-            className={clsx(
-              styles["nav-link"],
-              currentPath == "/staking" && styles.active
-            )}
-            onClick={() => Analytics.actions.events.clickedNavLink("Staking")}
-          >
-            <Text size="sm">Staking</Text>
-          </Link>
-        )}
-        {isMobile && (
-          <Link
-            href="/governance"
-            className={clsx(
-              styles["nav-link"],
-              (currentPath == "/governance" ||
-                currentPath == "/governance/proposal") &&
-                styles.active
-            )}
-            onClick={() =>
-              Analytics.actions.events.clickedNavLink("Governance")
-            }
-          >
-            <Text size="sm">Governance</Text>
-          </Link>
-        )}
+
         {/*  <div
           className={styles.moreLink}
           onMouseEnter={() => setIsMoreModalOpen(true)}

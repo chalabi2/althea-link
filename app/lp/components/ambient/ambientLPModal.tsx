@@ -78,7 +78,7 @@ export const AmbientModal = (props: AmbientModalProps) => {
             <Icon icon={{ url: "/dropdown.svg", size: 24 }} themed />
           </div>
         )}
-        <Text font="proto_mono" size="lg">
+        <Text font="macan-font" size="lg">
           {title()}
         </Text>
       </Container>
@@ -93,7 +93,7 @@ export const AmbientModal = (props: AmbientModalProps) => {
           >
             <div className={styles.iconTitle}>
               <Icon icon={{ url: props.pool.logoURI, size: 60 }} />
-              <Text size="lg" font="proto_mono">
+              <Text size="lg" font="macan-font">
                 {props.pool.symbol}
               </Text>
             </div>
@@ -167,13 +167,13 @@ const PositionList = ({
           >
             <Container direction="row" gap={20} width="100%">
               <Text>Position</Text>
-              <Text size="md" font="proto_mono">
+              <Text size="md" font="macan-font">
                 {idx + 1}
               </Text>
             </Container>
 
             <Container direction="row" gap={"auto"} width="100%">
-              <Text size="md" font="proto_mono">
+              <Text size="md" font="macan-font">
                 Range: (
                 {displayAmount(
                   getPriceFromTick(item.bidTick),
@@ -192,7 +192,7 @@ const PositionList = ({
                 )}
                 )
               </Text>
-              <Text size="md" font="proto_mono">
+              <Text size="md" font="macan-font">
                 {displayAmount(
                   concLiquidityNoteValue(
                     item.concLiq,

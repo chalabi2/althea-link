@@ -41,7 +41,7 @@ export const Pagination = (props: Props) => {
           }}
         >
           <Text
-            font="proto_mono"
+            font="macan-font"
             size="lg"
             opacity={props.currentPage == 1 ? 0.4 : 1}
           >
@@ -62,7 +62,7 @@ export const Pagination = (props: Props) => {
                       onClick={() => props.handlePageClick(index)}
                     >
                       <Text
-                        font="proto_mono"
+                        font="macan-font"
                         size="sm"
                         opacity={index == props.currentPage ? 1 : 0.4}
                       >
@@ -79,7 +79,7 @@ export const Pagination = (props: Props) => {
                   className={styles.number}
                   onClick={() => props.handlePageClick(1)}
                 >
-                  <Text font="proto_mono" size="sm" opacity={0.4}>
+                  <Text font="macan-font" size="sm" opacity={0.4}>
                     1
                   </Text>
                 </div>
@@ -89,7 +89,7 @@ export const Pagination = (props: Props) => {
                   //key={index}
                   className={styles.number}
                 >
-                  <Text font="proto_mono" size="sm">
+                  <Text font="macan-font" size="sm">
                     ..
                   </Text>
                 </div>
@@ -99,7 +99,7 @@ export const Pagination = (props: Props) => {
                   className={styles.number}
                   onClick={() => props.handlePageClick(props.currentPage - 1)}
                 >
-                  <Text font="proto_mono" size="sm" opacity={0.4}>
+                  <Text font="macan-font" size="sm" opacity={0.4}>
                     {props.currentPage - 1}
                   </Text>
                 </div>
@@ -108,7 +108,7 @@ export const Pagination = (props: Props) => {
                 className={styles.number}
                 onClick={() => props.handlePageClick(props.currentPage)}
               >
-                <Text font="proto_mono" size="sm" opacity={1}>
+                <Text font="macan-font" size="sm" opacity={1}>
                   {props.currentPage}
                 </Text>
               </div>
@@ -117,14 +117,14 @@ export const Pagination = (props: Props) => {
                   className={styles.number}
                   onClick={() => props.handlePageClick(props.currentPage + 1)}
                 >
-                  <Text font="proto_mono" size="sm" opacity={0.4}>
+                  <Text font="macan-font" size="sm" opacity={0.4}>
                     {props.currentPage + 1}
                   </Text>
                 </div>
               )}
               {props.currentPage < props.totalPages - 1 && (
                 <div className={styles.number}>
-                  <Text font="proto_mono" size="sm">
+                  <Text font="macan-font" size="sm">
                     ..
                   </Text>
                 </div>
@@ -134,7 +134,7 @@ export const Pagination = (props: Props) => {
                   className={styles.number}
                   onClick={() => props.handlePageClick(props.totalPages)}
                 >
-                  <Text font="proto_mono" size="sm" opacity={0.4}>
+                  <Text font="macan-font" size="sm" opacity={0.4}>
                     {props.totalPages}
                   </Text>
                 </div>
@@ -155,7 +155,7 @@ export const Pagination = (props: Props) => {
           }}
         >
           <Text
-            font="proto_mono"
+            font="macan-font"
             size="lg"
             opacity={props.currentPage == props.totalPages ? 0.4 : 1}
           >

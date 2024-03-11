@@ -80,7 +80,7 @@ export const ProposalRow = ({
           }}
         >
           <Text
-            font="rm_mono"
+            font="macan-font"
             className={styles.tableData}
             size={isMobile ? "md" : "x-sm"}
           >
@@ -97,7 +97,7 @@ export const ProposalRow = ({
           }}
         >
           <Text
-            font="rm_mono"
+            font="macan-font"
             className={styles.tableData}
             size={isMobile ? "md" : "x-sm"}
           >
@@ -110,7 +110,7 @@ export const ProposalRow = ({
         className={styles.tableTitleColumn}
       >
         <div className={styles.rowTitle}>
-          <Text font="rm_mono" size={isMobile ? "md" : "sm"}>
+          <Text font="macan-font" size={isMobile ? "md" : "sm"}>
             {proposal.title}
           </Text>
         </div>
@@ -139,7 +139,7 @@ export const ProposalRow = ({
                 marginBottom: "10px",
               }}
             >
-              <Text opacity={0.4} size="md" font="rm_mono">
+              <Text opacity={0.4} size="md" font="macan-font">
                 {active ? "Vote Status" : "Status"}
               </Text>
             </Container>
@@ -170,7 +170,7 @@ export const ProposalRow = ({
                     }}
                   />
                 </div>
-                <Text font="rm_mono" className={styles.tableData} size="md">
+                <Text font="macan-font" className={styles.tableData} size="md">
                   {formatProposalStatus(proposal.status)}
                 </Text>
               </Container>
@@ -206,7 +206,7 @@ export const ProposalRow = ({
                     marginBottom: "10px",
                   }}
                 >
-                  <Text opacity={0.4} size="md" font="rm_mono">
+                  <Text opacity={0.4} size="md" font="macan-font">
                     Time left to Vote
                   </Text>
                 </Container>
@@ -216,7 +216,11 @@ export const ProposalRow = ({
                   className={styles.proposalVotingDate}
                   height="30px"
                 >
-                  <Text font="rm_mono" className={styles.tableData} size="lg">
+                  <Text
+                    font="macan-font"
+                    className={styles.tableData}
+                    size="lg"
+                  >
                     <Countdown
                       endTimestamp={BigInt(
                         new Date(proposal.voting_end_time).getTime()
@@ -248,13 +252,13 @@ export const ProposalRow = ({
                   marginBottom: "10px",
                 }}
               >
-                <Text opacity={0.4} size="md" font="rm_mono">
+                <Text opacity={0.4} size="md" font="macan-font">
                   Voting Date
                 </Text>
               </Container>
 
               <Container direction="row" className={styles.proposalVotingDate}>
-                <Text font="rm_mono" className={styles.tableData} size="lg">
+                <Text font="macan-font" className={styles.tableData} size="lg">
                   {new Date(proposal.voting_end_time).toDateString()}
                 </Text>
               </Container>
@@ -293,7 +297,7 @@ export const ProposalRow = ({
               marginBottom: "10px",
             }}
           >
-            <Text opacity={0.4} size="x-sm" font="rm_mono">
+            <Text opacity={0.4} size="x-sm" font="macan-font">
               {active ? "Vote Status" : "Status"}
             </Text>
           </Container>
@@ -324,7 +328,7 @@ export const ProposalRow = ({
                   }}
                 />
               </div>
-              <Text font="rm_mono" className={styles.tableData} size="x-sm">
+              <Text font="macan-font" className={styles.tableData} size="x-sm">
                 {formatProposalStatus(proposal.status)}
               </Text>
             </Container>
@@ -363,7 +367,7 @@ export const ProposalRow = ({
                   marginBottom: "10px",
                 }}
               >
-                <Text opacity={0.4} size="x-sm" font="rm_mono">
+                <Text opacity={0.4} size="x-sm" font="macan-font">
                   Time left to Vote
                 </Text>
               </Container>
@@ -373,7 +377,7 @@ export const ProposalRow = ({
                 className={styles.proposalVotingDate}
                 height="30px"
               >
-                <Text font="rm_mono" className={styles.tableData} size="sm">
+                <Text font="macan-font" className={styles.tableData} size="sm">
                   <Countdown
                     endTimestamp={BigInt(
                       new Date(proposal.voting_end_time).getTime()
@@ -406,13 +410,13 @@ export const ProposalRow = ({
                 marginBottom: "10px",
               }}
             >
-              <Text opacity={0.4} size="x-sm" font="rm_mono">
+              <Text opacity={0.4} size="x-sm" font="macan-font">
                 Voting Date
               </Text>
             </Container>
 
             <Container direction="row" className={styles.proposalVotingDate}>
-              <Text font="rm_mono" className={styles.tableData} size="sm">
+              <Text font="macan-font" className={styles.tableData} size="sm">
                 {new Date(proposal.voting_end_time).toDateString()}
               </Text>
             </Container>

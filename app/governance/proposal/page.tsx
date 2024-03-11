@@ -57,10 +57,6 @@ export default function Page() {
     chainId: chainId,
   });
 
-  const { userStaking } = useStaking({
-    chainId: chainId,
-    userEthAddress: signer?.account.address,
-  });
   const { isMobile } = useScreenSize();
   // transaction
   function castVote(proposalId: number, voteOption: VoteOption | null) {
@@ -319,7 +315,7 @@ export default function Page() {
             <div className={styles.proposalInfo}>
               <div style={{ paddingBottom: "8px" }}>
                 <Text
-                  font="rm_mono"
+                  font="macan-font"
                   opacity={0.3}
                   size={isMobile ? "md" : "x-sm"}
                 >
@@ -335,7 +331,7 @@ export default function Page() {
             <div className={styles.proposalInfo}>
               <div style={{ paddingBottom: "8px" }}>
                 <Text
-                  font="rm_mono"
+                  font="macan-font"
                   opacity={0.3}
                   size={isMobile ? "md" : "x-sm"}
                 >
@@ -351,7 +347,7 @@ export default function Page() {
             <div className={styles.proposalInfo}>
               <div style={{ paddingBottom: "8px" }}>
                 <Text
-                  font="rm_mono"
+                  font="macan-font"
                   opacity={0.3}
                   size={isMobile ? "md" : "x-sm"}
                 >
@@ -367,7 +363,7 @@ export default function Page() {
             <div className={styles.proposalInfoTimeLine}>
               <div style={{ marginBottom: "10px" }}>
                 <Text
-                  font="rm_mono"
+                  font="macan-font"
                   opacity={0.3}
                   size={isMobile ? "md" : "x-sm"}
                 >
@@ -379,12 +375,12 @@ export default function Page() {
                   <div className={styles.circle} />
                 </div>
                 <div className={styles.txt}>
-                  <Text font="rm_mono" size={isMobile ? "md" : "x-sm"}>
+                  <Text font="macan-font" size={isMobile ? "md" : "x-sm"}>
                     Created on
                   </Text>
                 </div>
                 <div>
-                  <Text font="rm_mono" size={isMobile ? "md" : "x-sm"}>
+                  <Text font="macan-font" size={isMobile ? "md" : "x-sm"}>
                     {formatTime(proposal.submit_time)}
                   </Text>
                 </div>
@@ -395,12 +391,12 @@ export default function Page() {
                   <div className={styles.circle} />
                 </div>
                 <div className={styles.txt}>
-                  <Text font="rm_mono" size={isMobile ? "md" : "x-sm"}>
+                  <Text font="macan-font" size={isMobile ? "md" : "x-sm"}>
                     Voting Ended on{" "}
                   </Text>
                 </div>
                 <div>
-                  <Text font="rm_mono" size={isMobile ? "md" : "x-sm"}>
+                  <Text font="macan-font" size={isMobile ? "md" : "x-sm"}>
                     {formatTime(proposal.voting_end_time)}
                   </Text>
                 </div>

@@ -30,8 +30,10 @@ const ToastWizard: React.FC<ToastProps> = ({
           }}
         />
       </Container>
-      <Text>Migrate your cosmos wallet?</Text>
-      <div className="toastButton">
+      <div className={styles.toastCaption}>
+        <Text>Migrate your cosmos wallet?</Text>
+      </div>
+      <div className={styles.toastButton}>
         <Button onClick={onOpenModal}>Migrate</Button>
       </div>
     </div>

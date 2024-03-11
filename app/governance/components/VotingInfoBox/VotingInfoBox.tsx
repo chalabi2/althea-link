@@ -47,7 +47,7 @@ export function VotingInfoBox({
       <div className={styles.option}>
         <Container direction="row">
           <div>
-            <Text font="proto_mono" size="sm">
+            <Text font="macan-font" size="sm">
               {value}
             </Text>
           </div>
@@ -67,7 +67,7 @@ export function VotingInfoBox({
               vertical: true,
             }}
           >
-            <Text font="proto_mono" opacity={0.4} size="x-sm">
+            <Text font="macan-font" opacity={0.4} size="x-sm">
               {displayAmount(amount, 0, {
                 commify: true,
                 short: true,

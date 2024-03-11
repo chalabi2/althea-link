@@ -12,6 +12,7 @@ import ToastWizard from "@/components/walletWizard/wizardToast";
 import { WalletWizardModal } from "@/components/walletWizard/wizardModal";
 import { useState } from "react";
 import { ToastContainer } from "@/components/toast";
+import useScreenSize from "@/hooks/helpers/useScreenSize";
 
 const nm_plex = localFont({
   src: "../fonts/IBMPlexSans-Regular.ttf",
@@ -45,6 +46,8 @@ export default function RootLayout({
     setIsWalletWizardOpen(false);
     setShowToast(true);
   };
+
+  const { isMobile } = useScreenSize();
 
   return (
     <html lang="en">
@@ -129,21 +132,24 @@ export default function RootLayout({
                 <NavBar />
 
                 {children}
-                <div id="modal-root">
-                  {showToast && (
-                    <ToastWizard
-                      isVisible={showToast}
-                      onOpenModal={openWalletWizard}
-                      onClose={() => setShowToast(false)}
+                {!isMobile && (
+                  <div id="modal-root">
+                    {showToast && (
+                      <ToastWizard
+                        isVisible={showToast}
+                        onOpenModal={openWalletWizard}
+                        onClose={() => setShowToast(false)}
+                      />
+                    )}
+                    <WalletWizardModal
+                      balance={10}
+                      isOpen={isWalletWizardOpen}
+                      onOpen={setIsWalletWizardOpen}
+                      onClose={closeWalletWizard}
                     />
-                  )}
-                  <WalletWizardModal
-                    balance={10}
-                    isOpen={isWalletWizardOpen}
-                    onOpen={setIsWalletWizardOpen}
-                    onClose={closeWalletWizard}
-                  />
-                </div>
+                  </div>
+                )}
+
                 <Footer />
               </div>
             </ToastContainer>

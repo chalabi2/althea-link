@@ -26,10 +26,12 @@ export type StakingTransactionParams = {
       amount: string;
       newValidatorAddress: string;
       newValidatorName?: string;
+      nativeBalance: string;
     }
   | {
       txType: StakingTxTypes.CLAIM_REWARDS;
       validatorAddresses: string[];
+      nativeBalance: string;
     }
   | {
       txType: StakingTxTypes.MULTI_STAKE | StakingTxTypes.MULTI_UNSTAKE;

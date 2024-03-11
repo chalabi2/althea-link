@@ -45,6 +45,7 @@ a {
 }
 
 .light {
+  --card-background-color: #f0f0f0;
   --graph-fill: #868686;
   --text-blue-color: #0038d2;
   --graph-filled: #141414;
@@ -107,6 +108,7 @@ a {
 }
 
 .dark {
+  --card-background-color: #111111;
   --card-primary-color-opp: #111111;
   --text-blue-color: #0038d2;
   --althea-blue: #0077ff;

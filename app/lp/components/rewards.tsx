@@ -33,7 +33,7 @@ const Rewards = (props: Props) => {
           }}
         >
           <Text
-            font="proto_mono"
+            font="macan-font"
             size="x-lg"
             style={{
               fontSize: "36px",

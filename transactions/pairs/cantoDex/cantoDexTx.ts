@@ -145,6 +145,11 @@ export function validateCantoDexLPTxParams(
         pair.symbol,
         pair.decimals
       );
+    default:
+      return {
+        error: true,
+        reason: TX_PARAM_ERRORS.PARAM_INVALID("Tx Type"),
+      };
   }
 }
 
@@ -305,8 +310,9 @@ async function removeLiquidity(
           ...txParams,
           amountLP: unstakeAmount,
         });
-      if (withdrawError) throw withdrawError;
-      txList.push(...withdrawTx.transactions);
+      if (withdrawTx && withdrawTx.transactions) {
+        txList.push(...withdrawTx.transactions);
+      }
     }
 
     /** Remove liquidity */
@@ -466,16 +472,19 @@ export async function stakeCantoDexLPTx(
   }
 }
 
-
 // function to get max input amount
 const tokenBalance = (token: {
   chainId: number;
   address: string;
   balance?: string;
 }) => {
-  const updatedBalance = BigNumber(token.balance ?? "0").minus("1000000000000000000");
+  const updatedBalance = BigNumber(token.balance ?? "0").minus(
+    "1000000000000000000"
+  );
   const wcantoAddress = getCantoCoreAddress(Number(token.chainId), "wcanto");
   return areEqualAddresses(token.address, wcantoAddress ?? "")
-    ? updatedBalance.isNegative() ? "0" : updatedBalance.toString()
-    : token.balance ?? "0"
+    ? updatedBalance.isNegative()
+      ? "0"
+      : updatedBalance.toString()
+    : token.balance ?? "0";
 };
