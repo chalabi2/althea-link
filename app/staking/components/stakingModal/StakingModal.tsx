@@ -156,15 +156,17 @@ export const StakingModal = (props: StakingModalParams) => {
         <Spacer></Spacer>
       </Container>
       <Spacer height="40px" />
-      <Text weight="bold">{props.validator?.description.moniker}</Text>
+      <Text font="macan-font" weight="bold">
+        {props.validator?.description.moniker}
+      </Text>
       <Spacer height="20px"></Spacer>
-      <div className={styles.modalInfoRow}>
+      <div font="macan-font" className={styles.modalInfoRow}>
         <div>
-          <Text>Available Balance</Text>
+          <Text font="macan-font">Available Balance</Text>
         </div>
         <div style={{ display: "flex", flexDirection: "row" }}>
           <div style={{ marginRight: "5px" }}>
-            <Text>
+            <Text font="macan-font">
               {displayAmount(props.cantoBalance, 18, {
                 short: false,
                 precision: 2,
@@ -184,10 +186,10 @@ export const StakingModal = (props: StakingModalParams) => {
       </div>
       <Spacer height="10px"></Spacer>
       <div className={styles.modalInfoRow}>
-        <Text>Delegation</Text>
+        <Text font="macan-font">Delegation</Text>
         <div style={{ display: "flex", flexDirection: "row" }}>
           <div style={{ marginRight: "5px" }}>
-            <Text>
+            <Text font="macan-font">
               {displayAmount(
                 userDelegationBalance ? userDelegationBalance : "0",
                 18,
@@ -208,8 +210,8 @@ export const StakingModal = (props: StakingModalParams) => {
       </div>
       <Spacer height="10px"></Spacer>
       <div className={styles.modalInfoRow}>
-        <Text>Commission</Text>
-        <Text>
+        <Text font="macan-font">Commission</Text>
+        <Text font="macan-font">
           {displayAmount(props.validator.commission, -2, {
             commify: true,
             precision: 2,
@@ -257,7 +259,7 @@ export const StakingModal = (props: StakingModalParams) => {
       )}
       <div className={styles.modalInfoRow}>
         <div>
-          <Text>Enter Amount</Text>
+          <Text font="macan-font">Enter Amount</Text>
         </div>
         <div className={styles.modalInfoRow2}></div>
       </div>
@@ -277,7 +279,7 @@ export const StakingModal = (props: StakingModalParams) => {
       </div>
       <Spacer height="10px" />
       <div style={{ width: "100%" }} className={styles.modalInfoRow}>
-        <Text size="x-sm" color="#EE4B2B">
+        <Text font="macan-font" size="x-sm" color="#EE4B2B">
           Please Note: Undelegation period is 21 days
         </Text>
       </div>

@@ -29,7 +29,7 @@
     text-transform: uppercase;
     transition: background 0.1s ease-out;
     &:hover {
-      background-color: var(--light-20-color, #222);
+      background-color: var(--card-surface-color, #1c508c);
 
       cursor: pointer;
       color: var(--primary-color, #111);
