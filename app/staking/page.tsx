@@ -312,7 +312,7 @@ export default function StakingPage() {
         width="100%"
       >
         <Container gap={20} width="100%">
-          {userStaking && userStaking.unbonding.length > 0 && (
+          {userStaking && userStaking?.unbonding?.length > 0 && (
             <Table
               title={
                 <Container
