@@ -16,7 +16,7 @@ interface CantoAccountReturn {
     };
   };
 }
-export async function getCantoAccountMetaData(
+export async function getAltheaAccountMetaData(
   cantoAddress: string,
   chainId: string | number
 ): PromiseWithError<CantoAccountReturn> {
@@ -49,7 +49,7 @@ export async function getCantoSenderObj(
   chainId: string | number
 ): PromiseWithError<Sender> {
   try {
-    const { data: cantoAccount, error } = await getCantoAccountMetaData(
+    const { data: cantoAccount, error } = await getAltheaAccountMetaData(
       senderCantoAddress,
       chainId
     );
@@ -81,10 +81,10 @@ export async function getGravitySenderObj(
 ): PromiseWithError<Sender> {
   try {
     const { data: gravityAccount, error } =
-    await tryFetchWithRetry<GravityAccountReturn>(
-      `${GRAVITY_BRIDGE.restEndpoint}/cosmos/auth/v1beta1/accounts/${senderGravityAddress}`,
-      5
-    );
+      await tryFetchWithRetry<GravityAccountReturn>(
+        `${GRAVITY_BRIDGE.restEndpoint}/cosmos/auth/v1beta1/accounts/${senderGravityAddress}`,
+        5
+      );
     if (error) throw error;
     return NO_ERROR({
       accountAddress: gravityAccount.account.address,

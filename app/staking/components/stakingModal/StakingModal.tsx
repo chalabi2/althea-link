@@ -148,7 +148,6 @@ export const StakingModal = (props: StakingModalParams) => {
     selectedTx == StakingTxTypes.DELEGATE
       ? maxDelegateAmount()
       : userDelegationBalance;
-
   return (
     <Container className={styles.modalContainer}>
       <Spacer />

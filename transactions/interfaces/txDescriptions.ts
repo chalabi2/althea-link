@@ -60,7 +60,7 @@ export const TX_DESCRIPTIONS = {
   }),
   DELEGATE: (validatorName: string, amount: string, undelegate: boolean) => ({
     title: `${undelegate ? "Undelegate from" : "Delegate to"} ${validatorName}`,
-    description: `${undelegate ? "Undelegate" : "Delegate"} ${amount} CANTO ${
+    description: `${undelegate ? "Undelegate" : "Delegate"} ${amount} ALTHEA ${
       undelegate ? "from" : "to"
     } ${validatorName}`,
   }),
@@ -72,7 +72,7 @@ export const TX_DESCRIPTIONS = {
     title: `${
       undelegate ? "Undelegate from" : "Delegating to"
     } ${validatorAmount} validators`,
-    description: `${undelegate ? "Undelegate" : "Delegate"} ${amount} CANTO ${
+    description: `${undelegate ? "Undelegate" : "Delegate"} ${amount} ALTHEA ${
       undelegate ? "from" : "to"
     } ${validatorAmount} validators`,
   }),
@@ -82,7 +82,7 @@ export const TX_DESCRIPTIONS = {
     amount: string
   ) => ({
     title: `Redelegate from ${validatorName} to ${newValidatorName}`,
-    description: `Redelegate ${amount} CANTO from ${validatorName} to ${newValidatorName}`,
+    description: `Redelegate ${amount} ALTHEA from ${validatorName} to ${newValidatorName}`,
   }),
   CLAIM_STAKING_REWARDS: () => ({
     title: "Claim Staking Rewards",
@@ -90,7 +90,8 @@ export const TX_DESCRIPTIONS = {
   }),
   DRIP_COMPTROLLER: () => ({
     title: "Drip Comptroller",
-    description: "Drip WCANTO rewards to the lending market from the reservoir",
+    description:
+      "Drip WALTHEA rewards to the lending market from the reservoir",
   }),
   GENERATE_PUBLIC_KEY: () => ({
     title: "Generate Public Key",

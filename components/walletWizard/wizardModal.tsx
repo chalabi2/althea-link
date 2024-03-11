@@ -38,7 +38,7 @@ export const WalletWizardModal: React.FC<WalletWizardModalProps> = ({
   const [keplrAddress, setKeplrAddress] = useState("");
   const [metamaskAddress, setMetamaskAddress] = useState("");
 
-  const chainId = "althea_417834-3";
+  const chainId = "althea_417834-4";
 
   const metamaskToCosmosAddress = ethToAlthea(metamaskAddress);
 

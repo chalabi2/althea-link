@@ -41,7 +41,7 @@ export const CANTO_MAINNET_EVM: EVMNetwork = {
 export const CANTO_MAINNET_COSMOS: CosmosNetwork = {
   ...cantoMainnetBaseInfo,
   id: "althea-mainnet",
-  chainId: "althea_417834-3",
+  chainId: "althea_417834-4",
   restEndpoint: "https://nodes.chandrastation.com/testnet/api/althea/",
   addressPrefix: "althea",
   checkAddress: function (address) {
@@ -82,7 +82,7 @@ export const CANTO_TESTNET_EVM: EVMNetwork = {
 export const CANTO_TESTNET_COSMOS: CosmosNetwork = {
   ...cantoMainnetBaseInfo,
   id: "althea-mainnet",
-  chainId: "althea_417834-3",
+  chainId: "althea_417834-4",
   restEndpoint: "https://nodes.chandrastation.com/testnet/api/althea/",
   addressPrefix: "althea",
   checkAddress: function (address) {
@@ -104,7 +104,7 @@ export const metamaskChainConfig = {
 };
 
 export const chainConfig = {
-  chainId: "althea_417834-3",
+  chainId: "althea_417834-4",
   chainName: "Althea",
   rpc: "https://nodes.chandrastation.com/testnet/rpc/althea/",
   rest: "https://nodes.chandrastation.com/testnet/api/althea/",

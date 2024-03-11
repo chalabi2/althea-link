@@ -92,9 +92,8 @@ export default function useBridgeIn(
               ...token,
               address: token.oftUnderlyingAddress,
             };
-          } else {
-            return token;
           }
+          return token;
         }) as ERC20Token[])
       : [],
     state.connectedEthAddress,
