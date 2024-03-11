@@ -43,7 +43,10 @@ import { ProposalVoteTxParams } from "@/transactions/gov";
 import { Proposal } from "@/hooks/gov/interfaces/proposal";
 
 export function displayAnalyticsAmount(amount: string, decimals: number) {
-  return displayAmount(amount, decimals, { short: false, precision: decimals < 0 ? 18 : decimals });
+  return displayAmount(amount, decimals, {
+    short: false,
+    precision: decimals < 0 ? 18 : decimals,
+  });
 }
 
 export function getAnalyticsTransactionFlowInfo(
@@ -385,14 +388,23 @@ function getStakingTransactionFlowData(
           18
         ),
         stakingNewValidator: stakingTxParams.newValidatorName,
+        stakingWalletBalance: displayAnalyticsAmount(
+          stakingTxParams.nativeBalance ?? "0",
+          18
+        ),
       };
     case StakingTxTypes.CLAIM_REWARDS:
-      return {};
+      return {
+        stakingDelegatedValidators: stakingTxParams.validatorAddresses,
+        stakingWalletBalance: displayAnalyticsAmount(
+          stakingTxParams.nativeBalance ?? "0",
+          18
+        ),
+      };
     default:
       return {};
   }
 }
-
 
 function getProposalVoteTransactionFlowData(
   voteTxParams: ProposalVoteTxParams
@@ -400,7 +412,7 @@ function getProposalVoteTransactionFlowData(
   return {
     govProposalId: voteTxParams.proposalId,
     govProposalTitle: voteTxParams.proposal?.title,
-    govVoteOption : voteTxParams.voteOption,
+    govVoteOption: voteTxParams.voteOption,
   };
 }
 
@@ -517,7 +529,10 @@ export function getAnalyticsStakingInfo(
   };
 }
 
-export function getAnalyticsProposalInfo(proposalId: any, proposals: Proposal[]) : AnalyticsGovernanceData {
+export function getAnalyticsProposalInfo(
+  proposalId: any,
+  proposals: Proposal[]
+): AnalyticsGovernanceData {
   const proposal = proposals.find((p) => p.proposal_id === Number(proposalId));
   return {
     govProposalId: proposal?.proposal_id,

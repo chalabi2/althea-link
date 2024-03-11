@@ -14,10 +14,10 @@
         "nativeWrappedToken": true,
         "chainId": 417834,
         "address": "0x56C03B8C4FA80Ba37F5A7b60CAAAEF749bB5b220",
-        "name": "Canto",
-        "symbol": "CANTO",
+        "name": "Althea",
+        "symbol": "ALTHEA",
         "decimals": 18,
-        "icon": "/icons/canto.svg",
+        "icon": "/tokens/althea.png",
         "isOFT": true,
         "isOFTProxy": true,
         "oftHasAdapterParams": true,
@@ -32,67 +32,7 @@
           }
         ]
       },
-      {
-        "id": "0xEbe265c9299d0C879bcc2A76948511BA6ED6C36D",
-        "chainId": 417834,
-        "address": "0xEbe265c9299d0C879bcc2A76948511BA6ED6C36D",
-        "name": "cNote",
-        "symbol": "cNOTE",
-        "decimals": 18,
-        "icon": "/icons/cNote.svg",
-        "isOFT": true,
-        "isOFTProxy": true,
-        "oftUnderlyingAddress": "0xEe602429Ef7eCe0a13e4FfE8dBC16e101049504C",
-        "oftHasAdapterParams": true,
-        "bridgeMethods": [
-          {
-            "chainId": "eth-mainnet",
-            "methods": ["2"]
-          },
-          {
-            "chainId": "bnb-mainnet",
-            "methods": ["2"]
-          }
-        ]
-      },
-      {
-        "id": "0xE936c358efA4d34c065DfbE37A778A965c192B1B",
-        "chainId": 417834,
-        "address": "0xE936c358efA4d34c065DfbE37A778A965c192B1B",
-        "name": "Note",
-        "symbol": "NOTE",
-        "decimals": 18,
-        "icon": "/icons/note.svg",
-        "isOFT": true,
-        "isOFTProxy": true,
-        "oftUnderlyingAddress": "0x4e71A2E537B7f9D9413D3991D37958c0b5e1e503",
-        "oftHasAdapterParams": true,
-        "bridgeMethods": [
-          {
-            "chainId": "eth-mainnet",
-            "methods": ["2"]
-          }
-        ]
-      },
-      {
-        "id": "0xf590C2B9eb804258ac6AE8419FaF35acf49F6813",
-        "chainId": 417834,
-        "address": "0xf590C2B9eb804258ac6AE8419FaF35acf49F6813",
-        "name": "Cadence",
-        "symbol": "CAD",
-        "decimals": 18,
-        "icon": "/icons/cadence.svg",
-        "isOFT": true,
-        "isOFTProxy": true,
-        "oftUnderlyingAddress": "0x8F20150205165C31D9b29C55a7B01F4911396306",
-        "oftHasAdapterParams": false,
-        "bridgeMethods": [
-          {
-            "chainId": "eth-mainnet",
-            "methods": ["2"]
-          }
-        ]
-      },
+
       {
         "id": "0x80b5a32E4F032B2a058b4F29EC95EEfEEB87aDcd",
         "chainId": 417834,
