@@ -10,21 +10,22 @@ import Text from "@/components/text";
 import Icon from "@/components/icon/icon";
 import { displayAmount } from "@/utils/formatting/balances.utils";
 import Button from "@/components/button/button";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { StakingTxTypes } from "@/transactions/staking";
 import { StakingTabs } from "../stakingTab/StakingTabs";
 import Selector from "@/components/selector/selector";
 import Amount from "@/components/amount/amount";
 import { Validation } from "@/config/interfaces";
 import { levenshteinDistance } from "@/utils/staking/searchUtils";
-import { Fee } from "@/transactions/interfaces";
+
 import {
   CLAIM_STAKING_REWARD_FEE,
   DELEGATE_FEE,
   REDELEGATE_FEE,
   UNDELEGATE_FEE,
 } from "@/config/consts/fees";
-
+import BigNumber from "bignumber.js";
+import { TX_ERROR_TYPES } from "@/config/consts/errors";
 interface StakingModalParams {
   validator: ValidatorWithDelegations | null;
   cantoBalance: string;
@@ -114,19 +115,38 @@ export const StakingModal = (props: StakingModalParams) => {
     }
   };
 
+  const userDelegationBalance = props?.validator?.userDelegation.balance;
+  const maxDelegateAmount = () => {
+    const updatedBalance = BigNumber(props.cantoBalance).minus(
+      DELEGATE_FEE.amount
+    );
+    return updatedBalance.isNegative() ? "0" : updatedBalance.toString();
+  };
+
   const txValidation = useMemo(
     () => props.txValidation(inputAmount, selectedTx, validatorToRedelegate),
-    [inputAmount, selectedTx, validatorToRedelegate, props]
+    [
+      inputAmount,
+      selectedTx,
+      validatorToRedelegate,
+      props.cantoBalance,
+      userDelegationBalance,
+    ]
   );
+
+  useEffect(() => {
+    if (userDelegationBalance === "0") {
+      setSelectedTx(StakingTxTypes.DELEGATE);
+    }
+  }, [userDelegationBalance]);
 
   if (!props.validator) {
     return;
   }
 
-  const userDelegationBalance = props.validator.userDelegation.balance;
   const maxAmount =
     selectedTx == StakingTxTypes.DELEGATE
-      ? props.cantoBalance
+      ? maxDelegateAmount()
       : userDelegationBalance;
 
   return (
@@ -252,7 +272,7 @@ export const StakingModal = (props: StakingModalParams) => {
           decimals={18}
           value={inputAmount}
           min={"0"}
-          max={maxAmount}
+          max={maxAmount ?? ""}
         />
       </div>
       <Spacer height="10px" />
@@ -263,7 +283,17 @@ export const StakingModal = (props: StakingModalParams) => {
       </div>
       <Spacer height="20px" />
       <div>
-        <Text size="x-sm" font="macan-font">
+        <Text
+          size="x-sm"
+          font="macan-font"
+          color={
+            txValidation.error &&
+            txValidation.reason ===
+              TX_ERROR_TYPES.NOT_ENOUGH_NATIVE_BALANCE_STAKING
+              ? " var(--extra-failure-color, #ff0000)"
+              : ""
+          }
+        >
           GAS FEES :{" "}
           {displayAmount(feeMap(selectedTx), 18, {
             short: false,

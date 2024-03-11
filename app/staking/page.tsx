@@ -65,6 +65,7 @@ export default function StakingPage() {
         ethAccount: signer.account.address,
         txType: StakingTxTypes.CLAIM_REWARDS,
         validatorAddresses: validatorAddresses,
+        nativeBalance: userStaking?.cantoBalance ?? "0",
       });
       txStore?.addNewFlow({
         txFlow: newFlow,
@@ -92,6 +93,7 @@ export default function StakingPage() {
           newValidatorAddress: validatorToRedelegate.operator_address,
           newValidatorName: validatorToRedelegate.description.moniker,
           amount: (convertToBigNumber(inputAmount, 18).data ?? "0").toString(),
+          nativeBalance: userStaking?.cantoBalance ?? "0",
         };
       case StakingTxTypes.DELEGATE:
       case StakingTxTypes.UNDELEGATE:
@@ -106,11 +108,6 @@ export default function StakingPage() {
         };
 
       case StakingTxTypes.MULTI_STAKE:
-        console.log(
-          "Validators in stakingTxParams:",
-          selectedValidators,
-          inputAmount
-        );
         if (!selectedValidators || selectedValidators.length === 0) {
           return null; // Or handle this case as needed
         }
@@ -291,6 +288,19 @@ export default function StakingPage() {
   const openMultiStakeModal = () => {
     setIsMultiStakeModalOpen(true);
   };
+
+  const claimRewardsTxValidation = useMemo(
+    () =>
+      transaction.validateTxParams({
+        chainId: chainId,
+        ethAccount: signer?.account.address ?? "",
+        txType: StakingTxTypes.CLAIM_REWARDS,
+        validatorAddresses: allUserValidatorsAddresses,
+        nativeBalance: userStaking.cantoBalance,
+      }),
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [userStaking.cantoBalance]
+  );
 
   return isLoading ? (
     <div className={styles.loaderContainer}>
@@ -780,7 +790,9 @@ export default function StakingPage() {
                   onClick={() =>
                     handleRewardsClaimClick(signer, allUserValidatorsAddresses)
                   }
-                  disabled={!signer || !hasUserStaked}
+                  disabled={
+                    !signer || !hasUserStaked || claimRewardsTxValidation.error
+                  }
                   color="secondary"
                   themed={false}
                 >
@@ -838,7 +850,7 @@ export default function StakingPage() {
         <MultiStakingModal
           cantoBalance={userStaking?.cantoBalance ?? "0"}
           validators={validators}
-          unbondings={userStaking?.unbonding}
+          delegations={userStaking?.validators}
           onConfirm={(amount, selectedTx, selectedValidators) =>
             handleStakingTxClick(
               amount,

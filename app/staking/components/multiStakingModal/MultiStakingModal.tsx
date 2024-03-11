@@ -31,6 +31,7 @@ import { DelegationRewards } from "@/hooks/staking/interfaces/hookParams";
 interface MultiStakingModalParams {
   validators: Validator[];
   delegations: ValidatorWithDelegations[];
+
   cantoBalance: string;
   txValidation: (
     amount: string,
