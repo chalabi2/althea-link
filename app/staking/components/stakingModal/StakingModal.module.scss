@@ -14,9 +14,11 @@
   height: 7%;
   flex-direction: row !important;
   justify-content: space-between;
+  font-family: var(--nm-macan) !important;
   .modalInfoRow2 {
     display: flex;
     flex-direction: row !important;
+    font-family: var(--nm-macan) !important;
   }
 }
 .buttonContainer {
