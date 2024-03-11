@@ -60,8 +60,8 @@ export default function RootLayout({
         />
       </head> */}
       {/* <!-- Primary Meta Tags --> */}
-      <title>althea app</title>
-      <meta name="title" content="althea app" />
+      <title>Althea.zone | Althea L1 App</title>
+      <meta name="title" content="Althea.zone | liquid infrastructure " />
       <meta
         name="description"
         content="Althea is your gateway to cross-chain liquid infrastructure"
@@ -69,23 +69,23 @@ export default function RootLayout({
 
       {/* <!-- Open Graph / Facebook --> */}
       <meta property="og:type" content="website" />
-      <meta property="og:url" content="https://althea.app" />
-      <meta property="og:title" content="Althea.app" />
+      <meta property="og:url" content="https://althea.zone" />
+      <meta property="og:title" content="althea.zone" />
       <meta
         property="og:description"
-        content="Althea is your gateway to cross-chain liquid infrastrucute_"
+        content="Althea is your gateway to cross-chain liquid infrastructure"
       />
-      <meta property="og:image" content="https://althea.app/meta.jpg" />
+      <meta property="og:image" content="https://althea.zone/meta.jpg" />
 
       {/* <!-- Twitter --> */}
       <meta property="twitter:card" content="summary_large_image" />
-      <meta property="twitter:url" content="https://althea.app" />
-      <meta property="twitter:title" content="Althea.app" />
+      <meta property="twitter:url" content="https://althea.zone" />
+      <meta property="twitter:title" content="althea.zone" />
       <meta
         property="twitter:description"
-        content="Althea is your gateway to cross-chain liquid infrastrucute_"
+        content="Althea is your gateway to cross-chain liquid infrastructure"
       />
-      <meta property="twitter:image" content="https://althea.app/meta.jpg" />
+      <meta property="twitter:image" content="https://althea.zone/meta.jpg" />
 
       <body
         className={"dark"}
