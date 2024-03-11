@@ -13,10 +13,14 @@ import Splash from "@/components/splash/splash";
 import Link from "next/link";
 import Container from "@/components/container/container";
 import LoadingComponent from "@/components/animated/loader";
+import useScreenSize from "@/hooks/helpers/useScreenSize";
 
 export default function GovernancePage() {
   const { chainId } = useCantoSigner();
+  const { isMobile } = useScreenSize();
   const { proposals, isProposalsLoading } = useProposals({ chainId: chainId });
+
+  //console.log(isMobile);
 
   const sorted_proposals = useMemo(
     () =>
@@ -34,21 +38,33 @@ export default function GovernancePage() {
   ) : (
     <div>
       <div className={styles.container}>
-        <div className={styles.header}>
-          <Text font="macan-font" className={styles.title}>
-            Governance
-          </Text>
-          <Text size="sm" opacity={0.4} className={styles.middleText}>
-            Stake your $ALTHEA to participate in governance
-          </Text>
-          <Link href="/staking">
-            <Button>Go to Staking</Button>
-          </Link>
-        </div>
+        <Container
+          width="100%"
+          className={styles.header}
+          direction={isMobile ? "column" : "row"}
+          style={{ justifyContent: "space-between" }}
+        >
+          <div>
+            <Text font="proto_mono" className={styles.title}>
+              Governance
+            </Text>
+          </div>
+          <Container
+            direction="column"
+            className={styles.middleText}
+            center={{ vertical: true }}
+            style={{ marginTop: isMobile ? "16px" : "" }}
+          >
+            <Text size="sm" color="#7B7B7B">
+              Stake {isMobile ? "" : "your"} $ALTHEA to participate in
+              governance
+            </Text>
+          </Container>
+        </Container>
 
-        <Spacer height="40px" />
+        <Spacer height="32px" />
 
-        <ProposalTable proposals={sorted_proposals} />
+        <ProposalTable proposals={sorted_proposals} isMobile={isMobile} />
         <Spacer height="40px" />
       </div>
     </div>

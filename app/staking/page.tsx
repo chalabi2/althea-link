@@ -21,7 +21,7 @@ import {
   GenerateMyStakingTableRow,
   GenerateUnbondingDelegationsTableRow,
   GenerateValidatorTableRow,
-} from "./components/validatorTableRow";
+} from "./components/tableRows";
 import { useMemo, useState } from "react";
 import { StakingModal } from "./components/stakingModal/StakingModal";
 import { Validator } from "@/hooks/staking/interfaces/validators";
@@ -39,7 +39,8 @@ import { Pagination } from "@/components/pagination/Pagination";
 import { levenshteinDistance } from "@/utils/staking/searchUtils";
 import { WalletClient } from "wagmi";
 import Analytics from "@/provider/analytics";
-
+import useScreenSize from "@/hooks/helpers/useScreenSize";
+import { getAnalyticsStakingInfo } from "@/utils/analytics";
 import LoadingComponent from "@/components/animated/loader";
 
 export default function StakingPage() {
@@ -52,7 +53,7 @@ export default function StakingPage() {
       chainId: chainId,
       userEthAddress: signer?.account.address,
     });
-
+  const { isMobile } = useScreenSize();
   // handle txs
   function handleRewardsClaimClick(
     signer: GetWalletClientResult | undefined,
@@ -296,6 +297,7 @@ export default function StakingPage() {
       <LoadingComponent size="lg" />
     </div>
   ) : (
+    //main content
     <div className={styles.container}>
       <div>
         <Spacer height="20px" />
@@ -304,31 +306,77 @@ export default function StakingPage() {
         STAKING
       </Text>
       <Spacer height="20px" />
-      <Container direction="row" gap={20} width="100%">
+      <Container
+        style={{ flexDirection: isMobile ? "column-reverse" : "row" }}
+        gap={20}
+        width="100%"
+      >
         <Container gap={20} width="100%">
           {userStaking && userStaking.unbonding.length > 0 && (
             <Table
-              title="Unbonding Delegations"
+              title={
+                <Container
+                  style={{ padding: isMobile ? "0px 0px 8px 8px" : "0" }}
+                >
+                  UNBONDING DELEGATIONS
+                </Container>
+              }
               headerFont="macan-font"
               headers={[
                 {
-                  value: "Name",
+                  value: !isMobile ? (
+                    "Name"
+                  ) : (
+                    <Container
+                      width="100%"
+                      style={{
+                        textAlign: "left",
+                        paddingLeft: "16px",
+                      }}
+                    >
+                      Name
+                    </Container>
+                  ),
+                  ratio: 5,
+                },
+                {
+                  value: !isMobile ? (
+                    "Undelegation"
+                  ) : (
+                    <Container
+                      width="100%"
+                      style={{
+                        textAlign: "left",
+                      }}
+                    >
+                      Undelegation
+                    </Container>
+                  ),
                   ratio: 3,
                 },
                 {
-                  value: "Undelegation",
-                  ratio: 2,
-                },
-                {
-                  value: "Completion Time",
-                  ratio: 5,
+                  value: !isMobile ? (
+                    "Completion Time"
+                  ) : (
+                    <Container
+                      width="100%"
+                      style={{
+                        textAlign: "left",
+                        paddingLeft: "16px",
+                      }}
+                    >
+                      Completion
+                    </Container>
+                  ),
+                  ratio: 4,
                 },
               ]}
               content={[
                 ...userStaking.unbonding.map((userStakingElement, index) =>
                   GenerateUnbondingDelegationsTableRow(
                     userStakingElement,
-                    index
+                    index,
+                    isMobile
                   )
                 ),
               ]}
@@ -336,28 +384,86 @@ export default function StakingPage() {
           )}
           {hasUserStaked && userStaking && (
             <Table
-              title="My Staking"
+              title={
+                <Container
+                  style={{ padding: isMobile ? "0px 0px 8px 8px" : "0" }}
+                >
+                  MY STAKING
+                </Container>
+              }
               headerFont="macan"
+              onRowsClick={
+                isMobile
+                  ? userStaking.validators
+                      .filter(
+                        (e) =>
+                          Number(formatBalance(e.userDelegation.balance, 18)) >
+                          0.0000001
+                      )
+                      .sort((a, b) =>
+                        b.userDelegation.balance.localeCompare(
+                          a.userDelegation.balance
+                        )
+                      )
+                      .map((validator) => () => handleClick(validator))
+                  : undefined
+              }
               headers={[
                 {
-                  value: "Name",
+                  value: !isMobile ? (
+                    "Name"
+                  ) : (
+                    <Container
+                      width="100%"
+                      style={{
+                        textAlign: "left",
+                        paddingLeft: "16px",
+                      }}
+                    >
+                      Name
+                    </Container>
+                  ),
                   ratio: 5,
                 },
                 {
-                  value: "My Stake",
+                  value: !isMobile ? (
+                    "My Stake"
+                  ) : (
+                    <Container
+                      width="100%"
+                      style={{
+                        textAlign: "left",
+                      }}
+                    >
+                      My Stake
+                    </Container>
+                  ),
                   ratio: 3,
                 },
                 {
                   value: "Total Stake",
                   ratio: 3,
+                  hideOnMobile: true,
                 },
                 {
-                  value: "Commission",
+                  value: !isMobile ? (
+                    "Commission"
+                  ) : (
+                    <Container
+                      width="100%"
+                      style={{
+                        textAlign: "left",
+                      }}
+                    >
+                      Commission
+                    </Container>
+                  ),
                   ratio: 3,
                 },
                 {
                   value: <div />,
                   ratio: 3,
+                  hideOnMobile: true,
                 },
               ]}
               content={[
@@ -373,8 +479,11 @@ export default function StakingPage() {
                     )
                   )
                   .map((userStakingElement, index) =>
-                    GenerateMyStakingTableRow(userStakingElement, index, () =>
-                      handleClick(userStakingElement)
+                    GenerateMyStakingTableRow(
+                      userStakingElement,
+                      index,
+                      () => handleClick(userStakingElement),
+                      isMobile
                     )
                   ),
               ]}
@@ -382,24 +491,49 @@ export default function StakingPage() {
           )}
           {validators.length > 0 && (
             <Table
-              title={"VALIDATORS"}
+              title={
+                <Container
+                  style={{ padding: isMobile ? "0px 0px 8px 8px" : "0" }}
+                >
+                  VALIDATORS
+                </Container>
+              }
+              onRowsClick={
+                isMobile
+                  ? currentFilter == "ACTIVE"
+                    ? paginatedvalidators.map(
+                        (validator) => () => handleClick(validator)
+                      )
+                    : undefined
+                  : undefined
+              }
               secondary={
                 <Container
-                  direction="row"
+                  //direction={isMobile ? "column" : "row"}
                   gap={20}
                   width="100%"
                   style={{
                     justifyContent: "flex-end",
+                    display: "flex",
+                    flexDirection: isMobile ? "column-reverse" : "row",
                   }}
                 >
-                  <Input
-                    height={38}
-                    type="search"
-                    value={searchQuery}
-                    onChange={(e) => setSearchQuery(e.target.value)}
-                    placeholder={"Search..."}
-                  />
-                  <Container width="200px">
+                  <Container
+                    style={{ padding: isMobile ? "0 8px 8px 8px" : "" }}
+                  >
+                    <Input
+                      height={38}
+                      type="search"
+                      value={searchQuery}
+                      onChange={(e) => setSearchQuery(e.target.value)}
+                      placeholder={"Search..."}
+                    />
+                  </Container>
+
+                  <Container
+                    width={isMobile ? "100%" : "200px"}
+                    style={{ padding: isMobile ? "0 8px 0 8px" : "" }}
+                  >
                     <ToggleGroup
                       options={["ACTIVE", "INACTIVE"]}
                       selected={currentFilter}
@@ -418,33 +552,73 @@ export default function StakingPage() {
                 {
                   value: "Rank",
                   ratio: 2,
+                  hideOnMobile: true,
                 },
                 {
-                  value: "Name",
-                  ratio: 6,
+                  value: !isMobile ? (
+                    "Name"
+                  ) : (
+                    <Container
+                      width="100%"
+                      style={{
+                        textAlign: "left",
+                        paddingLeft: "16px",
+                      }}
+                    >
+                      Name
+                    </Container>
+                  ),
+                  ratio: isMobile ? 5 : 6,
                 },
                 {
-                  value: "Total Stake",
+                  value: !isMobile ? (
+                    "Total Stake"
+                  ) : (
+                    <Container
+                      width="100%"
+                      style={{
+                        textAlign: "left",
+                      }}
+                    >
+                      Total Stake
+                    </Container>
+                  ),
                   ratio: 4,
                 },
                 {
-                  value: "Commission",
+                  value: !isMobile ? (
+                    "Commission"
+                  ) : (
+                    <Container
+                      width="100%"
+                      style={{
+                        textAlign: "left",
+                      }}
+                    >
+                      Commission
+                    </Container>
+                  ),
                   ratio: 3,
                 },
                 {
                   value: <div />,
                   ratio: 4,
+                  hideOnMobile: true,
                 },
               ]}
               content={
                 paginatedvalidators.length > 0
                   ? [
                       ...paginatedvalidators.map((validator, index) =>
-                        GenerateValidatorTableRow(validator, index, () =>
-                          handleClick(validator)
+                        GenerateValidatorTableRow(
+                          validator,
+                          index,
+                          () => handleClick(validator),
+                          isMobile
                         )
                       ),
                       <Pagination
+                        isMobile={isMobile}
                         key="pagination"
                         currentPage={currentPage}
                         totalPages={totalPages}
@@ -469,76 +643,151 @@ export default function StakingPage() {
             />
           )}
         </Container>
-        <Container className={styles.infoCard}>
-          <Container direction="column" width="100%" height="100%">
-            <div className={styles.infoBox}>
-              <div>
-                <Text font="macan">Total Staked </Text>
-              </div>
-              <Container direction="row" center={{ vertical: true }}>
-                <div style={{ marginRight: "5px" }}>
-                  <Text font="macan-font" size="title">
-                    {totalStaked}
-                  </Text>
-                </div>
-                <p> </p>
-                <Icon
-                  themed
-                  icon={{
-                    url: "/althea.png",
-                    size: 24,
-                  }}
-                />
-              </Container>
-            </div>
-            <div className={styles.infoBox}>
-              <div>
-                <Text font="macan">APR</Text>
-              </div>
-              <Container direction="row" center={{ vertical: true }}>
-                <Text font="macan-font" size="title">
-                  {formatPercent((parseFloat(apr) / 100).toString())}
-                </Text>
-              </Container>
-            </div>
-            <div className={styles.infoBox}>
-              <div>
-                <Text font="macan">Rewards</Text>
-              </div>
-              <Container direction="row" center={{ vertical: true }}>
-                <div style={{ marginRight: "5px" }}>
-                  <Text font="macan-font" size="title">
-                    {displayAmount(
-                      userStaking.rewards?.total[0]?.amount &&
-                        !isNaN(Number(userStaking.rewards?.total[0]?.amount))
-                        ? userStaking.rewards?.total[0]?.amount
-                        : "0.00",
-                      18,
-                      { precision: 2 }
-                    )}
-                  </Text>
-                  <Text> </Text>
-                </div>
-                <Icon
-                  themed
-                  icon={{
-                    url: "/althea.png",
-                    size: 24,
-                  }}
-                />
-              </Container>
-            </div>
+
+        {isMobile && (
+          <div>
             <Spacer height="20px" />
-            <Button
-              width={"fill"}
-              height="large"
-              onClick={() =>
-                handleRewardsClaimClick(signer, allUserValidatorsAddresses)
-              }
-              disabled={!signer || !hasUserStaked}
+          </div>
+        )}
+
+        <Container
+          className={styles.infoCard}
+          width={isMobile ? "100%" : "30%"}
+          style={{
+            position: isMobile ? "relative" : "sticky",
+          }}
+          height={!isMobile ? "400px" : "320px"}
+        >
+          <Container
+            direction="column"
+            width="100%"
+            height="100%"
+            backgroundColor="#222222"
+          >
+            <Container
+              style={{
+                borderBottom: "1px solid #3d3d3d",
+                padding: "16px",
+              }}
             >
-              Claim Rewards
-            </Button>
+              <Text font="macan" color="#FFFFFF" size={isMobile ? "lg" : "sm"}>
+                Staking Stats{" "}
+              </Text>
+            </Container>
+            <Container style={{ padding: "16px" }}>
+              <div className={styles.infoBox}>
+                <div style={{ marginBottom: "8px" }}>
+                  <Text
+                    font="rm_mono"
+                    color="#767676"
+                    size={isMobile ? "md" : "x-sm"}
+                  >
+                    Rewards
+                  </Text>
+                </div>
+                <Container direction="row" center={{ vertical: true }}>
+                  <Icon
+                    themed
+                    icon={{
+                      url: "/tokens/althea.png",
+                      size: 20,
+                    }}
+                    style={{ filter: "invert(1)" }}
+                  />
+                  <div style={{ margin: "0 4px 0 4px" }}>
+                    <Text
+                      font="macan"
+                      size={isMobile ? "title" : "x-lg"}
+                      color="#FFFFFF"
+                    >
+                      {displayAmount(
+                        userStaking.rewards?.total[0]?.amount &&
+                          !isNaN(Number(userStaking.rewards?.total[0]?.amount))
+                          ? userStaking.rewards?.total[0]?.amount
+                          : "0.00",
+                        18,
+                        { precision: 2 }
+                      )}
+                    </Text>
+                    <Text> </Text>
+                  </div>
+                </Container>
+              </div>
+              <Container direction={isMobile ? "row" : "column"}>
+                <div
+                  className={styles.infoBox}
+                  style={{ width: isMobile ? "50%" : "" }}
+                >
+                  <div style={{ marginBottom: "8px" }}>
+                    <Text
+                      font="rm_mono"
+                      color="#767676"
+                      size={isMobile ? "md" : "x-sm"}
+                    >
+                      APR
+                    </Text>
+                  </div>
+                  <Container direction="row" center={{ vertical: true }}>
+                    <Text
+                      font="macan"
+                      size={isMobile ? "x-lg" : "lg"}
+                      color="#FFFFFF"
+                    >
+                      {formatPercent((parseFloat(apr) / 100).toString())}
+                    </Text>
+                  </Container>
+                </div>
+                <div className={styles.infoBox}>
+                  <div style={{ marginBottom: "8px" }}>
+                    <Text
+                      font="rm_mono"
+                      color="#767676"
+                      size={isMobile ? "md" : "x-sm"}
+                    >
+                      Total Staked{" "}
+                    </Text>
+                  </div>
+                  <Container direction="row" center={{ vertical: true }}>
+                    <Icon
+                      icon={{
+                        url: "/tokens/althea.png",
+                        size: 18,
+                      }}
+                      style={{ filter: "invert(1)" }}
+                      //color="primary"
+                    />
+                    <div style={{ margin: "0 4px 0 4px" }}>
+                      <Text
+                        font="macan"
+                        size={isMobile ? "x-lg" : "lg"}
+                        color="#FFFFFF"
+                      >
+                        {displayAmount(
+                          totalStaked ? totalStaked.toFixed(2) : "0",
+                          0
+                        )}
+                      </Text>
+                    </div>
+                    <p> </p>
+                  </Container>
+                </div>
+              </Container>
+              <Spacer height="20px" />
+              <Container>
+                <Button
+                  width={"fill"}
+                  height="large"
+                  onClick={() =>
+                    handleRewardsClaimClick(signer, allUserValidatorsAddresses)
+                  }
+                  disabled={!signer || !hasUserStaked}
+                  color="secondary"
+                  themed={false}
+                >
+                  <Text font="macan">Claim Staking Rewards</Text>
+                </Button>
+              </Container>
+            </Container>
             <Spacer height="20px" />
             <Button
               width={"fill"}
