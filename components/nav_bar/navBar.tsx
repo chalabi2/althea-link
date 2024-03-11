@@ -190,7 +190,7 @@ const NavBar = () => {
           >
             <Text size="sm">Governance</Text>
           </Link>
-        )} */}
+        )}
         {/*  <div
           className={styles.moreLink}
           onMouseEnter={() => setIsMoreModalOpen(true)}
