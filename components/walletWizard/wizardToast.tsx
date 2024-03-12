@@ -28,6 +28,7 @@ const ToastWizard: React.FC<ToastProps> = ({
             url: "/close.svg",
             size: 40,
           }}
+          style={{ filter: "invert(var(--dark-mode))" }}
         />
       </Container>
       <div className={styles.toastCaption}>
