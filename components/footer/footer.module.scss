@@ -29,10 +29,12 @@
     text-transform: uppercase;
     transition: background 0.1s ease-out;
     &:hover {
-      background-color: var(--card-surface-color, #1c508c);
+      background-color: var(--althea-blue, #0077ff);
+      opacity: 0.5;
 
       cursor: pointer;
-      color: var(--primary-color, #111);
+      color: var(--primary-color, #ffffff);
+      opacity: 1;
     }
 
     &:active {
