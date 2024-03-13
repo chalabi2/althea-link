@@ -6,7 +6,7 @@ import { getCantoCosmosNetwork } from "@/utils/networks";
 
 interface CantoAccountReturn {
   account: {
-    base_account: {
+    base_account?: {
       account_number: number;
       sequence: number;
       address: string;
@@ -14,8 +14,15 @@ interface CantoAccountReturn {
         key: string;
       } | null;
     };
+    account_number?: number;
+    sequence?: number;
+    address?: string;
+    pub_key?: {
+      key: string;
+    } | null;
   };
 }
+
 export async function getAltheaAccountMetaData(
   cantoAddress: string,
   chainId: string | number
@@ -54,12 +61,17 @@ export async function getCantoSenderObj(
       chainId
     );
     if (error) throw error;
-    const baseAccount = cantoAccount.account.base_account;
+    let baseAccount;
+    if (!cantoAccount.account.base_account) {
+      baseAccount = cantoAccount.account;
+    } else {
+      baseAccount = cantoAccount?.account?.base_account;
+    }
     return NO_ERROR({
-      accountAddress: baseAccount.address,
-      sequence: baseAccount.sequence,
-      accountNumber: baseAccount.account_number,
-      pubkey: baseAccount.pub_key?.key,
+      accountAddress: baseAccount?.address || "",
+      sequence: baseAccount?.sequence,
+      accountNumber: baseAccount?.account_number,
+      pubkey: baseAccount?.pub_key?.key,
     });
   } catch (err) {
     return NEW_ERROR("getCantoSenderObj", err);

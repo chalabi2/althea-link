@@ -14,9 +14,9 @@ export interface Fee {
   gas: string;
 }
 export interface Sender {
-  accountAddress: string;
-  sequence: number;
-  accountNumber: number;
+  accountAddress: string | undefined;
+  sequence: number | undefined;
+  accountNumber: number | undefined;
   pubkey: string | null | undefined;
 }
 

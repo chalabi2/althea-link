@@ -228,6 +228,7 @@ export async function checkGbridgeInTxStatus(
         // grab data from event
         if (event.confirmed === true) {
           return NO_ERROR({ status: "SUCCESS", completedIn: undefined });
+          // eslint-disable-next-line no-else-return
         } else {
           return NO_ERROR({
             status: "PENDING",

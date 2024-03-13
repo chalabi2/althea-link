@@ -47,6 +47,7 @@ export async function waitForTransaction(
 }> {
   switch (txType) {
     case "EVM":
+      // eslint-disable-next-line no-case-declarations
       const receipt = await evmWait({
         chainId: chainId as number,
         hash: hash as `0x${string}`,

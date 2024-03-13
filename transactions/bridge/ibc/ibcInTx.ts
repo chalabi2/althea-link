@@ -440,8 +440,8 @@ async function evmosIBCIn(
     parseInt("200000", 10),
     "ethsecp256",
     senderObj.pubkey,
-    senderObj.sequence,
-    senderObj.accountNumber,
+    senderObj.sequence ?? 0,
+    senderObj.accountNumber ?? 0,
     evmosNetwork.chainId
   );
 
@@ -456,7 +456,7 @@ async function evmosIBCIn(
           bodyBytes: keplrPayload.signDirect.body.serializeBinary(),
           authInfoBytes: keplrPayload.signDirect.authInfo.serializeBinary(),
           chainId: evmosNetwork.chainId,
-          accountNumber: new Long(senderObj.accountNumber),
+          accountNumber: new Long(senderObj.accountNumber ?? 0),
         }
       );
       if (!signResponse) {

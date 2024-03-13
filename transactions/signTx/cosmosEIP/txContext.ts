@@ -40,6 +40,7 @@ async function generateCantoEIP712TxContext(
       altheaAddress,
       chainId
     );
+
     if (senderObjError) throw senderObjError;
 
     /** return context */
