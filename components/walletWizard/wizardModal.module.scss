@@ -48,8 +48,8 @@
 
 .close {
   position: absolute;
-  top: 6px;
-  right: 6px;
+  top: 0px;
+  right: 0px;
   cursor: pointer;
   transition:
     transform 0.3s 0.2s cubic-bezier(0.165, 0.84, 0.44, 1),
@@ -156,5 +156,5 @@
 }
 
 .toastCaption {
-  margin-top: 4px;
+  margin-top: 0px;
 }

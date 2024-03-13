@@ -7,27 +7,23 @@ import {
 } from "@/transactions/interfaces";
 import { getCantoBalance } from "@/utils/cosmos";
 import BigNumber from "bignumber.js";
-
+import { createMsgsSend } from "../messages/messageSend";
+import { PUB_KEY_BOT_ADDRESS } from "@/config/consts/addresses";
 import { getCantoCosmosNetwork } from "@/utils/networks";
 import { asyncCallWithRetry, sleep } from "@/utils/async";
-import { createMsgsDelegate } from "../messages/staking/delegate";
 
 export async function generateCantoPublicKeyWithTx(
   chainId: number,
   ethAddress: string,
-  altheaAddress: string,
-  validatorAddress: string,
-  amount: string,
-  undelegate: boolean
+  cantoAddress: string
 ): PromiseWithError<Transaction[]> {
   try {
     // get canto cosmos network
     const cantoNetwork = getCantoCosmosNetwork(chainId);
-
     if (!cantoNetwork) throw new Error("invalid chainId");
     // get current canto balance to see if enough canto for public key gen
     const { data: cantoBalance, error: cantoBalanceError } =
-      await getCantoBalance(cantoNetwork.chainId, altheaAddress);
+      await getCantoBalance(cantoNetwork.chainId, cantoAddress);
     if (cantoBalanceError) throw cantoBalanceError;
 
     const enoughCanto = new BigNumber(cantoBalance).gte("300000000000000000");
@@ -42,7 +38,7 @@ export async function generateCantoPublicKeyWithTx(
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          canto_address: altheaAddress,
+          canto_address: cantoAddress,
           eth_address: ethAddress,
         }),
       });
@@ -53,7 +49,7 @@ export async function generateCantoPublicKeyWithTx(
         async (): PromiseWithError<boolean> => {
           const { data, error } = await getCantoBalance(
             cantoNetwork.chainId,
-            altheaAddress
+            cantoAddress
           );
           if (error) return NEW_ERROR("generateCantoPublicKeyWithTx", error);
           if (new BigNumber(data).lte("300000000000000000")) {
@@ -72,11 +68,8 @@ export async function generateCantoPublicKeyWithTx(
       _generatePubKeyTx(
         chainId,
         ethAddress,
-        altheaAddress,
-        TX_DESCRIPTIONS.GENERATE_PUBLIC_KEY(),
-        validatorAddress,
-        amount,
-        undelegate
+        cantoAddress,
+        TX_DESCRIPTIONS.GENERATE_PUBLIC_KEY()
       ),
     ]);
   } catch (err) {
@@ -87,18 +80,14 @@ export async function generateCantoPublicKeyWithTx(
 const _generatePubKeyTx = (
   chainId: number,
   ethSender: string,
-  altheaSender: string,
-  description: TransactionDescription,
-  validatorAddress: string,
-  amount: string,
-  undelegate: boolean
+  cantoSender: string,
+  description: TransactionDescription
 ): Transaction => {
-  const pubKeyTx = createMsgsDelegate({
-    delegatorCantoAddress: altheaSender,
-    validatorAddress: validatorAddress,
-    amount: amount,
+  const pubKeyTx = createMsgsSend({
+    fromAddress: cantoSender,
+    destinationAddress: PUB_KEY_BOT_ADDRESS,
+    amount: "1",
     denom: "aalthea",
-    undelegate: undelegate,
   });
   return {
     chainId,

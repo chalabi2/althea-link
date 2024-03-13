@@ -121,7 +121,6 @@ const TxItem = (props: TxItemProps) => {
           {props.tx.error && (
             <Text size="sm" style={{ color: "var(--extra-failure-color,red)" }}>
               {formatError(props.tx.error)}
-              {console.log(props.tx.error)}
             </Text>
           )}
         </div>

@@ -64,20 +64,6 @@ export async function stakingTx(
   // switch based on tx type
   switch (txParams.txType) {
     case StakingTxTypes.DELEGATE:
-      if (checkPubKeyError || !hasPubKey) {
-        // error getting account or no public key available, so make a public key
-        const { data: pubKeyTxs, error: pubKeyTxsError } =
-          await generateCantoPublicKeyWithTx(
-            CANTO_MAINNET_EVM.chainId,
-            txParams.ethAccount,
-            altheaAddress,
-            txParams.validator.operator_address,
-            txParams.amount,
-            false
-          );
-        if (pubKeyTxsError) throw pubKeyTxsError;
-        txList.push(...pubKeyTxs);
-      }
       if (!checkPubKeyError || hasPubKey) {
         txList.push(
           _delegateTx(

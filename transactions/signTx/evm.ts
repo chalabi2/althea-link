@@ -63,18 +63,19 @@ export async function signEVMTransaction(
     );
     if (gasError) throw gasError;
 
-    const transaction = await contractInstance.methods[tx.method](...(tx.params as [])).send({
+    const transaction = await contractInstance.methods[tx.method](
+      ...(tx.params as [])
+    ).send({
       from: tx.fromAddress,
       value: tx.value,
       gas: gasLimit,
-    })
+    });
     if (!transaction.transactionHash)
       throw new Error("performEVMTransaction: no tx hash");
 
     return NO_ERROR(transaction.transactionHash as `0x${string}`);
   } catch (err) {
     if (err instanceof BaseError) {
-      console.log(err.shortMessage);
       return NEW_ERROR("performEVMTransaction::" + err.shortMessage);
     }
     return NEW_ERROR("performEVMTransaction", err);
