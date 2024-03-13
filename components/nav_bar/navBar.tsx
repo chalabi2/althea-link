@@ -83,7 +83,7 @@ const NavBar = () => {
           />
         </button>
         <Link href="/">
-          <Image src="/althea.png" width={30} height={30} alt="althea" />
+          <Image src="/althea.png" width={40} height={40} alt="althea" />
         </Link>
       </div>
 
