@@ -82,7 +82,7 @@ async function signAndBroadcastCosmosTransaction(
 ): PromiseWithError<any> {
   try {
     // create correct fee object for EIP712
-    const feeObj = generateFeeObj(tx.fee, context.sender.accountAddress);
+    const feeObj = generateFeeObj(tx.fee, context.sender.accountAddress ?? "");
 
     // check if multiple messages are included in transactions
     const eipMsgArray = Array.isArray(tx.eipMsg) ? tx.eipMsg : [tx.eipMsg];
@@ -92,8 +92,8 @@ async function signAndBroadcastCosmosTransaction(
 
     // create eip payload
     const eipPayload = generateMessageWithMultipleTransactions(
-      context.sender.accountNumber.toString(),
-      context.sender.sequence.toString(),
+      (context.sender.accountNumber ?? "").toString(),
+      (context.sender.sequence ?? "").toString(),
       context.chain.cosmosChainId,
       context.memo,
       feeObj,
@@ -137,8 +137,8 @@ async function signAndBroadcastCosmosTransaction(
       parseInt(tx.fee.gas, 10),
       "ethsecp256",
       context.sender.pubkey,
-      context.sender.sequence,
-      context.sender.accountNumber,
+      context.sender.sequence ?? 0,
+      context.sender.accountNumber ?? 0,
       context.chain.cosmosChainId
     );
 
@@ -153,9 +153,9 @@ async function signAndBroadcastCosmosTransaction(
       signatureToWeb3Extension(
         context.chain,
         {
-          accountAddress: context.sender.accountAddress,
-          sequence: context.sender.sequence,
-          accountNumber: context.sender.accountNumber,
+          accountAddress: context.sender.accountAddress ?? "",
+          sequence: context.sender.sequence ?? 0,
+          accountNumber: context.sender.accountNumber ?? 0,
           pubkey: context.sender.pubkey,
         },
         signature
