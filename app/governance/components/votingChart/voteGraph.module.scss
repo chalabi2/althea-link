@@ -16,7 +16,7 @@
   flex-direction: row;
   justify-content: space-around;
   margin: 20px 20px 20px 20px;
-  border-bottom: 1px solid var(--border-stroke-color, #b3b3b3);
+  border-bottom: 1px solid var(--althea-blue, #0077ff);
   .barContainer {
     display: flex;
     flex-direction: column-reverse;
@@ -49,16 +49,14 @@
         justify-content: center;
         padding-left: 2px;
       }
+    }
+
+    .voteInfo {
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+    }
   }
-  
-  .voteInfo {
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-  }
-  
-  }
-  
 }
 
 .inforow {

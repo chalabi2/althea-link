@@ -149,6 +149,7 @@ export default function Page() {
                 url: "/dropdown.svg",
                 size: 22,
               }}
+              style={{ filter: "invert(var(--dark-mode))" }}
               themed
             />
           </div>

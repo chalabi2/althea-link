@@ -437,6 +437,7 @@ export const ProposalRow = ({
               size: 22,
             }}
             themed
+            style={{ filter: "invert(var(--dark-mode))" }}
           />
         </div>
       </Container>

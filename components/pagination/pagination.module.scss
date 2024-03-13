@@ -20,9 +20,9 @@
   justify-content: center;
   align-items: center;
   padding: 5px 10px 5px 10px;
-  @media  screen and (min-width: 768px) {
+  @media screen and (min-width: 768px) {
     &:hover {
-      background-color: var(--border-stroke-color, #b3b3b3);
+      background-color: var(--althea-blue, #0077ff);
       z-index: 1;
     }
   }
@@ -39,13 +39,11 @@
   align-items: center;
   padding: 5px 10px 5px 10px;
   cursor: pointer;
-  @media  screen and (min-width: 768px) {
+  @media screen and (min-width: 768px) {
     &:hover {
-      background-color: var(--border-stroke-color, #b3b3b3);
+      background-color: var(--althea-blue, #0077ff);
+      opacity: 0.4;
       z-index: 1;
     }
   }
 }
-
-
-

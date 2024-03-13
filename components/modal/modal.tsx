@@ -78,6 +78,7 @@ const Modal = ({
           <Container className={styles.close} onClick={handleClose}>
             <Icon
               themed
+              style={{ filter: "invert(var(--dark-mode))" }}
               icon={{
                 url: "/close.svg",
                 size: 40,
