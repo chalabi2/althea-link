@@ -3,7 +3,7 @@ import { getAltheaAccountMetaData } from "../cosmos";
 
 /**
  *
- * @param {string} cantoAddress canto address to check if public key exists
+ * @param {string} altheaAddress canto address to check if public key exists
  * @param {string} chainId chainId to check public key on
  * @returns {boolean} true if the user has a pub key on the chain or error
  */
@@ -17,7 +17,7 @@ export async function checkCantoPubKey(
       await getAltheaAccountMetaData(altheaAddress, chainId);
     if (accountMetaError) throw accountMetaError;
     // return true if the user has a pub key on the chain
-    return NO_ERROR(accountMeta?.account?.base_account?.pub_key != null);
+    return NO_ERROR(accountMeta.account.base_account?.pub_key != null);
   } catch (err) {
     return NEW_ERROR("checkCantoPubKey", err);
   }

@@ -7,15 +7,18 @@ import {
 } from "@/transactions/interfaces";
 import { getCantoBalance } from "@/utils/cosmos";
 import BigNumber from "bignumber.js";
-import { createMsgsSend } from "../messages/messageSend";
-import { PUB_KEY_BOT_ADDRESS } from "@/config/consts/addresses";
+
 import { getCantoCosmosNetwork } from "@/utils/networks";
 import { asyncCallWithRetry, sleep } from "@/utils/async";
+import { createMsgsDelegate } from "../messages/staking/delegate";
 
 export async function generateCantoPublicKeyWithTx(
   chainId: number,
   ethAddress: string,
-  altheaAddress: string
+  altheaAddress: string,
+  validatorAddress: string,
+  amount: string,
+  undelegate: boolean
 ): PromiseWithError<Transaction[]> {
   try {
     // get canto cosmos network
@@ -70,7 +73,10 @@ export async function generateCantoPublicKeyWithTx(
         chainId,
         ethAddress,
         altheaAddress,
-        TX_DESCRIPTIONS.GENERATE_PUBLIC_KEY()
+        TX_DESCRIPTIONS.GENERATE_PUBLIC_KEY(),
+        validatorAddress,
+        amount,
+        undelegate
       ),
     ]);
   } catch (err) {
@@ -82,13 +88,17 @@ const _generatePubKeyTx = (
   chainId: number,
   ethSender: string,
   altheaSender: string,
-  description: TransactionDescription
+  description: TransactionDescription,
+  validatorAddress: string,
+  amount: string,
+  undelegate: boolean
 ): Transaction => {
-  const pubKeyTx = createMsgsSend({
-    fromAddress: altheaSender,
-    destinationAddress: PUB_KEY_BOT_ADDRESS,
-    amount: "1",
+  const pubKeyTx = createMsgsDelegate({
+    delegatorCantoAddress: altheaSender,
+    validatorAddress: validatorAddress,
+    amount: amount,
     denom: "aalthea",
+    undelegate: undelegate,
   });
   return {
     chainId,

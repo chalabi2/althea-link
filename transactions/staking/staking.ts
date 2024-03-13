@@ -55,7 +55,6 @@ export async function stakingTx(
     altheaAddress,
     CANTO_MAINNET_EVM.chainId
   );
-
   if (!txParams || !txParams.ethAccount) {
     return NEW_ERROR(
       "Invalid transaction parameters or Ethereum address is missing."
@@ -71,26 +70,31 @@ export async function stakingTx(
           await generateCantoPublicKeyWithTx(
             CANTO_MAINNET_EVM.chainId,
             txParams.ethAccount,
-            altheaAddress
+            altheaAddress,
+            txParams.validator.operator_address,
+            txParams.amount,
+            false
           );
         if (pubKeyTxsError) throw pubKeyTxsError;
         txList.push(...pubKeyTxs);
       }
-      txList.push(
-        _delegateTx(
-          txParams.ethAccount,
-          txParams.chainId,
-          altheaAddress,
-          txParams.validator.operator_address,
-          txParams.amount,
-          false,
-          TX_DESCRIPTIONS.DELEGATE(
-            txParams.validator.description.moniker,
-            displayAmount(txParams.amount, 18),
-            false
+      if (!checkPubKeyError || hasPubKey) {
+        txList.push(
+          _delegateTx(
+            txParams.ethAccount,
+            txParams.chainId,
+            altheaAddress,
+            txParams.validator.operator_address,
+            txParams.amount,
+            false,
+            TX_DESCRIPTIONS.DELEGATE(
+              txParams.validator.description.moniker,
+              displayAmount(txParams.amount, 18),
+              false
+            )
           )
-        )
-      );
+        );
+      }
       return NO_ERROR({ transactions: txList });
     case StakingTxTypes.UNDELEGATE:
       return NO_ERROR({

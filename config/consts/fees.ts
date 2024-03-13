@@ -19,7 +19,7 @@ export const PUB_KEY_FEE: Fee = {
 };
 
 export const DELEGATE_FEE: Fee = {
-  amount: "1000000000000000",
+  amount: "100000000000000000",
   denom: "aalthea",
   gas: "300000",
 };
