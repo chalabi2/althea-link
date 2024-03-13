@@ -224,6 +224,7 @@ export const WalletWizardModal: React.FC<WalletWizardModalProps> = ({
 
               <Icon
                 className={styles["pagination"]}
+                style={{ filter: "invert(var(--dark-mode))" }}
                 icon={{
                   url: "/paginationRight.svg",
                   size: {

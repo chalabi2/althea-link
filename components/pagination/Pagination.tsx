@@ -23,6 +23,7 @@ export const Pagination = (props: Props) => {
         >
           <Icon
             themed
+            style={{ filter: "invert(var(--dark-mode))" }}
             icon={{
               url: "/paginationLeft.svg",
               size: 18,
@@ -172,6 +173,7 @@ export const Pagination = (props: Props) => {
         >
           <Icon
             themed
+            style={{ filter: "invert(var(--dark-mode))" }}
             icon={{
               url: "/paginationRight.svg",
               size: 18,
