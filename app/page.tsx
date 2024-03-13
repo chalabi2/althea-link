@@ -19,6 +19,7 @@ export default function Home() {
       <section className={styles.hero}>
         <Icon
           className={styles["hero-logo"]}
+          style={{ filter: "invert(var(--light-mode))" }}
           icon={{
             url: "/altheaMenu.svg",
             size: {
