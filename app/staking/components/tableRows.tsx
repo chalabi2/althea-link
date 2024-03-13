@@ -233,7 +233,7 @@ export const GenerateUnbondingDelegationsTableRow = (
       <Icon
         style={{ marginLeft: "5px" }}
         icon={{
-          url: "/tokens/canto.svg",
+          url: "/tokens/althea.png",
           size: 16,
         }}
         themed={true}
@@ -255,12 +255,11 @@ export const GenerateUnbondingDelegationsTableRow = (
               hour: "2-digit",
               minute: "2-digit",
               hour12: true,
-            }) +
-            (completionDate.getHours() >= Number(12) ? "PM" : "AM")
+            })
           : completionDate.getDate().toString().padStart(2, "0") +
             "/" +
             (completionDate.getMonth() + 1).toString().padStart(2, "0") +
-            " " + // Note: Month is zero-indexed
+            " " +
             completionDate.toLocaleTimeString([], {
               hour: "2-digit",
               minute: "2-digit",

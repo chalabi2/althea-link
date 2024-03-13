@@ -767,7 +767,6 @@ export default function StakingPage() {
                   disabled={
                     !signer || !hasUserStaked || claimRewardsTxValidation.error
                   }
-                  color="secondary"
                   themed={false}
                 >
                   <Text font="macan">Claim Staking Rewards</Text>
@@ -777,7 +776,7 @@ export default function StakingPage() {
                   width={"fill"}
                   height="large"
                   onClick={openMultiStakeModal}
-                  disabled={!signer}
+                  disabled={true}
                 >
                   Multi Stake
                 </Button>
