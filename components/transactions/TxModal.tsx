@@ -142,6 +142,7 @@ const TransactionModal = () => {
                       >
                         <Icon
                           themed
+                          style={{ filter: "invert(var(--dark-mode))" }}
                           icon={{
                             url: "/dropdown.svg",
                             size: 24,
@@ -200,6 +201,7 @@ const TransactionModal = () => {
                   >
                     <Icon
                       themed
+                      style={{ filter: "invert(var(--dark-mode))" }}
                       icon={{
                         url: "/dropdown.svg",
                         size: 24,
@@ -261,6 +263,7 @@ const TransactionModal = () => {
       >
         <Icon
           themed
+          style={{ filter: "invert(var(--dark-mode))" }}
           icon={{
             url: "/transactions.svg",
             size: 24,
