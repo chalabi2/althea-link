@@ -144,8 +144,8 @@ export const chainConfig = {
   },
   coinType: 118,
   gasPriceStep: {
-    low: 0.0,
-    average: 0.015,
-    high: 0.03,
+    low: 90000000000,
+    average: 100000000000,
+    high: 300000000000,
   },
 };

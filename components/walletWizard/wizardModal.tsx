@@ -21,6 +21,7 @@ import { useAccountInfo, useBalance } from "@/hooks/wizard/useQueries";
 import { shiftDigits } from "../utils/shiftDigits";
 import { cosmos } from "interchain";
 import Icon from "../icon/icon";
+import LoadingComponent from "../animated/loader";
 
 interface WalletWizardModalProps {
   isOpen: boolean;
@@ -38,6 +39,8 @@ export const WalletWizardModal: React.FC<WalletWizardModalProps> = ({
   const [keplrAddress, setKeplrAddress] = useState("");
   const [metamaskAddress, setMetamaskAddress] = useState("");
 
+  const [isSigning, setIsSigning] = useState(false);
+  const [isError, setIsError] = useState(false);
   const chainId = "althea_417834-4";
 
   const metamaskToCosmosAddress = ethToAlthea(metamaskAddress);
@@ -68,6 +71,7 @@ export const WalletWizardModal: React.FC<WalletWizardModalProps> = ({
   };
 
   const sendTokens = async () => {
+    setIsSigning(true);
     try {
       const keplr = await getKeplr();
       if (!keplr) {
@@ -81,8 +85,9 @@ export const WalletWizardModal: React.FC<WalletWizardModalProps> = ({
       const signer = window.keplr.getOfflineSigner(chainConfig.chainId);
 
       const fee: StdFee = {
-        amount: coins(10000, "aalthea"),
-        gas: "2000000",
+        amount: coins("2000000000000000000", "aalthea"),
+
+        gas: "20000000",
       };
 
       const cosmJS = await SigningStargateClient.connectWithSigner(
@@ -95,7 +100,10 @@ export const WalletWizardModal: React.FC<WalletWizardModalProps> = ({
       const msgSend = send({
         fromAddress: keplrAddress,
         toAddress: metamaskToCosmosAddress,
-        amount: coins((keplrBalance - 100000).toString(), "aalthea"),
+        amount: coins(
+          (keplrBalance - Number("2000000000000000000")).toString(),
+          "aalthea"
+        ),
       });
 
       const explicitSignerData: SignerData = {
@@ -112,10 +120,10 @@ export const WalletWizardModal: React.FC<WalletWizardModalProps> = ({
         explicitSignerData
       );
 
-      const result = await cosmJS.broadcastTx(
-        Uint8Array.from(TxRaw.encode(signed).finish())
-      );
+      await cosmJS.broadcastTx(Uint8Array.from(TxRaw.encode(signed).finish()));
+      setIsSigning(false);
     } catch (error) {
+      setIsError(true);
       console.error("Failed to send tokens:", error);
     }
   };
@@ -307,8 +315,15 @@ export const WalletWizardModal: React.FC<WalletWizardModalProps> = ({
               <Button
                 disabled={keplrBalance <= 50000000000000000}
                 onClick={sendTokens}
+                width={100}
               >
-                Migrate
+                {isError ? (
+                  "Failed"
+                ) : isSigning ? (
+                  <LoadingComponent size="sm" />
+                ) : (
+                  "Migrate"
+                )}
               </Button>
             </div>
           </>

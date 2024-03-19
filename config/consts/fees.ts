@@ -15,33 +15,33 @@ export const IBC_FEE: Fee = {
 export const PUB_KEY_FEE: Fee = {
   amount: "100000000000000000",
   denom: "aalthea",
-  gas: "300000",
+  gas: "3000000",
 };
 
 export const DELEGATE_FEE: Fee = {
-  amount: "100000000000000000",
+  amount: "1000000000000000000",
   denom: "aalthea",
-  gas: "300000",
+  gas: "3000000",
 };
 
 export const UNDELEGATE_FEE: Fee = {
-  amount: "100000000000000000",
+  amount: "1000000000000000000",
   denom: "aalthea",
-  gas: "300000",
+  gas: "3000000",
 };
 
 export const REDELEGATE_FEE: Fee = {
-  amount: "100000000000000000",
+  amount: "1000000000000000000",
   denom: "aalthea",
-  gas: "300000",
+  gas: "3000000",
 };
 export const CLAIM_STAKING_REWARD_FEE: Fee = {
-  amount: "100000000000000000",
+  amount: "1000000000000000000",
   denom: "aalthea",
-  gas: "300000",
+  gas: "3000000",
 };
 export const VOTING_FEE: Fee = {
   amount: "100000000000000000",
   denom: "aalthea",
-  gas: "300000",
+  gas: "3000000",
 };
