@@ -67,7 +67,7 @@ const { chains, publicClient } = configureChains(formattedChains, [
   publicProvider(),
 ]);
 const { connectors } = getDefaultWallets({
-  appName: "Canto v3",
+  appName: "Althea App",
   projectId: process.env.NEXT_PUBLIC_WALLET_CONNECT_PROJECT_ID as string,
   chains,
 });
