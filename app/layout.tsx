@@ -10,7 +10,7 @@ import { ChainProvider, ThemeCustomizationProps } from "@cosmos-kit/react";
 import { cosmosAminoConverters, cosmosProtoRegistry } from "interchain";
 import { wallets as keplr } from "@cosmos-kit/keplr";
 import { wallets as cosmostation } from "@cosmos-kit/cosmostation";
-import { wallets as leap } from "@cosmos-kit/leap";
+
 import { wallets as station } from "@cosmos-kit/station";
 import { wallets as trust } from "@cosmos-kit/trust";
 import { ReactQueryClientProvider } from "@/provider/reactQueryProvider";
