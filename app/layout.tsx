@@ -325,7 +325,7 @@ export default function RootLayout({
           chains={[altheatestnet]}
           assetLists={[altheatestnetAssets]}
           // @ts-ignore
-          wallets={[...keplr, ...cosmostation, ...trust, ...leap, ...station]}
+          wallets={[...keplr, ...cosmostation, ...trust, ...station]}
           signerOptions={signerOptions}
           logLevel="NONE"
           modalTheme={modalThemeOverrides}
