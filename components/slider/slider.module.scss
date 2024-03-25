@@ -24,7 +24,7 @@
     box-shadow: 2px 2px 0px 0px rgba(17, 17, 17, 0.15);
     background: rgba(var(--dark-color), 1);
     cursor: pointer;
-    clip-path: polygon(100% 0, 100% 80%, 50% 100%, 0 80%, 0 0);
+    clippath: polygon(100% 0, 100% 80%, 50% 100%, 0 80%, 0 0);
   }
 
   &::-moz-range-thumb {

@@ -1,18 +1,28 @@
 "use client";
 
 import "./globals.scss";
-import InfoBar from "@/components/info_bar/infoBar";
+
 import Footer from "@/components/footer/footer";
 import NavBar from "@/components/nav_bar/navBar";
 import CantoWalletProvider from "@/provider/rainbowProvider";
 import localFont from "next/font/local";
-import DesktopOnly from "@/components/desktop-only/desktop-only";
+import { ChainProvider, ThemeCustomizationProps } from "@cosmos-kit/react";
+import { cosmosAminoConverters, cosmosProtoRegistry } from "interchain";
+import { wallets as keplr } from "@cosmos-kit/keplr";
+import { wallets as cosmostation } from "@cosmos-kit/cosmostation";
+import { wallets as leap } from "@cosmos-kit/leap";
+import { wallets as station } from "@cosmos-kit/station";
+import { wallets as trust } from "@cosmos-kit/trust";
 import { ReactQueryClientProvider } from "@/provider/reactQueryProvider";
 import ToastWizard from "@/components/walletWizard/wizardToast";
 import { WalletWizardModal } from "@/components/walletWizard/wizardModal";
 import { useState } from "react";
 import { ToastContainer } from "@/components/toast";
-import useScreenSize from "@/hooks/helpers/useScreenSize";
+import { Chain, AssetList } from "@chain-registry/types";
+import { Registry } from "@cosmjs/proto-signing";
+import { SigningStargateClientOptions, AminoTypes } from "@cosmjs/stargate";
+import { SignerOptions } from "@cosmos-kit/core";
+import "@interchain-ui/react/styles";
 
 const nm_plex = localFont({
   src: "../fonts/IBMPlexSans-Regular.ttf",
@@ -37,6 +47,23 @@ export default function RootLayout({
 
   const [showToast, setShowToast] = useState(true);
 
+  const signerOptions: SignerOptions = {
+    // @ts-ignore
+    signingStargate: (
+      _chain: string | Chain
+    ): SigningStargateClientOptions | undefined => {
+      // @ts-ignore
+      const mergedRegistry = new Registry([...cosmosProtoRegistry]);
+      const mergedAminoTypes = new AminoTypes({
+        ...cosmosAminoConverters,
+      });
+      return {
+        aminoTypes: mergedAminoTypes,
+        // @ts-ignore
+        registry: mergedRegistry,
+      };
+    },
+  };
   const openWalletWizard = () => {
     setIsWalletWizardOpen(true);
     setShowToast(false);
@@ -47,7 +74,204 @@ export default function RootLayout({
     setShowToast(true);
   };
 
-  const { isMobile } = useScreenSize();
+  const modalThemeOverrides: ThemeCustomizationProps = {
+    modalContentStyles: {
+      backgroundColor: "#0077ff",
+      opacity: 1,
+    },
+    overrides: {
+      "connect-modal": {
+        bg: {
+          light: "rgba(0,0,0,0.75)",
+          dark: "rgba(32,32,32,0.9)",
+        },
+        activeBg: {
+          light: "rgba(0,0,0,0.75)",
+          dark: "rgba(32,32,32,0.9)",
+        },
+        color: {
+          light: "#FFFFFF",
+          dark: "#FFFFFF",
+        },
+        focusedBg: {
+          light: "rgba(0,0,0,0.75)",
+          dark: "rgba(32,32,32,0.9)",
+        },
+        disabledBg: {
+          light: "rgba(0,0,0,0.75)",
+          dark: "rgba(32,32,32,0.9)",
+        },
+      },
+
+      "clipboard-copy-text": {
+        bg: {
+          light: "#FFFFFF",
+          dark: "#FFFFFF",
+        },
+      },
+      "connect-modal-qr-code-shadow": {
+        bg: {
+          light: "#FFFFFF",
+          dark: "#FFFFFF",
+        },
+      },
+      button: {
+        bg: {
+          light: "#1c508c",
+          dark: "#1c508c",
+        },
+      },
+      "connect-modal-head-title": {
+        bg: {
+          light: "#FFFFFF",
+          dark: "#FFFFFF",
+        },
+      },
+      "connect-modal-wallet-button-label": {
+        bg: {
+          light: "#FFFFFF",
+          dark: "#FFFFFF",
+        },
+      },
+      "connect-modal-wallet-button-sublogo": {
+        bg: {
+          light: "#FFFFFF",
+          dark: "#FFFFFF",
+        },
+      },
+      "connect-modal-qr-code-loading": {
+        bg: {
+          light: "#FFFFFF",
+          dark: "#FFFFFF",
+        },
+      },
+      "connect-modal-wallet-button": {
+        bg: {
+          light: "rgba(55,55,55,0.9)",
+          dark: "rgba(55,55,55,0.9",
+        },
+        hoverBg: {
+          light: "#1c508c",
+          dark: "#1c508c",
+        },
+        borderColor: { light: "black", dark: "black" },
+        hoverBorderColor: {
+          light: "black",
+          dark: "black",
+        },
+        activeBorderColor: {
+          light: "#FFFFFF",
+          dark: "#FFFFFF",
+        },
+        color: {
+          light: "#000000",
+          dark: "#FFFFFF",
+        },
+        focusedBorderColor: { light: "#FFFFFF", dark: "#FFFFFF" },
+      },
+      "connect-modal-qr-code": {
+        bg: {
+          light: "",
+          dark: "blue",
+        },
+        color: {
+          light: "#000000",
+          dark: "#000000",
+        },
+      },
+      "connect-modal-install-button": {
+        bg: {
+          light: "#F0F0F0",
+          dark: "#1c508c",
+        },
+      },
+      "connect-modal-qr-code-error": {
+        bg: {
+          light: "#FFEEEE",
+          dark: "#FFFFFF",
+        },
+      },
+      "connect-modal-qr-code-error-button": {
+        bg: {
+          light: "#FFCCCC",
+          dark: "#552222",
+        },
+      },
+    },
+  };
+
+  const altheatestnet: Chain = {
+    chain_name: "altheatestnet",
+    status: "live",
+    network_type: "testnet",
+    website: "https://althea.net/",
+    pretty_name: "Althea Testnet",
+    chain_id: "althea_417834-4",
+    bech32_prefix: "althea",
+    daemon_name: "althea",
+    node_home: "$HOME/.althea",
+    slip44: 118,
+    fees: {
+      fee_tokens: [
+        {
+          denom: "aalthea",
+          fixed_min_gas_price: 100000000000,
+          low_gas_price: 100000000000,
+          average_gas_price: 100000000000,
+          high_gas_price: 300000000000,
+        },
+      ],
+    },
+    staking: {
+      staking_tokens: [
+        {
+          denom: "aalthea",
+        },
+      ],
+    },
+    codebase: {
+      git_repo: "github.com/althea-net/altheal1",
+      recommended_version: "v1.0.0-rc2",
+      compatible_versions: ["v0.22.0"],
+      binaries: {
+        "linux/amd64":
+          "https://github.com/althea-net/althea-L1/releases/download/v1.0.0-rc2/althea-linux-amd64",
+      },
+      versions: [
+        {
+          name: "v1",
+          recommended_version: "v1.0.0-rc2",
+          compatible_versions: ["v1.0.0-rc2"],
+        },
+      ],
+      genesis: {
+        genesis_url:
+          "https://github.com/althea-net/althea-L1-docs/blob/main/althea-l1-dress-rehersal-genesis.json",
+      },
+    },
+  };
+  const altheatestnetAssets: AssetList = {
+    chain_name: "altheatestnet",
+    assets: [
+      {
+        description: "Althea testnet native token",
+        denom_units: [
+          {
+            denom: "aalthea",
+            exponent: 0,
+          },
+          {
+            denom: "althea",
+            exponent: 18,
+          },
+        ],
+        base: "aalthea",
+        name: "Althea Testnet Token",
+        display: "althea",
+        symbol: "ALTHEA",
+      },
+    ],
+  };
 
   return (
     <html lang="en">
@@ -97,11 +321,42 @@ export default function RootLayout({
         }
       >
         <div id="toast-root"></div>
-        <CantoWalletProvider>
-          <ReactQueryClientProvider>
-            <ToastContainer>
-              <div className="body">
-                {/* <InfoBar
+        <ChainProvider
+          chains={[altheatestnet]}
+          assetLists={[altheatestnetAssets]}
+          // @ts-ignore
+          wallets={[...keplr, ...cosmostation, ...trust, ...leap, ...station]}
+          signerOptions={signerOptions}
+          logLevel="NONE"
+          modalTheme={modalThemeOverrides}
+          walletConnectOptions={{
+            signClient: {
+              projectId: process.env
+                .NEXT_PUBLIC_WALLET_CONNECT_PROJECT_ID as string,
+              relayUrl: "wss://relay.walletconnect.org",
+              metadata: {
+                name: "Althea",
+                description: "Althea App",
+                url: "https://althea.zone/",
+                icons: [],
+              },
+            },
+          }}
+          endpointOptions={{
+            isLazy: true,
+            endpoints: {
+              altheatestnet: {
+                rpc: ["https://nodes.chandrastation.com/testnet/rpc/althea/"],
+                rest: ["https://nodes.chandrastation.com/testnet/api/althea/"],
+              },
+            },
+          }}
+        >
+          <CantoWalletProvider>
+            <ReactQueryClientProvider>
+              <ToastContainer>
+                <div className="body">
+                  {/* <InfoBar
                 values={[
                   {
                     name: "contracts w/ CSR enabled:",
@@ -129,10 +384,10 @@ export default function RootLayout({
                   },
                 ]}
               /> */}
-                <NavBar />
+                  <NavBar />
 
-                {children}
-                {!isMobile && (
+                  {children}
+
                   <div id="modal-root">
                     {showToast && (
                       <ToastWizard
@@ -148,13 +403,13 @@ export default function RootLayout({
                       onClose={closeWalletWizard}
                     />
                   </div>
-                )}
 
-                <Footer />
-              </div>
-            </ToastContainer>
-          </ReactQueryClientProvider>
-        </CantoWalletProvider>
+                  <Footer />
+                </div>
+              </ToastContainer>
+            </ReactQueryClientProvider>
+          </CantoWalletProvider>
+        </ChainProvider>
       </body>
     </html>
   );
