@@ -30,7 +30,7 @@ import useScreenSize from "@/hooks/helpers/useScreenSize";
 
 export default function Page() {
   const {
-    pairs,
+    fakePairs,
     rewards,
     filteredPairs,
     setFilteredPairs,
@@ -51,7 +51,7 @@ export default function Page() {
   //   return <DesktopOnly />;
   // }
   const { isMobile } = useScreenSize();
-
+  const pairs = fakePairs.pairs;
   //main content
   return (
     <div className={styles.container}>
