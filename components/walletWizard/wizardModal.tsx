@@ -8,7 +8,7 @@ import { truncateAddress } from "@/config/networks/helpers";
 import { ConnectButton } from "@rainbow-me/rainbowkit";
 
 import { ethToAlthea } from "@gravity-bridge/address-converter";
-import { SignerData, StdFee, coins } from "@cosmjs/stargate";
+import { Coin, SignerData, StdFee, coins } from "@cosmjs/stargate";
 import useCantoSigner from "@/hooks/helpers/useCantoSigner";
 
 import { useAccountInfo, useBalance } from "@/hooks/wizard/useQueries";
@@ -60,7 +60,6 @@ export const WalletWizardModal: React.FC<WalletWizardModalProps> = ({
     try {
       const fee: StdFee = {
         amount: coins("200000000000000000000000", "aalthea"),
-
         gas: "20000000",
       };
 
@@ -68,10 +67,17 @@ export const WalletWizardModal: React.FC<WalletWizardModalProps> = ({
 
       const sendAmount = (keplrBalance - 2000000000000000000).toString();
 
+      const sendAmountTx = [
+        {
+          denom: "aalthea",
+          amount: sendAmount,
+        },
+      ] as Coin[];
+
       const msgSend = send({
         fromAddress: address ?? "",
         toAddress: metamaskToCosmosAddress,
-        amount: coins(sendAmount, "aalthea"),
+        amount: sendAmountTx,
       });
 
       await tx([msgSend], { fee });
