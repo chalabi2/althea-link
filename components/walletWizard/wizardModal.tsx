@@ -40,24 +40,20 @@ export const WalletWizardModal: React.FC<WalletWizardModalProps> = ({
   const chainContext = useChain("altheatestnet");
 
   const { address, connect, disconnect } = chainContext;
-  console.log({ address }, { connect }, { disconnect });
 
   const accountInfoData = useAccountInfo(address ?? "");
-  console.log({ accountInfoData }.accountInfoData.data);
 
   const explicitSignerData: SignerData = {
     accountNumber: accountInfoData.data?.account_number,
     sequence: accountInfoData.data?.sequence,
     chainId: "althea_417834-4",
   };
-  console.log({ explicitSignerData });
 
   const { tx } = useTx("altheatestnet", explicitSignerData);
 
   const balanceData = useBalance(address ?? "");
 
   const keplrBalance = balanceData.data?.balances[0]?.amount ?? "0";
-  console.log({ keplrBalance });
 
   const sendTokens = async () => {
     setIsSigning(true);
@@ -87,7 +83,6 @@ export const WalletWizardModal: React.FC<WalletWizardModalProps> = ({
   };
 
   const { signer } = useCantoSigner();
-  console.log({ signer });
 
   useEffect(() => {
     const address = signer?.account.address;

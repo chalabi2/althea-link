@@ -38,8 +38,6 @@ export async function getAltheaAccountMetaData(
     );
     if (error) throw error;
 
-    console.log("getAltheaAccountMetaData", data, error)
-
     // return account data
     return NO_ERROR(data);
   } catch (err) {
@@ -62,7 +60,7 @@ export async function getCantoSenderObj(
       senderCantoAddress,
       chainId
     );
-    console.log("getCantoSenderObj", cantoAccount, error)
+
     if (error) throw error;
     let baseAccount;
     if (!cantoAccount.account.base_account) {

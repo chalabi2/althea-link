@@ -38,7 +38,7 @@ const fetchAccountInfo = async (address: string) => {
 
 export const useAccountInfo = (address: string) => {
   const data = fetchAccountInfo(address);
-  console.log('useAccountInfo', Promise.resolve(data));
+
   return useQuery(["accountInfo", address], () => fetchAccountInfo(address), {
     enabled: !!address,
   });
