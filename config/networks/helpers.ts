@@ -2,13 +2,13 @@ const getEthAddressLink = (explorerUrl: string) => (address: string) =>
   `${explorerUrl}/address/${address}`;
 
 const getEthTransactionLink = (explorerUrl: string) => (txnId: string) =>
-  `${explorerUrl}/tx/${txnId}`;
+  `${explorerUrl}/transaction/${txnId}`;
 
 const getCosmosAddressLink = (explorerUrl: string) => (address: string) =>
   `${explorerUrl}/accounts/${address}`;
 
 const getCosmosTransactionLink = (explorerUrl: string) => (txnId: string) =>
-  `${explorerUrl}/transactions/${txnId}`;
+  `${explorerUrl}/transaction/${txnId}`;
 
 const checkCosmosAddress = (prefix: string) => (address: string) =>
   address.startsWith(prefix);
