@@ -70,13 +70,12 @@ export const WalletWizardModal: React.FC<WalletWizardModalProps> = ({
 
       const { send } = cosmos.bank.v1beta1.MessageComposer.withTypeUrl;
 
+      const sendAmount = (keplrBalance - 2000000000000000000).toString();
+
       const msgSend = send({
         fromAddress: address ?? "",
         toAddress: metamaskToCosmosAddress,
-        amount: coins(
-          (keplrBalance - Number("2000000000000000000")).toString(),
-          "aalthea"
-        ),
+        amount: coins(sendAmount, "aalthea"),
       });
 
       await tx([msgSend], { fee });
