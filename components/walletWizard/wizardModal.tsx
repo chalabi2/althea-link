@@ -18,6 +18,7 @@ import Icon from "../icon/icon";
 import LoadingComponent from "../animated/loader";
 import { useChain } from "@cosmos-kit/react";
 import { useTx } from "@/hooks/wizard/useTx";
+import BigNumber from "bignumber.js";
 
 interface WalletWizardModalProps {
   isOpen: boolean;
@@ -58,6 +59,8 @@ export const WalletWizardModal: React.FC<WalletWizardModalProps> = ({
   const sendTokens = async () => {
     setIsSigning(true);
     try {
+      const feeAmount = new BigNumber("2000000000000000000");
+
       const fee: StdFee = {
         amount: coins("200000000000000000000000", "aalthea"),
         gas: "20000000",
@@ -65,19 +68,23 @@ export const WalletWizardModal: React.FC<WalletWizardModalProps> = ({
 
       const { send } = cosmos.bank.v1beta1.MessageComposer.withTypeUrl;
 
-      const sendAmount = (keplrBalance - 2000000000000000000).toString();
+      const sendAmount = new BigNumber(keplrBalance).minus(feeAmount);
 
-      const sendAmountTx = [
+      if (sendAmount.isLessThanOrEqualTo(0)) {
+        throw new Error("Insufficient balance after fee deduction");
+      }
+
+      const sendTxAmount = [
         {
           denom: "aalthea",
-          amount: sendAmount,
+          amount: sendAmount.toString(),
         },
       ] as Coin[];
 
       const msgSend = send({
         fromAddress: address ?? "",
         toAddress: metamaskToCosmosAddress,
-        amount: sendAmountTx,
+        amount: sendTxAmount,
       });
 
       await tx([msgSend], { fee });
@@ -87,7 +94,6 @@ export const WalletWizardModal: React.FC<WalletWizardModalProps> = ({
       console.error("Failed to send tokens:", error);
     }
   };
-
   const { signer } = useCantoSigner();
 
   useEffect(() => {
