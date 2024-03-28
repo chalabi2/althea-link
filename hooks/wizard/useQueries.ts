@@ -24,13 +24,21 @@ const fetchAccountInfo = async (address: string) => {
     throw new Error("Network response was not ok");
   }
   const data = await response.json();
+  let baseAccount;
+  if (!data.account.base_account) {
+    baseAccount = data.account;
+  } else {
+    baseAccount = data.account.base_account;
+  }
   return {
-    account_number: data.account.base_account.account_number,
-    sequence: data.account.base_account.sequence,
+    account_number: baseAccount.account_number,
+    sequence: baseAccount.sequence,
   };
 };
 
 export const useAccountInfo = (address: string) => {
+  const data = fetchAccountInfo(address);
+  console.log('useAccountInfo', Promise.resolve(data));
   return useQuery(["accountInfo", address], () => fetchAccountInfo(address), {
     enabled: !!address,
   });
