@@ -41,7 +41,7 @@ export const CLAIM_STAKING_REWARD_FEE: Fee = {
   gas: "3000000",
 };
 export const VOTING_FEE: Fee = {
-  amount: "100000000000000000",
+  amount: "1000000000000000000",
   denom: "aalthea",
   gas: "3000000",
 };
