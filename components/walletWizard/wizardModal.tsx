@@ -19,6 +19,7 @@ import LoadingComponent from "../animated/loader";
 import { useChain } from "@cosmos-kit/react";
 import { useTx } from "@/hooks/wizard/useTx";
 import BigNumber from "bignumber.js";
+import Link from "next/link";
 
 interface WalletWizardModalProps {
   isOpen: boolean;
@@ -50,7 +51,8 @@ export const WalletWizardModal: React.FC<WalletWizardModalProps> = ({
     chainId: "althea_417834-4",
   };
 
-  const { tx } = useTx("altheatestnet", explicitSignerData);
+  const { tx, transactionHash } = useTx("altheatestnet", explicitSignerData);
+  console.log("tx", transactionHash);
 
   const balanceData = useBalance(address ?? "");
 
@@ -84,9 +86,14 @@ export const WalletWizardModal: React.FC<WalletWizardModalProps> = ({
         amount: coins(sendAmount.toFixed(), "aalthea"),
       });
 
-      await tx([msgSend], { fee });
-      setIsSigning(false);
+      await tx([msgSend], {
+        fee,
+        onSuccess: () => {
+          setIsSigning(false);
+        },
+      });
     } catch (error) {
+      setIsSigning(false);
       setIsError(true);
       console.error("Failed to send tokens:", error);
     }
@@ -179,7 +186,7 @@ export const WalletWizardModal: React.FC<WalletWizardModalProps> = ({
             </div>
           </>
         )}
-        {showNextStep && (
+        {showNextStep && !transactionHash && (
           <>
             <div className={styles["migration"]}>
               <Text className="text" size="lg" font="macan-font">
@@ -245,6 +252,31 @@ export const WalletWizardModal: React.FC<WalletWizardModalProps> = ({
               </Button>
             </div>
           </>
+        )}
+        {transactionHash && (
+          <div className={styles["successMessage"]}>
+            <Text size="lg" font="macan-font">
+              Transaction Successful!
+            </Text>
+            <Text size="sm" font="macan-font">
+              Your tokens are on their way.
+            </Text>
+            <Text size="sm" font="macan-font">
+              Link to transaction:
+            </Text>
+            <Link
+              target="_blank"
+              rel="noopener noreferrer"
+              href={`https://althea.explorers.guru/transaction/${transactionHash}`}
+            >
+              {" "}
+              <Text size="sm" font="macan-font">
+                {transactionHash.split("").slice(0, 6).join("")}...
+              </Text>
+            </Link>
+
+            <Button onClick={() => onOpen(false)}>Close</Button>
+          </div>
         )}
       </div>
     </Modal>
