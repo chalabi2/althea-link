@@ -30,6 +30,7 @@ export const useTx = (chainName: string, explicitSignerData: SignerData ) => {
   const [responseEvents, setResponseEvents] = useState<readonly Event[] | null>(
     null
   );
+  const [transactionHash, setTransactionHash] = useState<string | null>(null); 
 
   const tx = async (msgs: Msg[], options: TxOptions) => {
     if (!address) {
@@ -79,6 +80,7 @@ export const useTx = (chainName: string, explicitSignerData: SignerData ) => {
             if (options.onSuccess) options.onSuccess();
             //@ts-ignore
             setResponseEvents(res?.events);
+            setTransactionHash(res?.transactionHash);
           } else {
             console.error(res);
           }
@@ -92,5 +94,5 @@ export const useTx = (chainName: string, explicitSignerData: SignerData ) => {
     }
   };
 
-  return { tx, responseEvents };
+  return { tx, responseEvents, transactionHash };
 };
