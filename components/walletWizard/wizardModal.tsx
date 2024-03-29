@@ -66,25 +66,22 @@ export const WalletWizardModal: React.FC<WalletWizardModalProps> = ({
         gas: "20000000",
       };
 
-      const { send } = cosmos.bank.v1beta1.MessageComposer.withTypeUrl;
-
-      const sendAmount = new BigNumber(keplrBalance).minus(feeAmount);
-
-      if (sendAmount.isLessThanOrEqualTo(0)) {
-        throw new Error("Insufficient balance after fee deduction");
+      const keplrBalanceBN = new BigNumber(keplrBalance);
+      if (!keplrBalanceBN.isInteger()) {
+        throw new Error("Balance is not an integer");
       }
 
-      const sendTxAmount = [
-        {
-          denom: "aalthea",
-          amount: sendAmount.toString(),
-        },
-      ] as Coin[];
+      const sendAmount = keplrBalanceBN.minus(feeAmount);
+      if (sendAmount.isLessThanOrEqualTo(0) || !sendAmount.isInteger()) {
+        throw new Error(
+          "Insufficient balance after fee deduction or result is not an integer"
+        );
+      }
 
-      const msgSend = send({
+      const msgSend = cosmos.bank.v1beta1.MessageComposer.withTypeUrl.send({
         fromAddress: address ?? "",
         toAddress: metamaskToCosmosAddress,
-        amount: sendTxAmount,
+        amount: coins(sendAmount.toFixed(), "aalthea"),
       });
 
       await tx([msgSend], { fee });
@@ -94,6 +91,7 @@ export const WalletWizardModal: React.FC<WalletWizardModalProps> = ({
       console.error("Failed to send tokens:", error);
     }
   };
+
   const { signer } = useCantoSigner();
 
   useEffect(() => {
