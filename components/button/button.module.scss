@@ -7,7 +7,7 @@
   cursor: pointer;
   border-radius: var(--border-radius, 0);
   //   box-shadow: var(--box-shadow, 3px 3px 0px 0px rgba(17, 17, 17, 0.15));
-  &:hover:not(:disabled) {
+  &:hover:not(:disabled):not(:global(.minimal)) {
     filter: saturate(1) contrast(1.25);
     box-shadow: 4px 4px 0px 0px rgba(17, 17, 17, 0.2) !important;
     transition: all 0.1s linear;
@@ -23,6 +23,31 @@
 
     box-shadow: var(--box-shadow, 1px 1px 0px 0px rgba(17, 17, 17, 0.3));
     transition: all 0.2s ease-out;
+  }
+  &:global(.minimal) {
+    position: relative;
+    transition: all 0.3s ease;
+  
+    &::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 1px;
+      background-color: #fff;
+      transition: bottom 0.3s ease;
+    }
+  
+    &:hover::after {
+      bottom: -4px;
+    }
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .container:global(.minimal) {
+    font-size: 13px !important;
   }
 }
 

@@ -5,7 +5,7 @@ export interface ButtonProps {
   onClick?: () => void;
   height?: "small" | "medium" | "large" | number;
   width?: "contain" | "fill" | number;
-  color?: "primary" | "secondary" | "accent";
+  color?: "primary" | "secondary" | "accent" | "white";
   icon?: {
     url: string;
     position: "left" | "right";
@@ -21,6 +21,7 @@ export interface ButtonProps {
   shadow?: "small" | "medium" | "none";
   buttonProps?: React.JSX.IntrinsicElements["button"];
   themed?: boolean;
+  minimal?: boolean;
 }
 
 const Button = (props: ButtonProps) => {
@@ -44,7 +45,7 @@ const Button = (props: ButtonProps) => {
       case "macan-font":
         return "var(--nm-macan)";
       default:
-        return "var(--nm-macan)";
+        return "var(--nm-plex)";
     }
   };
 
@@ -62,6 +63,9 @@ const Button = (props: ButtonProps) => {
   };
 
   const getBGColor = () => {
+    if (props.minimal) {
+      return "transparent";
+    }
     if (props.disabled) {
       if (props.themed || props.themed == undefined) {
         return "var(--primary-10-color)";
@@ -111,6 +115,8 @@ const Button = (props: ButtonProps) => {
           return "rgb(#111111)";
         case "accent":
           return "rgb(#212121)";
+        case "white":
+          return "rgb(#f1f1f1)";
         case undefined:
           return "var(--primary-10-color)";
         default:
@@ -130,6 +136,8 @@ const Button = (props: ButtonProps) => {
         return props.themed || props.themed == undefined
           ? "var(--text-only-dark)"
           : "#212121";
+      case "white":
+        return "#ffffff";
       case undefined:
         return "var(--text-light-color)";
       default:
@@ -168,6 +176,9 @@ const Button = (props: ButtonProps) => {
   }
 
   function getShadow() {
+    if (props.minimal) {
+      return undefined;
+    }
     if (props.disabled) {
       return "0px 0px 0px 0px rgba(17, 17, 17, 0.15)";
     }
@@ -185,7 +196,7 @@ const Button = (props: ButtonProps) => {
 
   return (
     <button
-      className={styles.container}
+      className={`${styles.container}${props.minimal ? " minimal" : ""}`}
       onClick={props.onClick}
       disabled={props.disabled}
       style={{
@@ -194,13 +205,15 @@ const Button = (props: ButtonProps) => {
         fontSize: getFontSize() + "px",
         width: getWidth(),
         backgroundColor: getBGColor(),
-        padding: getPadding() + "px",
+        padding: props.minimal ? undefined : getPadding() + "px",
         color: getTextColor(),
         fontFamily: getFontFamily(),
         gap: "12px",
         fontWeight: props.weight == "bold" ? "bold" : "normal",
         boxShadow: getShadow(),
         flexDirection: props.icon?.position == "right" ? "row-reverse" : "row",
+        textTransform: props.minimal ? "uppercase" : "none",
+        letterSpacing: props.minimal ? "0.27px" : "none",
       }}
       {...props.buttonProps}
     >

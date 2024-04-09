@@ -16,13 +16,15 @@ import { wallets as trust } from "@cosmos-kit/trust";
 import { ReactQueryClientProvider } from "@/provider/reactQueryProvider";
 import ToastWizard from "@/components/walletWizard/wizardToast";
 import { WalletWizardModal } from "@/components/walletWizard/wizardModal";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { ToastContainer } from "@/components/toast";
 import { Chain, AssetList } from "@chain-registry/types";
 import { Registry } from "@cosmjs/proto-signing";
 import { SigningStargateClientOptions, AminoTypes } from "@cosmjs/stargate";
 import { SignerOptions } from "@cosmos-kit/core";
 import "@interchain-ui/react/styles";
+import WalletConnect from "@/components/wallet_connect/walletConnect";
+import StatusText from "@/components/status_text/statusText";
 
 const nm_plex = localFont({
   src: "../fonts/IBMPlexSans-Regular.ttf",
@@ -44,7 +46,6 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   const [isWalletWizardOpen, setIsWalletWizardOpen] = useState(false);
-
   const [showToast, setShowToast] = useState(true);
 
   const signerOptions: SignerOptions = {
@@ -403,7 +404,8 @@ export default function RootLayout({
                       onClose={closeWalletWizard}
                     />
                   </div>
-
+                  <WalletConnect />
+                  <StatusText />
                   <Footer />
                 </div>
               </ToastContainer>

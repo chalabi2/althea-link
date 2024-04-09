@@ -82,9 +82,7 @@ const TransactionModal = () => {
         height="36rem"
         width="32rem"
       >
-        <Text size="lg" font="macan-font">
-          Activity
-        </Text>
+        <Text size="lg">Activity</Text>
         {transactionFlows == undefined ||
         (transactionFlows.length > 0 &&
           transactionFlows[transactionFlows.length - 1].status ==
@@ -253,22 +251,16 @@ const TransactionModal = () => {
         )}
       </Modal>
       <Button
-        color="secondary"
-        padding={10}
-        height={40}
+        color="white"
+        minimal
+        height={25}
+        fontSize="sm"
         onClick={() => {
           Analytics.actions.events.transactionModalOpened();
           setIsOpen(true);
         }}
       >
-        <Icon
-          themed
-          style={{ filter: "invert(var(--dark-mode))" }}
-          icon={{
-            url: "/transactions.svg",
-            size: 24,
-          }}
-        />
+        Activity
       </Button>
     </>
   );
