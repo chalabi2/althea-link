@@ -24,15 +24,15 @@ const NavBar = () => {
   const searchParams = useSearchParams();
   const { signer } = useCantoSigner();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  useEffect(() => {
-    if (signer?.account.address) {
-      Analytics.actions.people.registerWallet(signer.account.address);
-      Analytics.actions.identify(signer.account.address, {
-        account: signer.account.address,
-      });
-      Analytics.actions.events.connections.walletConnect(true);
-    }
-  }, [signer]);
+  // useEffect(() => {
+  //   if (signer?.account.address) {
+  //     Analytics.actions.people.registerWallet(signer.account.address);
+  //     Analytics.actions.identify(signer.account.address, {
+  //       account: signer.account.address,
+  //     });
+  //     Analytics.actions.events.connections.walletConnect(true);
+  //   }
+  // }, [signer]);
 
   useEffect(() => {
     let url = window.origin + currentPath;
@@ -55,12 +55,12 @@ const NavBar = () => {
       Analytics.actions.events.pageOpened("home", url);
     }
     isMenuOpen && setIsMenuOpen(false);
-  }, [currentPath, searchParams, signer]);
-  const balance = useBalance({
-    address: signer?.account.address,
-    watch: true,
-    chainId: signer?.chain.id,
-  });
+  }, [currentPath, searchParams]);
+  // const balance = useBalance({
+  //   address: signer?.account.address,
+  //   watch: true,
+  //   chainId: signer?.chain.id,
+  // });
 
   return (
     <div className={styles.container}>
@@ -80,7 +80,7 @@ const NavBar = () => {
           />
         </button>
         <Link href="/">
-          <Image src="/althea.png" width={40} height={40} alt="althea" />
+          <Image src="/altheaLink.svg" width={160} height={24} alt="althea" />
         </Link>
       </div>
 
@@ -93,9 +93,7 @@ const NavBar = () => {
           )}
           onClick={() => Analytics.actions.events.clickedNavLink("Bridge")}
         >
-          <Text font="macan-font" size="sm">
-            Bridge
-          </Text>
+          <Text size="sm">Bridge</Text>
         </Link>
 
         {/* <Link
@@ -116,9 +114,7 @@ const NavBar = () => {
           )}
           onClick={() => Analytics.actions.events.clickedNavLink("Pools")}
         >
-          <Text font="macan-font" size="sm">
-            Pools
-          </Text>
+          <Text size="sm">Pools</Text>
         </Link>
         {/* <Link
           href="/explore"
@@ -138,9 +134,7 @@ const NavBar = () => {
           )}
           onClick={() => Analytics.actions.events.clickedNavLink("Staking")}
         >
-          <Text font="macan-font" size="sm">
-            Staking
-          </Text>
+          <Text size="sm">Staking</Text>
         </Link>
         <Link
           href="/governance"
@@ -150,9 +144,7 @@ const NavBar = () => {
           )}
           onClick={() => Analytics.actions.events.clickedNavLink("Governance")}
         >
-          <Text font="macan-font" size="sm">
-            Governance
-          </Text>
+          <Text size="sm">Governance</Text>
         </Link>
 
         {/*  <div
@@ -208,19 +200,16 @@ const NavBar = () => {
         </div> */}
       </div>
       <div className={styles["btn-grp"]}>
-        <div className={styles.theme}>
+        {/* <div className={styles.theme}>
           <ThemeButton />
-        </div>
+        </div> */}
         <div className={styles.activity}>
           <TransactionModal />
         </div>
 
-        <div className={styles["wallet-connect"]}>
-          {/* <Button height={34} onClick={toggleWalletWizard} font="macan-font">
-            Connect Wallet
-          </Button> */}
+        {/* <div className={styles["wallet-connect"]}>
           <ConnectButton key={balance.data?.formatted} chainStatus={"none"} />
-        </div>
+        </div> */}
         {/* <WalletWizardModal
           isOpen={isWalletWizardOpen}
           onOpen={setIsWalletWizardOpen}

@@ -1,0 +1,18 @@
+
+.wallet_connect {
+  position: absolute;
+  left:36px;
+  bottom: 36px;
+  display: flex;
+  justify-content: flex-end;
+  background-color: rgba(255, 255, 255, 0.25);
+  padding: 0.5em;
+  border-radius: 0.5em;
+  z-index: 10;
+  * {
+    font-weight: 400 !important;
+    font-family: var(--nm-plex) !important;
+    border-radius: 0.5em !important;
+    box-shadow: none !important;
+  }
+}

@@ -5,40 +5,53 @@ import styles from "./home.module.scss";
 import Icon from "@/components/icon/icon";
 import Button from "@/components/button/button";
 import Link from "next/link";
+import Image from "next/image";
 import Glitch from "@/components/glitch/glitch";
+import AnimatedBackgroundHome from "@/components/animated_background_home/animatedBackgroundHome";
 
 export default function Home() {
   return (
-    <Container
-      className={styles.container}
-      center={{
-        vertical: true,
-        horizontal: true,
-      }}
-    >
-      <section className={styles.hero}>
-        <Icon
-          className={styles["hero-logo"]}
-          style={{ filter: "invert(var(--light-mode))" }}
-          icon={{
-            url: "/altheaMenu.svg",
-            size: {
-              width: 600,
-              height: 160,
-            },
-          }}
-        />
-        <Container direction="row" gap={30}>
-          <Link href="/bridge">
-            <Button width={280}>Bridge To Althea</Button>
-          </Link>
-          {/* <a href="#ecosystem">
+    <>
+      <AnimatedBackgroundHome initSize="570px" direction="in" time={20} />
+      <Container
+        className={styles.container}
+        center={{
+          vertical: true,
+          horizontal: true,
+        }}
+      >
+        <section className={styles.hero}>
+          <Container direction="column" gap={20} style={{ paddingTop: "25px" }}>
+            <Icon
+              className={styles["hero-logo"]}
+              // style={{ filter: "invert(var(--light-mode))" }}
+              icon={{
+                url: "/altheaLink.svg",
+                size: {
+                  width: 374,
+                  height: 56,
+                },
+              }}
+            />
+            <Link href="/bridge">
+              Bridge to Althea
+              <Image
+                src="/dropdown-blue.svg"
+                style={{
+                  transform: "translate(0, 2px) rotate(-90deg)",
+                }}
+                alt="right arrow icon"
+                width={16}
+                height={12}
+              />
+            </Link>
+            {/* <a href="#ecosystem">
             {" "}
             <Button width={280}>Explore Ecosystem</Button>
           </a> */}
-        </Container>
+          </Container>
 
-        {/* <svg
+          {/* <svg
           xmlns="http://www.w3.org/2000/svg"
           width="28"
           height="16"
@@ -106,9 +119,9 @@ export default function Home() {
             fill="var(--primary-90-color)"
           />
         </svg> */}
-      </section>
+        </section>
 
-      {/* <section className={styles.ecosystem} id="ecosystem">
+        {/* <section className={styles.ecosystem} id="ecosystem">
         <Text font="macan-font" size="title">
           Ecosystem
         </Text>
@@ -143,6 +156,7 @@ export default function Home() {
           />
         </div>
       </section> */}
-    </Container>
+      </Container>
+    </>
   );
 }
