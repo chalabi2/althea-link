@@ -46,3 +46,9 @@
   right: 0;
   pointer-events: none;
 }
+
+@media screen and (max-width: 768px) {
+  .wrapper {
+    padding: 24px;
+  }
+}

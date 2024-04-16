@@ -5,6 +5,7 @@ interface Props {
   direction: "in" | "out";
   time: number;
   initSize: string;
+  ratio?: number;
 }
 
 const AnimatedBackgroundHome = (props: Props) => {
@@ -16,6 +17,7 @@ const AnimatedBackgroundHome = (props: Props) => {
           "--direction": props.direction == "in" ? "normal" : "reverse",
           "--anim-time": props.time + "s",
           "--init-size": props.initSize,
+          "--aspect-ratio": props.ratio || 1.75,
         } as React.CSSProperties
       }
     >

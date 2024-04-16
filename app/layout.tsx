@@ -6,6 +6,7 @@ import Footer from "@/components/footer/footer";
 import NavBar from "@/components/nav_bar/navBar";
 import CantoWalletProvider from "@/provider/rainbowProvider";
 import localFont from "next/font/local";
+import { IBM_Plex_Mono, IBM_Plex_Sans } from "next/font/google";
 import { ChainProvider, ThemeCustomizationProps } from "@cosmos-kit/react";
 import { cosmosAminoConverters, cosmosProtoRegistry } from "interchain";
 import { wallets as keplr } from "@cosmos-kit/keplr";
@@ -26,11 +27,18 @@ import "@interchain-ui/react/styles";
 import WalletConnect from "@/components/wallet_connect/walletConnect";
 import StatusText from "@/components/status_text/statusText";
 
-const nm_plex = localFont({
-  src: "../fonts/IBMPlexSans-Regular.ttf",
-  weight: "400",
-  style: "normal",
+const nm_plex = IBM_Plex_Sans({
+  weight: ["400", "500", "700"],
+  style: ["normal", "italic"],
   variable: "--nm-plex",
+  subsets: ["latin"],
+});
+
+const rm_mono = IBM_Plex_Mono({
+  variable: "--rm-mono",
+  style: "normal",
+  weight: ["400", "500"],
+  subsets: ["latin"],
 });
 
 const nm_macan = localFont({
@@ -285,8 +293,8 @@ export default function RootLayout({
         />
       </head> */}
       {/* <!-- Primary Meta Tags --> */}
-      <title>Althea.zone | Althea L1</title>
-      <meta name="title" content="Althea.zone | liquid infrastructure " />
+      <title>Althea Link</title>
+      <meta name="title" content="Althea Link | liquid infrastructure " />
       <meta
         name="description"
         content="Althea is your gateway to cross-chain liquid infrastructure"
@@ -294,23 +302,23 @@ export default function RootLayout({
 
       {/* <!-- Open Graph / Facebook --> */}
       <meta property="og:type" content="website" />
-      <meta property="og:url" content="https://althea.zone" />
-      <meta property="og:title" content="althea.zone" />
+      <meta property="og:url" content="https://althea.link" />
+      <meta property="og:title" content="Althea Link" />
       <meta
         property="og:description"
         content="Althea is your gateway to cross-chain liquid infrastructure"
       />
-      <meta property="og:image" content="https://althea.zone/meta.jpg" />
+      <meta property="og:image" content="https://althea.link/meta.jpg" />
 
       {/* <!-- Twitter --> */}
       <meta property="twitter:card" content="summary_large_image" />
-      <meta property="twitter:url" content="https://althea.zone" />
-      <meta property="twitter:title" content="althea.zone" />
+      <meta property="twitter:url" content="https://althea.link" />
+      <meta property="twitter:title" content="althea.link" />
       <meta
         property="twitter:description"
         content="Althea is your gateway to cross-chain liquid infrastructure"
       />
-      <meta property="twitter:image" content="https://althea.zone/meta.jpg" />
+      <meta property="twitter:image" content="https://althea.link/meta.jpg" />
 
       <body
         className={"dark"}
@@ -318,6 +326,7 @@ export default function RootLayout({
           {
             "--nm-plex": nm_plex.style.fontFamily,
             "--nm-macan": nm_macan.style.fontFamily,
+            "--rm-mono": rm_mono.style.fontFamily,
           } as React.CSSProperties
         }
       >

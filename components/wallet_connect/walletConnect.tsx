@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import Analytics from "@/provider/analytics";
 import { ConnectButton } from "@rainbow-me/rainbowkit";
 import { useBalance } from "wagmi";
+import { usePathname } from "next/navigation";
 import useCantoSigner from "@/hooks/helpers/useCantoSigner";
 
 const WalletConnect = () => {
@@ -13,6 +14,10 @@ const WalletConnect = () => {
     watch: true,
     chainId: signer?.chain.id,
   });
+
+  const pathname = usePathname();
+
+  const homeView = pathname === "/";
 
   useEffect(() => {
     if (signer?.account.address) {
@@ -25,7 +30,7 @@ const WalletConnect = () => {
   }, [signer]);
 
   return (
-    <div className={styles.wallet_connect}>
+    <div className={`${styles.wallet_connect} ${homeView ? "home" : ""}`}>
       <ConnectButton key={balance.data?.formatted} chainStatus={"none"} />
     </div>
   );

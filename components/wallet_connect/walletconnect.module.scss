@@ -16,3 +16,13 @@
     box-shadow: none !important;
   }
 }
+
+@media screen and (max-width: 768px) {
+  .wallet_connect {
+    left: 24px;
+    bottom: 24px;
+    &:global(.home) {
+      bottom: calc(33vh + 24px);
+    }
+  }
+}

@@ -54,3 +54,13 @@
     }
   }
 }
+
+@media screen and (max-width: 768px) {
+  .item {
+    right: 24px;
+    font-size: 12px !important;
+    &:global(.home) {
+      bottom: calc(33vh + 24px);
+    }
+  }
+}

@@ -175,7 +175,7 @@ const Bridging = ({ props }: { props: BridgeComboReturn }) => {
                       width={30}
                       height={30}
                     />
-                    <Text size="md" font="macan-font">
+                    <Text size="md" font="nm_plex">
                       {fromNetwork?.name}
                     </Text>
                   </div>
@@ -225,7 +225,7 @@ const Bridging = ({ props }: { props: BridgeComboReturn }) => {
                     width={30}
                     height={30}
                   />
-                  <Text size="md" font="macan-font">
+                  <Text size="md" font="nm_plex">
                     {toNetwork?.name}
                   </Text>
                 </div>
@@ -460,7 +460,7 @@ function LoadingTextAnim() {
     return () => clearInterval(interval);
   });
   return (
-    <Text font="macan-font" size="x-sm" className={styles.blink}>
+    <Text font="nm_plex" size="x-sm" className={styles.blink}>
       {value}
     </Text>
   );
@@ -485,7 +485,7 @@ const FeesSection = ({
   return props.isLoading ? (
     <LoadingTextAnim />
   ) : props.error !== null ? (
-    <Text font="macan-font" size="x-sm">
+    <Text font="nm_plex" size="x-sm">
       error loading fees {props.error}
     </Text>
   ) : (
@@ -493,7 +493,7 @@ const FeesSection = ({
       {props.method === BridgingMethod.LAYER_ZERO &&
         props.direction === "out" && (
           <Text
-            font="macan-font"
+            font="nm_plex"
             size="x-sm"
             color={
               notEnoughNativeBalance
@@ -570,7 +570,7 @@ const FeesSection = ({
               />
             </Container>
             <Text
-              font="macan-font"
+              font="nm_plex"
               size="x-sm"
               color={
                 notEnoughNativeBalance
@@ -592,7 +592,7 @@ const FeesSection = ({
         )}
       {props.method === BridgingMethod.IBC && props.direction === "out" && (
         <Text
-          font="macan-font"
+          font="nm_plex"
           size="x-sm"
           color={
             notEnoughNativeBalance ? " var(--extra-failure-color, #ff0000)" : ""

@@ -8,11 +8,26 @@ import Link from "next/link";
 import Image from "next/image";
 import Glitch from "@/components/glitch/glitch";
 import AnimatedBackgroundHome from "@/components/animated_background_home/animatedBackgroundHome";
+import useScreenSize from "@/hooks/helpers/useScreenSize";
 
 export default function Home() {
+  const { isMobile } = useScreenSize();
+
+  const bgSize = isMobile ? "190px" : "570px";
+  const bgRatio = isMobile ? 0.95 : 1.75;
+  const logoWidth = isMobile ? 174 : 374;
+  const logoHeight = isMobile ? 26 : 56;
+
+  const rowGap = isMobile ? 10 : 20;
+
   return (
     <>
-      <AnimatedBackgroundHome initSize="570px" direction="in" time={20} />
+      <AnimatedBackgroundHome
+        initSize={bgSize}
+        ratio={bgRatio}
+        direction="in"
+        time={20}
+      />
       <Container
         className={styles.container}
         center={{
@@ -21,15 +36,19 @@ export default function Home() {
         }}
       >
         <section className={styles.hero}>
-          <Container direction="column" gap={20} style={{ paddingTop: "25px" }}>
+          <Container
+            direction="column"
+            gap={rowGap}
+            style={{ paddingTop: "25px" }}
+          >
             <Icon
               className={styles["hero-logo"]}
               // style={{ filter: "invert(var(--light-mode))" }}
               icon={{
                 url: "/altheaLink.svg",
                 size: {
-                  width: 374,
-                  height: 56,
+                  width: logoWidth,
+                  height: logoHeight,
                 },
               }}
             />

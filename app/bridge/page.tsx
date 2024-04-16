@@ -35,7 +35,6 @@ export default function BridgePage() {
           backgroundColor="var(--card-sub-surface-color, #DFDFDF)"
         >
           <Tabs
-            shadows
             defaultIndex={Direction.direction === "in" ? 0 : 1}
             tabs={[
               {
