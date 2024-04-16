@@ -55,7 +55,12 @@
   height: 64px;
   padding: 20px;
   border-radius: var(--border-radius, 0px);
-  border: 1px solid var(--border-stroke-color, #b3b3b3);
+  border: 1px solid var(--border-stroke-color);
+}
+
+.bridge_network-selection button {
+  border-radius: var(--border-radius, 0px);
+  border: 1px solid var(--border-stroke-color);
 }
 
 .token {

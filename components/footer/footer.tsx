@@ -33,7 +33,7 @@ const Footer = () => {
   return (
     <div className={styles.container}>
       <CropMarks theme={"white"} />
-      <Link href="/">
+      <Link href="/" className="footer-logo">
         <Image
           src="/altheaLink-white.svg"
           width={160}
@@ -41,14 +41,16 @@ const Footer = () => {
           alt="althea"
         />
       </Link>
-      <FooterLink
-        href="https://github.com/althea-net/althea-whitepaper/blob/master/whitepaper.pdf"
-        text="Docs"
-      />
-      <FooterLink href="https://discord.gg/CmdEA2ArVJ" text="Discord" />
-      <FooterLink href="https://twitter.com/altheanetwork" text="Twitter" />
-      <FooterLink href="https://medium.com/althea-mesh" text="Blog" />
-      <FooterLink href="https://althea.net" text="Althea L1" />
+      <nav>
+        <FooterLink
+          href="https://github.com/althea-net/althea-whitepaper/blob/master/whitepaper.pdf"
+          text="Docs"
+        />
+        <FooterLink href="https://discord.gg/CmdEA2ArVJ" text="Discord" />
+        <FooterLink href="https://twitter.com/altheanetwork" text="Twitter" />
+        <FooterLink href="https://medium.com/althea-mesh" text="Blog" />
+        <FooterLink href="https://althea.net" text="Althea L1" />
+      </nav>
       {/* <FooterButton text="theme" /> */}
     </div>
   );

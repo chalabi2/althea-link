@@ -4,12 +4,17 @@ import styles from "./statustext.module.scss";
 import { useEffect, useState } from "react";
 import { useBlockNumber } from "wagmi";
 import { CANTO_MAINNET_EVM } from "@/config/networks";
+import { usePathname } from "next/navigation";
 
 const StatusText = () => {
   const { data: blockNumber } = useBlockNumber({
     chainId: CANTO_MAINNET_EVM.chainId,
     watch: true,
   });
+
+  const pathname = usePathname();
+
+  const homeView = pathname === "/";
 
   const [blockString, setBlockString] = useState("Loading....");
   useEffect(() => {
@@ -19,7 +24,7 @@ const StatusText = () => {
     <Text
       size="x-sm"
       font="nm_plex"
-      className={styles.item}
+      className={`${styles.item} ${homeView ? "home" : ""}`}
       style={{
         justifyContent: "center",
       }}

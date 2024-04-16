@@ -34,6 +34,7 @@ const Splash = (props: Props) => {
         height: "100%",
         justifyContent: "center",
         alignItems: "center",
+        minHeight: "100vh",
       }}
     >
       <LoadingComponent size="lg" />

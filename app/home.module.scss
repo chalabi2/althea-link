@@ -74,15 +74,17 @@
     grid-template-columns: repeat(1, minmax(300px, 1fr));
   }
   .hero {
-    padding: 2rem 0;
+    padding: 1rem 0;
     gap: 1rem;
+    a {
+      align-self: center;
+    }
   }
 
   .container {
-    min-height: 75vh;
+    min-height: 67vh;
     img {
       padding: 0;
-      width: 100%;
     }
   }
 }
