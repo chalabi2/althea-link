@@ -33,6 +33,7 @@ export default function BridgePage() {
         <Container
           width={isMobile ? "100vw" : "700px"}
           backgroundColor="var(--card-sub-surface-color, #DFDFDF)"
+          style={{ borderRadius: "1em" }}
         >
           <Tabs
             defaultIndex={Direction.direction === "in" ? 0 : 1}

@@ -75,7 +75,7 @@ export function VotingInfoBox({
             </Text>
             <Icon
               icon={{
-                url: "/althea.png",
+                url: "/althea.svg",
                 size: 16,
               }}
               themed={true}
