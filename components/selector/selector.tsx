@@ -11,7 +11,7 @@ import clsx from "clsx";
 import LoadingIcon from "../loader/loading";
 import Input from "../input/input";
 import LoadingComponent from "../animated/loader";
-
+const loadingGif = "/loading.gif";
 export interface Item {
   id: string;
   icon?: string;
@@ -275,7 +275,12 @@ const Selector = (props: Props) => {
             </Text>
           )}
           {props.activeItem?.icon == "loader.svg" ? (
-            <LoadingComponent size="lg" />
+            <Image
+              alt="Loading icon"
+              src={loadingGif}
+              height={100}
+              width={100}
+            />
           ) : (
             props.activeItem?.icon && (
               <Image

@@ -84,7 +84,7 @@ export default function Page() {
         gap={isMobile ? 10 : "auto"}
         width="100%"
       >
-        <Text size="x-lg" font="macan-font" className={styles.title}>
+        <Text size="x-lg" font="nm_plex" className={styles.title}>
           Pools
         </Text>
         <Rewards

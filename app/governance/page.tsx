@@ -13,7 +13,9 @@ import Splash from "@/components/splash/splash";
 import Link from "next/link";
 import Container from "@/components/container/container";
 import LoadingComponent from "@/components/animated/loader";
+import Image from "next/image";
 import useScreenSize from "@/hooks/helpers/useScreenSize";
+const loadingGif = "/loading.gif";
 
 export default function GovernancePage() {
   const { chainId } = useCantoSigner();
@@ -33,7 +35,7 @@ export default function GovernancePage() {
 
   return isProposalsLoading ? (
     <div className={styles.loaderContainer}>
-      <LoadingComponent size="lg" />
+      <Image alt="Loading icon" src={loadingGif} height={100} width={100} />
     </div>
   ) : (
     <div>

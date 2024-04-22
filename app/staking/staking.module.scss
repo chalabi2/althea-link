@@ -4,7 +4,9 @@
   align-items: center;
   max-width: 1400px;
   width: 100vw;
-  margin: 10px auto;
+  margin: 110px auto 10px auto;
+
+  padding: 0px 36px 0px 36px;
 
   position: relative;
   padding-top: 10px;
@@ -21,6 +23,7 @@
 
   position: relative;
   padding-top: 2rem;
+  height: 100vh;
 }
 
 .title {
@@ -51,8 +54,10 @@
   .container {
     border-top: 1px solid var(--border-stroke-color, #b3b3b3);
     width: calc(100vw);
+    margin: 72px auto 10px auto;
+
+    padding: 0px 24px 0px 24px;  
     //gap: 1rem;
-    padding: 1rem;
     &::after {
       display: none;
     }
