@@ -11,7 +11,7 @@ interface Props {
     | "nm_macan"
     | "light_plex"
     | "modeseven";
-  weight?: "normal" | "bold";
+  weight?: "normal" | "500" | "bold";
   size?: "xx-sm" | "x-sm" | "sm" | "md" | "lg" | "x-lg" | "title";
   opacity?: number;
   theme?:

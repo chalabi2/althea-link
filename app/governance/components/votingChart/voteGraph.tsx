@@ -47,7 +47,7 @@ const Bar = ({ amount, totalVotes, size, isMobile }: BarProps) => {
         <div className={styles.icon}>
           <Icon
             icon={{
-              url: "/tokens/althea.png",
+              url: "/tokens/althea.svg",
               size: isMobile ? 10 : 12,
             }}
             themed

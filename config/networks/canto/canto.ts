@@ -15,7 +15,7 @@ const cantoMainBlockExplorerEVM = "https://althea.explorers.guru";
 // canto will have an EVM and COSMOS chain data
 const cantoMainnetBaseInfo = {
   name: "Althea",
-  icon: "/althea.png",
+  icon: "/althea.svg",
   isTestChain: false,
   rpcUrl: "https://nodes.chandrastation.com/testnet/evm/althea/",
   nativeCurrency: {

@@ -5,7 +5,7 @@ export const newStakingFlow = (
   txParams: StakingTransactionParams
 ): NewTransactionFlow => ({
   title: txParams.txType,
-  icon: "/althea.png",
+  icon: "/althea.svg",
   txType: TransactionFlowType.STAKE_CANTO_TX,
   params: txParams,
 });

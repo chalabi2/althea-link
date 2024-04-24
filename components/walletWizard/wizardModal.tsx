@@ -16,6 +16,8 @@ import { shiftDigits } from "../utils/shiftDigits";
 import { cosmos } from "interchain";
 import Icon from "../icon/icon";
 import LoadingComponent from "../animated/loader";
+import Image from "next/image";
+const loadingGif = "/loading.gif";
 import { useChain } from "@cosmos-kit/react";
 import { useTx } from "@/hooks/wizard/useTx";
 import BigNumber from "bignumber.js";
@@ -228,7 +230,7 @@ export const WalletWizardModal: React.FC<WalletWizardModalProps> = ({
                 <Icon
                   className={styles["amountIcon"]}
                   icon={{
-                    url: "/althea.png",
+                    url: "/althea.svg",
                     size: {
                       width: 20,
                       height: 20,
@@ -245,7 +247,12 @@ export const WalletWizardModal: React.FC<WalletWizardModalProps> = ({
                 {isError ? (
                   "Failed"
                 ) : isSigning ? (
-                  <LoadingComponent size="sm" />
+                  <Image
+                    alt="Loading icon"
+                    src={loadingGif}
+                    height={50}
+                    width={50}
+                  />
                 ) : (
                   "Migrate"
                 )}

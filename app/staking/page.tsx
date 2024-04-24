@@ -42,6 +42,8 @@ import Analytics from "@/provider/analytics";
 import useScreenSize from "@/hooks/helpers/useScreenSize";
 import { getAnalyticsStakingInfo } from "@/utils/analytics";
 import LoadingComponent from "@/components/animated/loader";
+import Image from "next/image";
+const loadingGif = "/loading.gif";
 
 export default function StakingPage() {
   // connected user info
@@ -304,7 +306,7 @@ export default function StakingPage() {
 
   return isLoading ? (
     <div className={styles.loaderContainer}>
-      <LoadingComponent size="lg" />
+      <Image alt="Loading icon" src={loadingGif} height={100} width={100} />
     </div>
   ) : (
     //main content
@@ -695,7 +697,7 @@ export default function StakingPage() {
                   <Icon
                     themed
                     icon={{
-                      url: "/tokens/althea.png",
+                      url: "/tokens/althea.svg",
                       size: 20,
                     }}
                   />
@@ -739,7 +741,7 @@ export default function StakingPage() {
                   <Container direction="row" center={{ vertical: true }}>
                     <Icon
                       icon={{
-                        url: "/tokens/althea.png",
+                        url: "/tokens/althea.svg",
                         size: 18,
                       }}
                       //color="primary"

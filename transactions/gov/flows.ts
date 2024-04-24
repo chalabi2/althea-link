@@ -5,7 +5,7 @@ export const newVoteFlow = (
   txParams: ProposalVoteTxParams
 ): NewTransactionFlow => ({
   title: "Voting",
-  icon: "/tokens/althea.png",
+  icon: "/tokens/althea.svg",
   txType: TransactionFlowType.VOTE_TX,
   params: txParams,
 });

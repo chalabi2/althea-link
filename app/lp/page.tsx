@@ -30,7 +30,7 @@ import useScreenSize from "@/hooks/helpers/useScreenSize";
 
 export default function Page() {
   const {
-    pairs,
+    fakePairs,
     rewards,
     filteredPairs,
     setFilteredPairs,
@@ -51,7 +51,7 @@ export default function Page() {
   //   return <DesktopOnly />;
   // }
   const { isMobile } = useScreenSize();
-
+  const pairs = fakePairs.pairs;
   //main content
   return (
     <div className={styles.container}>
@@ -84,7 +84,7 @@ export default function Page() {
         gap={isMobile ? 10 : "auto"}
         width="100%"
       >
-        <Text size="x-lg" font="macan-font" className={styles.title}>
+        <Text size="x-lg" font="nm_plex" className={styles.title}>
           Pools
         </Text>
         <Rewards
@@ -113,14 +113,59 @@ export default function Page() {
                 ? [
                     ...pairs.userAmbient.map((pool) => () => {
                       Analytics.actions.events.liquidityPool.manageLPClicked(
+                        // @ts-ignore
                         getAnalyticsAmbientLiquidityPoolInfo(pool)
                       );
                       setPair(pool.address);
+                      // interface BaseAmbientPool {
+                      //   address: string; // this address will never be used for transactions, just for identification in hook
+                      //   symbol: string;
+                      //   logoURI: string;
+                      //   base: AmbientPoolToken;
+                      //   quote: AmbientPoolToken;
+                      //   poolIdx: number;
+                      //   stable: boolean;
+                      //   rewardsLedger: string;
+                      // }
+                      // interface AmbientPool extends BaseAmbientPool {
+                      //   stats: {
+                      //     latestTime: number;
+                      //     baseTvl: string;
+                      //     quoteTvl: string;
+                      //     baseVolume: string;
+                      //     quoteVolume: string;
+                      //     baseFees: string;
+                      //     quoteFees: string;
+                      //     lastPriceSwap: string;
+                      //     lastPriceLiq: string;
+                      //     lastPriceIndic: string;
+                      //     feeRate: number;
+                      //   };
+                      //   userPositions: AmbientUserPosition[];
+                      //   userRewards: string;
+                      //   totals: {
+                      //     noteTvl: string;
+                      //     apr: {
+                      //       poolApr: string;
+                      //       // each token could have underlying apr from the lending market
+                      //       base?: {
+                      //         dist: string;
+                      //         supply: string;
+                      //       };
+                      //       quote?: {
+                      //         dist: string;
+                      //         supply: string;
+                      //       };
+                      //     };
+                      //   };
+                      // }
                     }),
                     ...pairs.userCantoDex.map((pair) => () => {
                       Analytics.actions.events.liquidityPool.manageLPClicked(
+                        // @ts-ignore
                         getAnalyticsCantoLiquidityPoolInfo(pair)
                       );
+                      // @ts-ignore
                       setPair(pair.address);
                     }),
                   ]
@@ -129,9 +174,11 @@ export default function Page() {
             content={[
               ...pairs.userAmbient.map((pool) =>
                 UserAmbientPairRow({
+                  // @ts-ignore
                   pool,
                   onManage: (poolAddress) => {
                     Analytics.actions.events.liquidityPool.manageLPClicked(
+                      // @ts-ignore
                       getAnalyticsAmbientLiquidityPoolInfo(pool)
                     );
                     setPair(poolAddress);
@@ -142,10 +189,12 @@ export default function Page() {
               ),
               ...pairs.userCantoDex.map((pair) =>
                 UserCantoDexPairRow({
+                  // @ts-ignore
                   pair,
 
                   onManage: (pairAddress) => {
                     Analytics.actions.events.liquidityPool.manageLPClicked(
+                      // @ts-ignore
                       getAnalyticsCantoLiquidityPoolInfo(pair)
                     );
                     setPair(pairAddress);
@@ -229,6 +278,7 @@ export default function Page() {
             )
             .map((pool) =>
               GeneralAmbientPairRow({
+                // @ts-ignore
                 pool,
                 onAddLiquidity: (poolAddress) => {
                   Analytics.actions.events.liquidityPool.addLPClicked({

@@ -2,6 +2,7 @@
 
 import Rive from "@rive-app/react-canvas";
 import LoadingComponent from "../animated/loader";
+import Image from "next/image";
 
 interface Props {
   height?: string;
@@ -9,6 +10,7 @@ interface Props {
   themed?: boolean;
 }
 const Splash = (props: Props) => {
+  const loadingGif = "/loading.gif";
   //   if mobile only
   if (!window.matchMedia("(min-width: 768px)").matches) {
     return (
@@ -21,7 +23,7 @@ const Splash = (props: Props) => {
           alignItems: "center",
         }}
       >
-        <LoadingComponent size="lg" />
+        <Image alt="Loading icon" src={loadingGif} height={100} width={100} />
       </div>
     );
   }
@@ -34,9 +36,10 @@ const Splash = (props: Props) => {
         height: "100%",
         justifyContent: "center",
         alignItems: "center",
+        minHeight: "100vh",
       }}
     >
-      <LoadingComponent size="lg" />
+      <Image alt="Loading icon" src={loadingGif} height={100} width={100} />
     </div>
   );
 };
