@@ -54,7 +54,6 @@ export const WalletWizardModal: React.FC<WalletWizardModalProps> = ({
   };
 
   const { tx, transactionHash } = useTx("altheatestnet", explicitSignerData);
-  console.log("tx", transactionHash);
 
   const balanceData = useBalance(address ?? "");
 

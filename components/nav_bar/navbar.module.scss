@@ -3,11 +3,12 @@
   grid-template-columns: 160px 1fr 120px;
   animation: fadeIn 0.5s ease-in-out;
   padding: 1em 36px;
-  margin-top: 1.25em;
+
   position: fixed;
-  top:0;
-  left:0;
-  right:0;
+  backdrop-filter: blur(4px);
+  top: 0;
+  left: 0;
+  right: 0;
   z-index: 10;
   @keyframes fadeIn {
     from {
@@ -80,7 +81,7 @@
 
 .wallet-connect {
   position: absolute;
-  left:36px;
+  left: 36px;
   bottom: 36px;
   display: flex;
   justify-content: flex-end;
@@ -119,13 +120,13 @@
     grid-row-gap: 16px;
     margin-top: 4px;
   }
-  
+
   .logo {
     display: flex;
     justify-content: center;
     align-items: flex-end;
     padding-bottom: 0px;
-  
+
     a > img {
       height: auto;
       max-width: 100%;
@@ -151,7 +152,7 @@
     justify-content: space-evenly;
     border-radius: 8px;
   }
-  
+
   .nav-link {
     padding: 0;
     p {
