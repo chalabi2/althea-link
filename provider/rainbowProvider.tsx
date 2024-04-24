@@ -1,15 +1,10 @@
 import "@rainbow-me/rainbowkit/styles.css";
 import {
   AvatarComponent,
-  connectorsForWallets,
   getDefaultWallets,
   RainbowKitProvider,
 } from "@rainbow-me/rainbowkit";
-import {
-  injectedWallet,
-  rainbowWallet,
-  walletConnectWallet,
-} from "@rainbow-me/rainbowkit/wallets";
+
 import {
   Chain,
   configureChains,

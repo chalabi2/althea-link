@@ -4,12 +4,25 @@
   animation: fadeIn 0.5s ease-in-out;
   padding: 1em 36px;
 
+  /* Make navbar fixed and set it at the top with a high z-index */
   position: fixed;
-  backdrop-filter: blur(4px);
   top: 0;
   left: 0;
   right: 0;
   z-index: 10;
+
+  /* Apply backdrop blur and slight opacity for a stylish effect */
+  backdrop-filter: blur(10px); /* Higher blur for a more intense effect */
+  background-color: rgba(32, 32, 32, 0.4); /* Transparent white background */
+
+  /* Add subtle shadow for depth */
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+
+  /* Animation for smooth appearance */
+  transition:
+    background-color 0.3s ease,
+    backdrop-filter 0.3s ease;
+
   @keyframes fadeIn {
     from {
       opacity: 0;

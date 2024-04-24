@@ -2,14 +2,18 @@
   display: flex;
   position: -webkit-sticky; /* Add vendor prefix for compatibility */
   position: sticky;
-  align-items: flex-end;
+  align-items: center;
+  max-width: 8rem;
   justify-content: flex-end; /* Ensures content is aligned to the right */
   text-transform: uppercase;
   transition: background 0.1s ease-out;
+  padding: 4px 22px;
+  border-radius: 36px;
+  background-color: rgba(#000000, 0.4);
   left: 36px;
   bottom: 24px;
   margin-right: 24px;
-  margin-bottom: 32px;
+  margin-bottom: 24px;
   margin-left: auto; /* Ensures the item pushes to the right */
   a {
     display: flex;
@@ -58,7 +62,7 @@
   .item {
     left: 36px;
     bottom: 24px;
-    margin-right: 24px;
+    margin-right: 32px;
     margin-bottom: 32px;
     font-size: 12px !important;
     /* Make sure the item stays at the bottom */
