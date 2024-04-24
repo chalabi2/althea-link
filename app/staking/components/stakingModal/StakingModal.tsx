@@ -278,7 +278,7 @@ export const StakingModal = (props: StakingModalParams) => {
       </div>
       <Spacer height="10px" />
       <div style={{ width: "100%" }} className={styles.modalInfoRow}>
-        <Text font="macan-font" size="x-sm" color="#EE4B2B">
+        <Text font="macan-font" size="x-sm" color="white">
           Please Note: Undelegation period is 21 days
         </Text>
       </div>

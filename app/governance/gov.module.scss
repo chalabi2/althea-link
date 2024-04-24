@@ -4,7 +4,7 @@
   align-items: center;
   max-width: 1080px !important;
   margin: 110px auto 10px auto;
-
+  margin-top: 128px;
   position: relative;
   padding: 2rem 36px 0 36px;
   min-height: 100vh;
@@ -34,7 +34,6 @@
 
 @media screen and (max-width: 768px) {
   .container {
-    border-top: 1px solid var(--althea-blue, #0077ff);
     width: calc(100vw);
     //gap: 1rem;
     padding: 1rem 24px 1rem 24px;

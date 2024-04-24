@@ -4,7 +4,7 @@
   align-items: center;
   max-width: 1080px !important;
   margin: 10px auto;
-
+  margin-top: 64px;
   position: relative;
   padding-top: 2rem;
 
@@ -40,6 +40,7 @@
     border: 1px solid;
     width: fit-content;
     margin: 40px 0px 24px 0;
+    justify-content: space-between;
     //border-style: solid ;
     .headerColumn2 {
       display: flex;
@@ -285,7 +286,6 @@
 
 @media screen and (max-width: 768px) {
   .container {
-    border-top: 1px solid var(--border-stroke-color, #b3b3b3);
     width: calc(100vw);
     //gap: 1rem;
     padding: 1rem;
