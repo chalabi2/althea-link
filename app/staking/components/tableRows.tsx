@@ -58,7 +58,7 @@ export const GenerateValidatorTableRow = (
     <Icon
       style={{ marginLeft: "5px" }}
       icon={{
-        url: "/tokens/althea.png",
+        url: "/tokens/althea.svg",
         size: 19,
       }}
       themed={true}
@@ -130,7 +130,7 @@ export const GenerateMyStakingTableRow = (
     <Icon
       style={{ marginLeft: "5px" }}
       icon={{
-        url: "/tokens/althea.png",
+        url: "/tokens/althea.svg",
         size: 19,
       }}
       themed={true}
@@ -150,7 +150,7 @@ export const GenerateMyStakingTableRow = (
       <Icon
         style={{ marginLeft: "5px" }}
         icon={{
-          url: "/tokens/althea.png",
+          url: "/tokens/althea.svg",
           size: 19,
         }}
         themed={true}
@@ -233,7 +233,7 @@ export const GenerateUnbondingDelegationsTableRow = (
       <Icon
         style={{ marginLeft: "5px" }}
         icon={{
-          url: "/tokens/althea.png",
+          url: "/tokens/althea.svg",
           size: 16,
         }}
         themed={true}

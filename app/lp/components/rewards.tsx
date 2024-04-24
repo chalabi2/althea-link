@@ -44,7 +44,7 @@ const Rewards = (props: Props) => {
           </Text>
           <Icon
             icon={{
-              url: "/althea.png",
+              url: "/althea.svg",
               size: 24,
             }}
           />

@@ -40,10 +40,16 @@ const Tabs = (props: Props) => {
               tab.onClick && tab.onClick();
             }}
             disabled={tab.isDisabled}
-            className={clsx(styles.tab, activeTab === index && styles.active)}
+            className={clsx(
+              styles.tab,
+              activeTab === index && styles.active,
+              activeTab === index && "active",
+              index === props.tabs.length - 1 && styles.last,
+              index === 0 && styles.first
+            )}
             style={isMobile && tab.hideOnMobile ? { display: "none" } : {}}
           >
-            <Text font="macan-font" size="sm" theme={"primary-dark"}>
+            <Text font="nm_plex" weight="500" size="sm" theme={"primary-dark"}>
               {tab.title}
             </Text>
             {tab.extraTitle}

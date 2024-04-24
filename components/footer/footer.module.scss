@@ -1,49 +1,17 @@
 .container {
   display: flex;
-  height: 28px;
-  position: fixed;
-  width: calc(100% + 1px);
-  background: linear-gradient(
-    90deg,
-    var(--background-color-start) 0%,
-    var(--background-color-end) 100%
-  );
-  bottom: 0;
+  height: 220px;
+  background: #000;
   z-index: 9;
-
+  position: relative;  
   align-items: center;
   justify-content: space-between;
-  border-top: 1px solid var(--border-stroke-color, #222);
-  border-radius: var(--border-radius, 0px);
-  .links {
+
+  nav {
     display: flex;
-    align-items: center;
-    height: 100%;
-  }
-
-  .link {
-    height: 100%;
-    display: flex;
-    align-items: center;
-    border-right: var(--border-stroke-color, #222) 1px solid;
-    text-transform: uppercase;
-    transition: background 0.1s ease-out;
-    &:hover {
-      background-color: var(--althea-blue, #0077ff);
-      opacity: 0.5;
-
-      cursor: pointer;
-      color: var(--primary-color, #ffffff);
-      opacity: 1;
-    }
-
-    &:active {
-      background: #bcbcbc;
-    }
-
-    &:not(:has(a)) {
-      padding: 0 2rem;
-    }
+    flex: 1;
+    justify-content: space-between;
+    margin-left: 1rem;
   }
 
   .item {
@@ -56,10 +24,6 @@
   }
   a {
     padding: 0 2rem;
-    display: flex;
-    align-items: center;
-    height: 100%;
-    width: 100%;
   }
 
   .status {
@@ -133,23 +97,38 @@
   .container {
     width: 100%;
     max-width: 100vw;
-    height: 62px;
+    min-height: 33vh;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    column-gap: 25vw;
+    align-items: start;
+    padding: 4rem 1.5rem 1.5rem 1.5rem;
 
-    flex-wrap: wrap;
-    position: relative;
+    nav {
+      display: block;
+      margin-left: 0px;
+    }
+
+    :global(.footer-logo) {
+      img {
+        max-width: 140px;
+      }
+    }
+
     .links {
       flex-wrap: wrap;
-
-      height: calc(56px / 2);
-      border-top: 1px solid var(--broder-stroke-color, #999);
-      &:first-of-type {
-        border-top: none;
-      }
       width: 100%;
     }
 
-    border-top: 1px solid var(--broder-stroke-color, #999);
-    border-bottom: 1px solid var(--broder-stroke-color, #999);
+    a {
+      padding: 0;
+    }
+
+  }
+
+  .link {
+    font-size: 15px !important;
+    margin-top: 0.5rem;
   }
 
   .links > * {
@@ -165,6 +144,7 @@
       padding: 0;
       height: 100%;
       width: 100%;
+      font-size: 15px;
     }
     &:not(:has(a)) {
       padding: 0 1rem;

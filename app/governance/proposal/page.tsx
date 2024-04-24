@@ -29,6 +29,8 @@ import { VoteBarGraph } from "../components/votingChart/voteGraph";
 import LoadingComponent from "@/components/animated/loader";
 import useScreenSize from "@/hooks/helpers/useScreenSize";
 import Container from "@/components/container/container";
+import Image from "next/image";
+const loadingGif = "/loading.gif";
 
 const VOTE_OPTION_COLORS = {
   [VoteOption.YES]: [
@@ -88,7 +90,7 @@ export default function Page() {
   if (isProposalsLoading) {
     return (
       <div className={styles.loaderContainer}>
-        <LoadingComponent size="lg" />
+        <Image alt="Loading icon" src={loadingGif} height={100} width={100} />
       </div>
     );
   }
@@ -96,8 +98,8 @@ export default function Page() {
   if (!id) {
     return (
       <div className={styles.noProposalContainer}>
-        <Text font="macan-font">Proposal ID is missing</Text>
-        <Text font="macan-font">Proposal ID is missing</Text>
+        <Text font="nm_plex">Proposal ID is missing</Text>
+        <Text font="nm_plex">Proposal ID is missing</Text>
       </div>
     );
   }
@@ -107,9 +109,7 @@ export default function Page() {
   if (!proposal) {
     return (
       <div className={styles.noProposalContainer}>
-        <Text font="macan-font">
-          No proposal found with the ID {proposalId}{" "}
-        </Text>
+        <Text font="nm_plex">No proposal found with the ID {proposalId} </Text>
       </div>
     );
   }
@@ -132,29 +132,29 @@ export default function Page() {
 
   return isProposalsLoading ? (
     <div className={styles.loaderContainer}>
-      <LoadingComponent size="lg" />
+      <Image alt="Loading icon" src={loadingGif} height={100} width={100} />
     </div>
   ) : (
     <div className={styles.container}>
       <div className={styles.proposalHeaderContainer}>
-        <div
-          className={styles.backButtonContainer}
-          onClick={() => {
-            router.push("/governance");
-          }}
-        >
-          <div className={styles.backButton}>
-            <Icon
-              icon={{
-                url: "/dropdown.svg",
-                size: 22,
-              }}
-              style={{ filter: "invert(var(--dark-mode))" }}
-              themed
-            />
-          </div>
-        </div>
         <div className={styles.headerCard}>
+          <div
+            className={styles.backButtonContainer}
+            onClick={() => {
+              router.push("/governance");
+            }}
+          >
+            <div className={styles.backButton}>
+              <Icon
+                icon={{
+                  url: "/dropdown.svg",
+                  size: 22,
+                }}
+                style={{ filter: "invert(var(--dark-mode))" }}
+                themed
+              />
+            </div>
+          </div>
           <div
             style={{
               borderRight:
@@ -166,6 +166,7 @@ export default function Page() {
           >
             <Text>#{proposal.proposal_id}</Text>
           </div>
+
           {!(proposal.status == "PROPOSAL_STATUS_VOTING_PERIOD") && (
             <div style={{ padding: "10px" }} className={styles.headerColumn2}>
               <div className={styles.circleContainer}>

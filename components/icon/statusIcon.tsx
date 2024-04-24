@@ -1,5 +1,6 @@
 import LoadingComponent from "../animated/loader";
-
+import Image from "next/image";
+const loadingGif = "/loading.gif";
 import Icon from "./icon";
 
 interface Props {
@@ -11,7 +12,7 @@ interface Props {
 
 const StatusIcon = (props: Props) => {
   if (["PENDING", "SIGNING", "POPULATING", "NONE"].includes(props.status))
-    return <LoadingComponent size={"sm"} />;
+    return <Image alt="Loading icon" src={loadingGif} height={50} width={50} />;
   return (
     <Icon
       themed

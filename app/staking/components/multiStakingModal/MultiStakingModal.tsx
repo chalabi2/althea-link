@@ -287,7 +287,7 @@ export const MultiStakingModal = (props: MultiStakingModalParams) => {
 
       <div>
         <Amount
-          IconUrl={"/althea.png"}
+          IconUrl={"/althea.svg"}
           title={"Althea"}
           symbol={"ALTHEA"}
           onChange={(val) => {

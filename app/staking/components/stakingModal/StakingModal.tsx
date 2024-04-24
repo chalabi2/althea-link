@@ -179,7 +179,7 @@ export const StakingModal = (props: StakingModalParams) => {
               justifyContent: "center",
             }}
           >
-            <Icon themed icon={{ url: "/althea.png", size: 24 }} />
+            <Icon themed icon={{ url: "/althea.svg", size: 24 }} />
           </div>
         </div>
       </div>
@@ -203,7 +203,7 @@ export const StakingModal = (props: StakingModalParams) => {
               justifyContent: "center",
             }}
           >
-            <Icon themed icon={{ url: "/althea.png", size: 24 }} />
+            <Icon themed icon={{ url: "/althea.svg", size: 24 }} />
           </div>
         </div>
       </div>
@@ -264,7 +264,7 @@ export const StakingModal = (props: StakingModalParams) => {
       </div>
       <div>
         <Amount
-          IconUrl={"/althea.png"}
+          IconUrl={"/althea.svg"}
           title={"Althea"}
           symbol={"ALTHEA"}
           onChange={(val) => {
@@ -278,7 +278,7 @@ export const StakingModal = (props: StakingModalParams) => {
       </div>
       <Spacer height="10px" />
       <div style={{ width: "100%" }} className={styles.modalInfoRow}>
-        <Text font="macan-font" size="x-sm" color="#EE4B2B">
+        <Text font="macan-font" size="x-sm" color="white">
           Please Note: Undelegation period is 21 days
         </Text>
       </div>

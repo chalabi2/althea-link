@@ -11,7 +11,7 @@ import clsx from "clsx";
 import LoadingIcon from "../loader/loading";
 import Input from "../input/input";
 import LoadingComponent from "../animated/loader";
-
+const loadingGif = "/loading.gif";
 export interface Item {
   id: string;
   icon?: string;
@@ -55,7 +55,7 @@ const Selector = (props: Props) => {
         width="32rem"
         height="36rem"
       >
-        <Text size="lg" font="macan-font">
+        <Text size="lg" font="nm_plex">
           {props.title}
         </Text>
         {props.searchProps && (
@@ -120,10 +120,10 @@ const Selector = (props: Props) => {
                   />
                 )}
                 <Container direction="row" gap={"auto"} width="100%">
-                  <Text size="md" font="macan-font">
+                  <Text size="md" font="nm_plex">
                     {item.name}
                   </Text>
-                  <Text size="md" font="macan-font">
+                  <Text size="md" font="nm_plex">
                     {item.secondary}
                   </Text>
                 </Container>
@@ -153,7 +153,7 @@ const Selector = (props: Props) => {
                         height={30}
                       />
                     )}
-                    <Text size="md" font="macan-font">
+                    <Text size="md" font="nm_plex">
                       {group.main.name} {group.main.secondary}
                     </Text>
                     <div
@@ -207,7 +207,7 @@ const Selector = (props: Props) => {
                   }}
                 />
               </div>
-              <Text size="md" font="macan-font">
+              <Text size="md" font="nm_plex">
                 Back
               </Text>
             </Container>
@@ -236,7 +236,7 @@ const Selector = (props: Props) => {
                         height={30}
                       />
                     )}
-                    <Text size="md" font="macan-font">
+                    <Text size="md" font="nm_plex">
                       {item.name} {item.secondary}
                     </Text>
                   </Container>
@@ -249,7 +249,7 @@ const Selector = (props: Props) => {
         color="secondary"
         width="fill"
         height={64}
-        shadow="small"
+        shadow="none"
         onClick={() => {
           setIsOpen(true);
         }}
@@ -275,7 +275,12 @@ const Selector = (props: Props) => {
             </Text>
           )}
           {props.activeItem?.icon == "loader.svg" ? (
-            <LoadingComponent size="lg" />
+            <Image
+              alt="Loading icon"
+              src={loadingGif}
+              height={100}
+              width={100}
+            />
           ) : (
             props.activeItem?.icon && (
               <Image
@@ -286,7 +291,7 @@ const Selector = (props: Props) => {
               />
             )
           )}
-          <Text size="md" font="macan-font">
+          <Text size="md" font="nm_plex">
             {props.activeItem?.name ?? "SELECT ITEM"}
           </Text>
         </Container>
