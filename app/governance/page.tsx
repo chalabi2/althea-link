@@ -7,12 +7,11 @@ import ProposalTable from "./components/ProposalTable/ProposalTable";
 import styles from "./gov.module.scss";
 import Text from "@/components/text";
 import Spacer from "@/components/layout/spacer";
-import Button from "@/components/button/button";
+
 import useCantoSigner from "@/hooks/helpers/useCantoSigner";
-import Splash from "@/components/splash/splash";
-import Link from "next/link";
+
 import Container from "@/components/container/container";
-import LoadingComponent from "@/components/animated/loader";
+
 import Image from "next/image";
 import useScreenSize from "@/hooks/helpers/useScreenSize";
 const loadingGif = "/loading.gif";

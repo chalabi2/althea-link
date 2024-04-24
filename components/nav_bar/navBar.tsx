@@ -106,7 +106,7 @@ const NavBar = () => {
         >
           <Text size="sm">Lending</Text>
         </Link> */}
-        <Link
+        {/* <Link
           href="/lp"
           className={clsx(
             styles["nav-link"],
@@ -115,7 +115,7 @@ const NavBar = () => {
           onClick={() => Analytics.actions.events.clickedNavLink("Pools")}
         >
           <Text size="sm">Pools</Text>
-        </Link>
+        </Link> */}
         {/* <Link
           href="/explore"
           className={clsx(

@@ -1,17 +1,22 @@
 .item {
   display: flex;
-  align-items: center;
+  position: -webkit-sticky; /* Add vendor prefix for compatibility */
+  position: sticky;
+  align-items: flex-end;
+  justify-content: flex-end; /* Ensures content is aligned to the right */
   text-transform: uppercase;
   transition: background 0.1s ease-out;
-  position: absolute;
-  right: 36px;
-  bottom: 36px;
+  left: 36px;
+  bottom: 24px;
+  margin-right: 24px;
+  margin-bottom: 32px;
+  margin-left: auto; /* Ensures the item pushes to the right */
   a {
     display: flex;
     align-items: center;
     height: 100%;
     width: 100%;
-  }  
+  }
 }
 
 .status {
@@ -19,7 +24,7 @@
   width: 10px;
   border-radius: 50%;
   background-color: var(--primary-90-color, #222);
-  position: relative;
+  position: relative; /* Changed from sticky to relative for inside the parent context */
   font-family: var(--nm-plex);
   letter-spacing: 0.27px;
   font-size: 13px;
@@ -34,31 +39,29 @@
     left: -1px;
     border-radius: 50%;
     border: 1px solid var(--primary-90-color, #111);
-
     animation: ripple 1s infinite ease-in-out;
   }
+}
 
-  @keyframes ripple {
-    0% {
-      transform: scale(1);
-      opacity: 1;
-    }
-    //   60% {
-    //     transform: scale(1.8);
-    //     opacity: 0.5;
-    //   }
-
-    100% {
-      transform: scale(1.8);
-      opacity: 0;
-    }
+@keyframes ripple {
+  0% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1.8);
+    opacity: 0;
   }
 }
 
 @media screen and (max-width: 768px) {
   .item {
-    right: 24px;
+    left: 36px;
+    bottom: 24px;
+    margin-right: 24px;
+    margin-bottom: 32px;
     font-size: 12px !important;
+    /* Make sure the item stays at the bottom */
     &:global(.home) {
       bottom: calc(33vh + 24px);
     }

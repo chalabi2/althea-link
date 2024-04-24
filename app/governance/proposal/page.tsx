@@ -137,24 +137,24 @@ export default function Page() {
   ) : (
     <div className={styles.container}>
       <div className={styles.proposalHeaderContainer}>
-        <div
-          className={styles.backButtonContainer}
-          onClick={() => {
-            router.push("/governance");
-          }}
-        >
-          <div className={styles.backButton}>
-            <Icon
-              icon={{
-                url: "/dropdown.svg",
-                size: 22,
-              }}
-              style={{ filter: "invert(var(--dark-mode))" }}
-              themed
-            />
-          </div>
-        </div>
         <div className={styles.headerCard}>
+          <div
+            className={styles.backButtonContainer}
+            onClick={() => {
+              router.push("/governance");
+            }}
+          >
+            <div className={styles.backButton}>
+              <Icon
+                icon={{
+                  url: "/dropdown.svg",
+                  size: 22,
+                }}
+                style={{ filter: "invert(var(--dark-mode))" }}
+                themed
+              />
+            </div>
+          </div>
           <div
             style={{
               borderRight:
@@ -166,6 +166,7 @@ export default function Page() {
           >
             <Text>#{proposal.proposal_id}</Text>
           </div>
+
           {!(proposal.status == "PROPOSAL_STATUS_VOTING_PERIOD") && (
             <div style={{ padding: "10px" }} className={styles.headerColumn2}>
               <div className={styles.circleContainer}>
