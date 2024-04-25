@@ -238,6 +238,16 @@ export default function RootLayout({
         },
       ],
     },
+    logo_URIs: {
+      png: "https://github.com/chalabi2/althea-appV2/blob/staging/public/althea.png",
+      svg: "https://github.com/chalabi2/althea-appV2/blob/staging/public/althea.svg",
+    },
+    images: [
+      {
+        png: "https://github.com/chalabi2/althea-appV2/blob/staging/public/althea.png",
+        svg: "https://github.com/chalabi2/althea-appV2/blob/staging/public/althea.svg",
+      },
+    ],
     codebase: {
       git_repo: "https://github.com/AltheaFoundation/althea-L1",
       recommended_version: "v1.3.0",
