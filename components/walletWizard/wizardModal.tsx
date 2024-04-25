@@ -41,7 +41,7 @@ export const WalletWizardModal: React.FC<WalletWizardModalProps> = ({
   const [isError, setIsError] = useState(false);
 
   const metamaskToCosmosAddress = ethToAlthea(metamaskAddress);
-  const chainContext = useChain("altheatestnet");
+  const chainContext = useChain("althea");
 
   const { address, connect, disconnect } = chainContext;
 
@@ -53,7 +53,7 @@ export const WalletWizardModal: React.FC<WalletWizardModalProps> = ({
     chainId: "althea_258432-1",
   };
 
-  const { tx, transactionHash } = useTx("altheatestnet", explicitSignerData);
+  const { tx, transactionHash } = useTx("althea", explicitSignerData);
 
   const balanceData = useBalance(address ?? "");
 
