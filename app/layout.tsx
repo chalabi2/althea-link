@@ -210,11 +210,11 @@ export default function RootLayout({
   };
 
   const altheatestnet: Chain = {
-    chain_name: "altheatestnet",
+    chain_name: "althea",
     status: "live",
-    network_type: "testnet",
+    network_type: "mainnet",
     website: "https://althea.net/",
-    pretty_name: "Althea Testnet",
+    pretty_name: "Althea",
     chain_id: "althea_258432-1",
     bech32_prefix: "althea",
     daemon_name: "althea",
@@ -239,31 +239,31 @@ export default function RootLayout({
       ],
     },
     codebase: {
-      git_repo: "github.com/althea-net/altheal1",
-      recommended_version: "v1.0.0-rc2",
-      compatible_versions: ["v0.22.0"],
+      git_repo: "https://github.com/AltheaFoundation/althea-L1",
+      recommended_version: "v1.3.0",
+      compatible_versions: ["v1.3.0"],
       binaries: {
         "linux/amd64":
-          "https://github.com/althea-net/althea-L1/releases/download/v1.0.0-rc2/althea-linux-amd64",
+          "https://github.com/AltheaFoundation/althea-L1/releases/download/v1.3.0/althea-linux-amd64",
       },
       versions: [
         {
           name: "v1",
-          recommended_version: "v1.0.0-rc2",
-          compatible_versions: ["v1.0.0-rc2"],
+          recommended_version: "v1.3.0",
+          compatible_versions: ["v1.3.0"],
         },
       ],
       genesis: {
         genesis_url:
-          "https://github.com/althea-net/althea-L1-docs/blob/main/althea-l1-dress-rehersal-genesis.json",
+          "https://github.com/AltheaFoundation/althea-L1-docs/blob/main/althea-l1-mainnet-genesis.json",
       },
     },
   };
   const altheatestnetAssets: AssetList = {
-    chain_name: "altheatestnet",
+    chain_name: "althea",
     assets: [
       {
-        description: "Althea testnet native token",
+        description: "Althea native token",
         denom_units: [
           {
             denom: "aalthea",
@@ -275,7 +275,7 @@ export default function RootLayout({
           },
         ],
         base: "aalthea",
-        name: "Althea Testnet Token",
+        name: "Althea Token",
         display: "althea",
         symbol: "ALTHEA",
       },
