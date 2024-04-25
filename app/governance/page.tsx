@@ -47,7 +47,7 @@ export default function GovernancePage() {
         >
           <div>
             <Text font="macan-font" className={styles.title}>
-              Governance
+              GOVERNANCE
             </Text>
           </div>
         </Container>
