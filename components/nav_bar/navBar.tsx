@@ -85,7 +85,7 @@ const NavBar = () => {
       </div>
 
       <div className={styles["nav-links"]} data-menu-open={isMenuOpen}>
-        <Link
+        {/* <Link
           href="/bridge"
           className={clsx(
             styles["nav-link"],
@@ -94,7 +94,7 @@ const NavBar = () => {
           onClick={() => Analytics.actions.events.clickedNavLink("Bridge")}
         >
           <Text size="sm">Bridge</Text>
-        </Link>
+        </Link> */}
 
         {/* <Link
           href="/lending"

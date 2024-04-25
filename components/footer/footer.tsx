@@ -11,20 +11,15 @@ import { CropMarks } from "../althea_net/CropMarks";
 import Link from "next/link";
 
 const Footer = () => {
-  const [cantoPrice, setCantoPrice] = useState("0");
-  const [notePrice, setNotePrice] = useState("0");
+  const [altheaPrice, setAltheaPrice] = useState("0");
 
   async function getTokenPrices() {
     // canto will use WCANTO address
-    const [priceCanto, priceNote] = await Promise.all([
+    const [priceCanto] = await Promise.all([
       getTokenPriceInUSDC("0x826551890Dc65655a0Aceca109aB11AbDbD7a07B", 18),
-      getTokenPriceInUSDC("0x4e71A2E537B7f9D9413D3991D37958c0b5e1e503", 18),
     ]);
     if (!priceCanto.error) {
-      setCantoPrice(priceCanto.data);
-    }
-    if (!priceNote.error) {
-      setNotePrice(priceNote.data);
+      setAltheaPrice(priceCanto.data);
     }
   }
   useEffect(() => {
@@ -42,10 +37,7 @@ const Footer = () => {
         />
       </Link>
       <nav>
-        <FooterLink
-          href="https://github.com/althea-net/althea-whitepaper/blob/master/whitepaper.pdf"
-          text="Docs"
-        />
+        <FooterLink href="https://docs.althea.net" text="Docs" />
         <FooterLink href="https://discord.gg/CmdEA2ArVJ" text="Discord" />
         <FooterLink href="https://twitter.com/altheanetwork" text="Twitter" />
         <FooterLink href="https://medium.com/althea-mesh" text="Blog" />
