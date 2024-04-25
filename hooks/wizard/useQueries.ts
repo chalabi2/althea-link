@@ -37,8 +37,6 @@ const fetchAccountInfo = async (address: string) => {
 };
 
 export const useAccountInfo = (address: string) => {
-  const data = fetchAccountInfo(address);
-
   return useQuery(["accountInfo", address], () => fetchAccountInfo(address), {
     enabled: !!address,
   });
