@@ -52,7 +52,7 @@ export default function Home() {
                 },
               }}
             />
-            <Link href="/bridge">
+            {/* <Link href="/bridge">
               Bridge to Althea
               <Image
                 src="/dropdown-blue.svg"
@@ -63,7 +63,7 @@ export default function Home() {
                 width={16}
                 height={12}
               />
-            </Link>
+            </Link> */}
             {/* <a href="#ecosystem">
             {" "}
             <Button width={280}>Explore Ecosystem</Button>

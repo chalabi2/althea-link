@@ -224,10 +224,10 @@ export default function RootLayout({
       fee_tokens: [
         {
           denom: "aalthea",
-          fixed_min_gas_price: 100000000000,
-          low_gas_price: 100000000000,
-          average_gas_price: 100000000000,
-          high_gas_price: 300000000000,
+          fixed_min_gas_price: 1000000000000,
+          low_gas_price: 1000000000000,
+          average_gas_price: 1000000000000,
+          high_gas_price: 3000000000000,
         },
       ],
     },

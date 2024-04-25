@@ -53,10 +53,10 @@
 @media screen and (max-width: 768px) {
   .container {
     width: calc(100vw);
-    margin: 72px auto 10px auto;
+    margin: 72px auto auto auto;
 
     padding: 0px 24px 0px 24px;
-    margin-top: 128px;
+
     //gap: 1rem;
     &::after {
       display: none;

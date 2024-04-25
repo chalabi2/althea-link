@@ -62,11 +62,11 @@ export const WalletWizardModal: React.FC<WalletWizardModalProps> = ({
   const sendTokens = async () => {
     setIsSigning(true);
     try {
-      const feeAmount = new BigNumber("2000000000000000000");
+      const feeAmount = new BigNumber("300000000000000000");
 
       const fee: StdFee = {
-        amount: coins("200000000000000000000000", "aalthea"),
-        gas: "20000000",
+        amount: coins("3000000000000000000000", "aalthea"),
+        gas: "200000",
       };
 
       const keplrBalanceBN = new BigNumber(keplrBalance);
@@ -146,11 +146,11 @@ export const WalletWizardModal: React.FC<WalletWizardModalProps> = ({
                 </Text>
 
                 <Button
-                  width={120}
-                  height={34}
+                  width={164}
+                  height={24}
                   onClick={address ? disconnect : connect}
                 >
-                  {address ? truncateAddress(address) : "Connect"}
+                  {address ? truncateAddress(address) : "Connect Wallet"}
                 </Button>
               </div>
 
