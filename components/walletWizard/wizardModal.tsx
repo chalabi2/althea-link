@@ -50,7 +50,7 @@ export const WalletWizardModal: React.FC<WalletWizardModalProps> = ({
   const explicitSignerData: SignerData = {
     accountNumber: accountInfoData.data?.account_number,
     sequence: accountInfoData.data?.sequence,
-    chainId: "althea_417834-4",
+    chainId: "althea_258432-1",
   };
 
   const { tx, transactionHash } = useTx("altheatestnet", explicitSignerData);

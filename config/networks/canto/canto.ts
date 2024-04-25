@@ -17,7 +17,7 @@ const cantoMainnetBaseInfo = {
   name: "Althea",
   icon: "/althea.svg",
   isTestChain: false,
-  rpcUrl: "https://nodes.chandrastation.com/testnet/evm/althea/",
+  rpcUrl: "https://nodes.chandrastation.com/evm/althea/",
   nativeCurrency: {
     name: "Althea",
     baseName: "aalthea",
@@ -29,7 +29,7 @@ const cantoMainnetBaseInfo = {
 export const CANTO_MAINNET_EVM: EVMNetwork = {
   ...cantoMainnetBaseInfo,
   id: "althea-mainnet",
-  chainId: 417834,
+  chainId: 258432,
   blockExplorer: {
     url: cantoMainBlockExplorerEVM,
     getAddressLink: getEthAddressLink(cantoMainBlockExplorerEVM),
@@ -41,8 +41,8 @@ export const CANTO_MAINNET_EVM: EVMNetwork = {
 export const CANTO_MAINNET_COSMOS: CosmosNetwork = {
   ...cantoMainnetBaseInfo,
   id: "althea-mainnet",
-  chainId: "althea_417834-4",
-  restEndpoint: "https://nodes.chandrastation.com/testnet/api/althea/",
+  chainId: "althea_258432-1",
+  restEndpoint: "https://nodes.chandrastation.com/api/althea/",
   addressPrefix: "althea",
   checkAddress: function (address) {
     return checkCosmosAddress(this.addressPrefix)(address);
@@ -70,7 +70,7 @@ const cantoTestnetBaseInfo = {
 export const CANTO_TESTNET_EVM: EVMNetwork = {
   ...cantoMainnetBaseInfo,
   id: "althea-mainnet",
-  chainId: 417834,
+  chainId: 258432,
   blockExplorer: {
     url: cantoMainBlockExplorerEVM,
     getAddressLink: getEthAddressLink(cantoMainBlockExplorerEVM),
@@ -82,8 +82,8 @@ export const CANTO_TESTNET_EVM: EVMNetwork = {
 export const CANTO_TESTNET_COSMOS: CosmosNetwork = {
   ...cantoMainnetBaseInfo,
   id: "althea-mainnet",
-  chainId: "althea_417834-4",
-  restEndpoint: "https://nodes.chandrastation.com/testnet/api/althea/",
+  chainId: "althea_258432-1",
+  restEndpoint: "https://nodes.chandrastation.com/api/althea/",
   addressPrefix: "althea",
   checkAddress: function (address) {
     return checkCosmosAddress(this.addressPrefix)(address);
@@ -104,10 +104,10 @@ export const metamaskChainConfig = {
 };
 
 export const chainConfig = {
-  chainId: "althea_417834-4",
+  chainId: "althea_258432-1",
   chainName: "Althea",
-  rpc: "https://nodes.chandrastation.com/testnet/rpc/althea/",
-  rest: "https://nodes.chandrastation.com/testnet/api/althea/",
+  rpc: "https://nodes.chandrastation.com/rpc/althea/",
+  rest: "https://nodes.chandrastation.com/api/althea/",
 
   bip44: {
     coinType: 118,
