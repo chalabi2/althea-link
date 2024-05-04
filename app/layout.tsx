@@ -14,6 +14,7 @@ import { wallets as cosmostation } from "@cosmos-kit/cosmostation";
 
 import { wallets as station } from "@cosmos-kit/station";
 import { wallets as trust } from "@cosmos-kit/trust";
+import { wallets as leap } from "@cosmos-kit/leap";
 import { ReactQueryClientProvider } from "@/provider/reactQueryProvider";
 import ToastWizard from "@/components/walletWizard/wizardToast";
 import { WalletWizardModal } from "@/components/walletWizard/wizardModal";
@@ -26,6 +27,7 @@ import { SignerOptions } from "@cosmos-kit/core";
 import "@interchain-ui/react/styles";
 import WalletConnect from "@/components/wallet_connect/walletConnect";
 import StatusText from "@/components/status_text/statusText";
+import AddKeplr from "@/components/walletWizard/addKeplr";
 
 const nm_plex = IBM_Plex_Sans({
   weight: ["400", "500", "700"],
@@ -73,42 +75,44 @@ export default function RootLayout({
       };
     },
   };
-  const openWalletWizard = () => {
-    setIsWalletWizardOpen(true);
-    setShowToast(false);
-  };
 
-  const closeWalletWizard = () => {
-    setIsWalletWizardOpen(false);
-    setShowToast(true);
-  };
+  // MIGRATION TOOL DISABLED
+  // const openWalletWizard = () => {
+  //   setIsWalletWizardOpen(true);
+  //   setShowToast(false);
+  // };
+
+  // const closeWalletWizard = () => {
+  //   setIsWalletWizardOpen(false);
+  //   setShowToast(true);
+  // };
 
   const modalThemeOverrides: ThemeCustomizationProps = {
     modalContentStyles: {
-      backgroundColor: "#0077ff",
+      backgroundColor: "#001833",
       opacity: 1,
     },
     overrides: {
       "connect-modal": {
         bg: {
-          light: "rgba(0,0,0,0.75)",
-          dark: "rgba(32,32,32,0.9)",
+          light: "rgba(0, 0, 0, 0)",
+          dark: "rgba(32, 32, 32, 0)",
         },
         activeBg: {
-          light: "rgba(0,0,0,0.75)",
-          dark: "rgba(32,32,32,0.9)",
+          light: "rgba(0, 0, 0, 0)",
+          dark: "rgba(255, 255, 255, 0.9)",
         },
         color: {
           light: "#FFFFFF",
           dark: "#FFFFFF",
         },
         focusedBg: {
-          light: "rgba(0,0,0,0.75)",
-          dark: "rgba(32,32,32,0.9)",
+          light: "rgba(0, 0, 0, 0)",
+          dark: "rgba(32, 32, 32, 0)",
         },
         disabledBg: {
-          light: "rgba(0,0,0,0.75)",
-          dark: "rgba(32,32,32,0.9)",
+          light: "rgba(0, 0, 0, 0)",
+          dark: "rgba(32, 32, 32, 0)",
         },
       },
 
@@ -156,8 +160,8 @@ export default function RootLayout({
       },
       "connect-modal-wallet-button": {
         bg: {
-          light: "rgba(55,55,55,0.9)",
-          dark: "rgba(55,55,55,0.9",
+          light: "rgba(45, 47, 61, 0.9)",
+          dark: "rgba(45, 47, 61, 0.9)",
         },
         hoverBg: {
           light: "#1c508c",
@@ -173,25 +177,25 @@ export default function RootLayout({
           dark: "#FFFFFF",
         },
         color: {
-          light: "#000000",
+          light: "#ffffff",
           dark: "#FFFFFF",
         },
         focusedBorderColor: { light: "#FFFFFF", dark: "#FFFFFF" },
       },
       "connect-modal-qr-code": {
         bg: {
-          light: "",
-          dark: "blue",
+          light: "#add3ff",
+          dark: "#0077ff",
         },
         color: {
-          light: "#000000",
-          dark: "#000000",
+          light: "#0077ff",
+          dark: "#add3ff",
         },
       },
       "connect-modal-install-button": {
         bg: {
           light: "#F0F0F0",
-          dark: "#1c508c",
+          dark: "#fcfcfc",
         },
       },
       "connect-modal-qr-code-error": {
@@ -220,14 +224,28 @@ export default function RootLayout({
     daemon_name: "althea",
     node_home: "$HOME/.althea",
     slip44: 118,
+    apis: {
+      rest: [
+        {
+          address: "https://nodes.chandrastation.com/api/althea/",
+          provider: "Chandra Station",
+        },
+      ],
+      rpc: [
+        {
+          address: "https://nodes.chandrastation.com/rpc/althea/",
+          provider: "Chandra Station",
+        },
+      ],
+    },
     fees: {
       fee_tokens: [
         {
           denom: "aalthea",
-          fixed_min_gas_price: 1000000000000,
-          low_gas_price: 1000000000000,
-          average_gas_price: 1000000000000,
-          high_gas_price: 3000000000000,
+          fixed_min_gas_price: 100000000000,
+          low_gas_price: 100000000000,
+          average_gas_price: 100000000000,
+          high_gas_price: 300000000000,
         },
       ],
     },
@@ -345,7 +363,7 @@ export default function RootLayout({
           chains={[altheatestnet]}
           assetLists={[altheatestnetAssets]}
           // @ts-ignore
-          wallets={[...keplr, ...cosmostation, ...trust, ...station]}
+          wallets={[...keplr, ...cosmostation, ...trust, ...station, ...leap]}
           signerOptions={signerOptions}
           logLevel="NONE"
           modalTheme={modalThemeOverrides}
@@ -410,18 +428,17 @@ export default function RootLayout({
 
                   <div id="modal-root">
                     {showToast && (
-                      <ToastWizard
+                      <AddKeplr
                         isVisible={showToast}
-                        onOpenModal={openWalletWizard}
                         onClose={() => setShowToast(false)}
                       />
                     )}
-                    <WalletWizardModal
+                    {/* <WalletWizardModal
                       balance={10}
                       isOpen={isWalletWizardOpen}
                       onOpen={setIsWalletWizardOpen}
                       onClose={closeWalletWizard}
-                    />
+                    /> */}
                   </div>
                   <WalletConnect />
                   <StatusText />

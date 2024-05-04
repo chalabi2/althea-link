@@ -107,7 +107,7 @@ async function signAndBroadcastCosmosTransaction(
 
     // check public key on sender object, if none, create one
     if (!context.sender.pubkey) {
-      // create a public key for the user IFF EIP712 Canto is used (since through metamask)
+      // create a public key for the user IFF EIP712 Althea is used (since through metamask)
       try {
         const signature = await window.ethereum.request({
           method: "personal_sign",

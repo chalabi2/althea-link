@@ -34,7 +34,7 @@ export async function getAltheaAccountMetaData(
 
     // get account data
     const { data, error } = await tryFetch<CantoAccountReturn>(
-      `${cantoNetwork.restEndpoint}/cosmos/auth/v1beta1/accounts/${cantoAddress}`
+      `${cantoNetwork.restEndpoint}cosmos/auth/v1beta1/accounts/${cantoAddress}`
     );
     if (error) throw error;
 
