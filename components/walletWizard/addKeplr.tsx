@@ -14,17 +14,11 @@ interface ToastProps {
   onClose: () => void;
 }
 
-const AddKeplr: React.FC<ToastProps> = ({
-  isVisible,
-
-  onClose,
-}) => {
-  if (!isVisible) return null;
-
+const AddKeplr: React.FC<ToastProps> = ({ isVisible, onClose }) => {
   const chainContext = useChain("althea");
 
   const { address, connect, disconnect } = chainContext;
-
+  if (!isVisible) return null;
   return (
     <div className={styles.toastContainer}>
       <Container className={styles.close} onClick={onClose}>
