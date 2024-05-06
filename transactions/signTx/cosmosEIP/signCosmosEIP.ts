@@ -21,6 +21,7 @@ import {
 import { sleep, tryFetch, tryFetchWithRetry } from "@/utils/async";
 import { generateCosmosEIP712TxContext } from "./txContext";
 import { TX_SIGN_ERRORS } from "@/config/consts/errors";
+import { areEqualAddresses } from "@/utils/address";
 
 export async function signCosmosEIPTx(
   tx: Transaction
@@ -105,14 +106,26 @@ async function signAndBroadcastCosmosTransaction(
       eipPayload
     );
 
+    if(!window || !window.ethereum){
+      return NEW_ERROR("signAndBroadcastCosmosTransaction", "Wallet not supported");
+    }
+    const connectedAccounts: string[] = await window.ethereum.request({ method: "eth_accounts" })
+    if(!connectedAccounts || connectedAccounts.length === 0){
+      return NEW_ERROR("signAndBroadcastCosmosTransaction", "Wallet not supported");
+    }
+    const index = connectedAccounts.findIndex((address: string) => areEqualAddresses(address, context.ethAddress));
+    if(index === -1){
+      return NEW_ERROR("signAndBroadcastCosmosTransaction", "Wallet not supported");
+    }
     // check public key on sender object, if none, create one
     if (!context.sender.pubkey) {
       // create a public key for the user IFF EIP712 Althea is used (since through metamask)
       try {
         const signature = await window.ethereum.request({
-          method: "eth_sign",
+          method: "personal_sign",
           params: [context.ethAddress, "generate_pubkey"],
         });
+      
         context.sender.pubkey = signatureToPubkey(
           signature,
           Buffer.from([
@@ -124,6 +137,7 @@ async function signAndBroadcastCosmosTransaction(
         // sleep for 2 seconds to allow for the wallet to refresh
         await sleep(2000);
       } catch (err) {
+      
         return NEW_ERROR("signAndBroadcastCosmosTransaction", err);
       }
     }
