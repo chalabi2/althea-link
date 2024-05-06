@@ -37,7 +37,7 @@ export async function getAltheaAccountMetaData(
       `${cantoNetwork.restEndpoint}cosmos/auth/v1beta1/accounts/${cantoAddress}`
     );
     if (error) throw error;
-
+    console.log("getAltheaAccountMetaData",data, error)
     // return account data
     return NO_ERROR(data);
   } catch (err) {
@@ -60,6 +60,8 @@ export async function getCantoSenderObj(
       senderCantoAddress,
       chainId
     );
+
+    console.log("getSenderObj",cantoAccount, error)
 
     if (error) throw error;
     let baseAccount;
