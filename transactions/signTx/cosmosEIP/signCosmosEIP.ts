@@ -110,7 +110,7 @@ async function signAndBroadcastCosmosTransaction(
       // create a public key for the user IFF EIP712 Althea is used (since through metamask)
       try {
         const signature = await window.ethereum.request({
-          method: "personal_sign",
+          method: "eth_sign",
           params: [context.ethAddress, "generate_pubkey"],
         });
         context.sender.pubkey = signatureToPubkey(
