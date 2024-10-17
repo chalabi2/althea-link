@@ -1,7 +1,6 @@
 use clarity::Address;
 use clarity::Uint256;
 use log::info;
-use log::trace;
 
 use super::InitPoolEvent;
 
