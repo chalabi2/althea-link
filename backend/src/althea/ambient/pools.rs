@@ -2,16 +2,10 @@ use clarity::{Address, Uint256};
 use serde::{Deserialize, Serialize};
 use web30::types::Log;
 
-use super::error::AltheaError;
+use crate::althea::error::AltheaError;
 
 /// InitPool is an event emitted when a user has created a new pool on Ambient using the ColdPath userCmd
 /// Note: This event was added to our fork to avoid the need to analyze ethereum traces to find function calls
-///
-/// event InitPool(address indexed base, address indexed quote, uint256 indexed poolIdx, uint128 price, address user, uint128 liq, uint128 baseQty, uint128 quoteQty);
-pub const INIT_POOL_SIGNATURE: &str =
-    "InitPool(address,address,uint256,uint128,address,uint128,uint128,uint128)";
-
-/// InitPoolEvent captures important data emitted from the InitPool event emissions on Ambient
 #[derive(Serialize, Deserialize, Debug, Default, Clone, Eq, PartialEq, Hash)]
 pub struct InitPoolEvent {
     pub block_height: Uint256,
