@@ -2,7 +2,10 @@ use clarity::{Address, Uint256};
 use serde::{Deserialize, Serialize};
 use web30::types::Log;
 
-use crate::althea::error::AltheaError;
+use crate::althea::{
+    abi_util::{parse_address, parse_u128},
+    error::AltheaError,
+};
 
 /// InitPool is an event emitted when a user has created a new pool on Ambient using the ColdPath userCmd
 /// Note: This event was added to our fork to avoid the need to analyze ethereum traces to find function calls
@@ -47,7 +50,7 @@ impl InitPoolEvent {
         let base_data = &input.topics[1];
         let quote_data = &input.topics[2];
         let pool_idx_data = &input.topics[3];
-        let base = Address::from_slice(base_data[12..].as_ref());
+        let base = parse_address(base_data, 0);
         if let Err(e) = base {
             return Err(AltheaError::InvalidEventLogError(format!(
                 "Invalid base token address: {}",
@@ -55,7 +58,7 @@ impl InitPoolEvent {
             )));
         }
         let base = base.unwrap();
-        let quote = Address::from_slice(quote_data[12..].as_ref());
+        let quote = parse_address(quote_data, 0);
         if let Err(e) = quote {
             return Err(AltheaError::InvalidEventLogError(format!(
                 "Invalid quote token address: {}",
@@ -88,28 +91,18 @@ impl InitPoolEvent {
     pub fn decode_data_bytes(input: &[u8]) -> Result<InitPoolBytes, AltheaError> {
         if input.len() < 5 * 32 {
             return Err(AltheaError::InvalidEventLogError(
-                "too short for InitPoolEventData".to_string(),
+                "too short for InitPoolBytes".to_string(),
             ));
         }
         // all the data is static, so each field is in a 32 byte slice (per abi-encoding)
 
         // price
-        let index_start = 0;
-        let index_end = index_start + 32;
-        let price_data = &input[index_start + 16..index_end];
-        let price = Uint256::from_be_bytes(price_data);
-        if price > u128::MAX.into() {
-            return Err(AltheaError::InvalidEventLogError(
-                "Price overflow, probably incorrect parsing".to_string(),
-            ));
-        }
-        let price: u128 = price.to_string().parse().unwrap();
+        let mut index_start = 0;
+        let price = parse_u128(input, index_start);
 
         // user
-        let index_start = 32;
-        let index_end = index_start + 32;
-        let user_data = &input[index_start..index_end];
-        let user = Address::from_slice(user_data[12..].as_ref());
+        index_start += 32;
+        let user = parse_address(input, index_start);
         if let Err(e) = user {
             return Err(AltheaError::InvalidEventLogError(format!(
                 "Bad user address, probably incorrect parsing {:?}",
@@ -119,40 +112,16 @@ impl InitPoolEvent {
         let user = user.unwrap();
 
         // liq
-        let index_start = 64;
-        let index_end = index_start + 32;
-        let liq_data = &input[index_start + 16..index_end];
-        let liq = Uint256::from_be_bytes(liq_data);
-        if liq > u128::MAX.into() {
-            return Err(AltheaError::InvalidEventLogError(
-                "Liq overflow, probably incorrect parsing".to_string(),
-            ));
-        }
-        let liq: u128 = liq.to_string().parse().unwrap();
+        index_start += 32;
+        let liq: u128 = parse_u128(input, index_start);
 
         // base_qty
-        let index_start = 92;
-        let index_end = index_start + 32;
-        let base_qty_data = &input[index_start + 16..index_end];
-        let base_qty = Uint256::from_be_bytes(base_qty_data);
-        if base_qty > u128::MAX.into() {
-            return Err(AltheaError::InvalidEventLogError(
-                "baseQty overflow, probably incorrect parsing".to_string(),
-            ));
-        }
-        let base_qty: u128 = base_qty.to_string().parse().unwrap();
+        index_start += 32;
+        let base_qty = parse_u128(input, index_start);
 
         // quote_qty
-        let index_start = 128;
-        let index_end = index_start + 32;
-        let quote_qty_data = &input[index_start + 16..index_end];
-        let quote_qty = Uint256::from_be_bytes(quote_qty_data);
-        if quote_qty > u128::MAX.into() {
-            return Err(AltheaError::InvalidEventLogError(
-                "quoteQty overflow, probably incorrect parsing".to_string(),
-            ));
-        }
-        let quote_qty: u128 = quote_qty.to_string().parse().unwrap();
+        index_start += 32;
+        let quote_qty = parse_u128(input, index_start);
 
         Ok(InitPoolBytes {
             price,

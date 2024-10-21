@@ -1,6 +1,9 @@
 use std::sync::Arc;
 
-use crate::althea::endpoints::{query_all_pools, query_pool};
+use crate::althea::endpoints::{
+    query_all_burn_ranged, query_all_init_pools, query_all_mint_ambient, query_all_mint_ranged,
+    query_pool,
+};
 use crate::tls::{load_certs, load_private_key};
 use crate::Opts;
 use actix_web::{middleware, web, App, HttpServer, Responder};
@@ -19,8 +22,12 @@ pub async fn start_server(opts: Opts, db: Arc<rocksdb::DB>) {
             .route("/", web::get().to(index))
             .service(
                 web::scope("/debug")
-                    .service(query_all_pools)
-                    .service(query_pool),
+                    .service(query_all_init_pools)
+                    .service(query_pool)
+                    .service(query_all_mint_ranged)
+                    .service(query_all_burn_ranged)
+                    .service(query_all_mint_ambient)
+                    .service(query_all_mint_ambient),
             )
             .wrap(middleware::Compress::default())
     });
