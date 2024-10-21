@@ -2,16 +2,19 @@ use crate::database::compact_db;
 use crate::Opts;
 use actix_web::rt::System;
 use ambient::pools::InitPoolEvent;
-use ambient::search_for_pools;
-use clarity::Address;
+use ambient::{query_latest, search_for_pools, search_for_positions};
+use clarity::{Address, Uint256};
+use database::{get_latest_searched_block, save_latest_searched_block};
 use deep_space::Contact;
 use log::{error, info};
+use std::cmp::min;
 use std::str::FromStr;
 use std::sync::Arc;
 use std::thread;
 use std::time::Duration;
 use web30::client::Web3;
 
+pub mod abi_util;
 pub mod ambient;
 pub mod database;
 pub mod endpoints;
@@ -41,6 +44,7 @@ const DEFAULT_TOKEN_ADDRESSES: &[&str] = &[
 /// Template creation requires governance permission (Ops role) but any user can create a
 /// pool using these templates permissionlessly.
 const DEFAULT_POOL_TEMPLATES: &[u64] = &[36000, 36001];
+const DEFAULT_QUERIER: &str = "0xbf660843528035a5a4921534e156a27e64b231fe";
 
 /// Returns a Contact struct for interacting with Gravity Bridge, pre-configured with the url
 /// and prefix
@@ -60,13 +64,37 @@ pub fn start_ambient_indexer(opts: Opts, db: Arc<rocksdb::DB>) {
         let db = db.clone();
         let runner = System::new();
 
+        let web3 = get_althea_web3(TIMEOUT);
         runner.block_on(async move {
             loop {
-                // Ignore the error for now, as it does not meaninfully affect the loop
-                if let Err(e) = search_for_pools(&db).await {
+                let start_block =
+                    get_latest_searched_block(&db).unwrap_or(DEFAULT_START_SEARCH_BLOCK.into());
+                let current_block = web3.eth_block_number().await;
+                if current_block.is_err() {
+                    error!("Error getting current block number, retrying later");
+                    thread::sleep(Duration::from_secs(10));
+                    continue;
+                }
+                let end_block = min(
+                    start_block + DEFAULT_SEARCH_RANGE.into(),
+                    current_block.unwrap(),
+                );
+                if let Err(e) = search_for_pools(&db, &web3, start_block, end_block).await {
                     error!("Error searching for pools: {}", e);
                 }
-                // search_for_positions(&db, &tokens, &templates).await;
+                if let Err(e) =
+                    search_for_positions(&db, &web3, &tokens, &templates, start_block, end_block)
+                        .await
+                {
+                    error!("Error searching for positions: {}", e);
+                }
+                save_latest_searched_block(&db, end_block);
+
+                if end_block != start_block {
+                    if let Err(e) = query_latest(&db, &web3, &tokens, &templates).await {
+                        error!("Error querying latest: {}", e);
+                    }
+                }
 
                 if opts.compact {
                     info!("Compacting database");
@@ -95,10 +123,13 @@ fn get_tokens(opts: &Opts) -> Vec<Address> {
     }
 }
 
-fn get_templates(opts: &Opts) -> Vec<u64> {
+fn get_templates(opts: &Opts) -> Vec<Uint256> {
     if opts.pool_templates.is_empty() {
         DEFAULT_POOL_TEMPLATES.to_vec()
     } else {
         opts.pool_templates.clone()
     }
+    .iter()
+    .map(|v| (*v).into())
+    .collect::<Vec<_>>()
 }
