@@ -1,7 +1,6 @@
 use clarity::Address;
 use clarity::Uint256;
 use log::debug;
-use log::info;
 
 use crate::althea::ambient::croc_query::CurveState;
 
