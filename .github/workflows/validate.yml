@@ -11,23 +11,23 @@ jobs:
         uses: GrantBirki/json-yaml-validate@v2.3.0
         with:
           comment: "true"
-          json_schema: config/jsons/schemas/ibcChannels.schema.json
-          files: config/jsons/ibcChannels.json
+          json_schema: frontend/config/jsons/schemas/ibcChannels.schema.json
+          files: frontend/config/jsons/ibcChannels.json
       - name: Validate Layer Zero JSON
         uses: GrantBirki/json-yaml-validate@v2.3.0
         with:
           comment: "true"
-          json_schema: config/jsons/schemas/layerZeroChainIds.schema.json
-          files: config/jsons/layerZeroChainIds.json
+          json_schema: frontend/config/jsons/schemas/layerZeroChainIds.schema.json
+          files: frontend/config/jsons/layerZeroChainIds.json
       - name: Validate Bridge Out Tokens
         uses: GrantBirki/json-yaml-validate@v2.3.0
         with:
           comment: "true"
-          json_schema: config/jsons/schemas/bridgeOutTokens.schema.json
-          files: config/jsons/bridgeOutTokens.json
+          json_schema: frontend/config/jsons/schemas/bridgeOutTokens.schema.json
+          files: frontend/config/jsons/bridgeOutTokens.json
       - name: Validate Bridge In Tokens
         uses: GrantBirki/json-yaml-validate@v2.3.0
         with:
           comment: "true"
-          json_schema: config/jsons/schemas/bridgeInTokens.schema.json
-          files: config/jsons/bridgeInTokens.json
+          json_schema: frontend/config/jsons/schemas/bridgeInTokens.schema.json
+          files: frontend/config/jsons/bridgeInTokens.json
