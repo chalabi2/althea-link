@@ -173,22 +173,13 @@ pub async fn search_for_positions(
 pub async fn query_latest(
     db: &Arc<rocksdb::DB>,
     web30: &Web3,
-    tokens: &[Address],
-    templates: &[Uint256],
+    pools: &[(Address, Address, Uint256)],
 ) -> Result<(), AltheaError> {
     info!("Querying latest pool data");
-    let mut pairs = Vec::new();
-    for i in 0..tokens.len() {
-        for j in i..tokens.len() {
-            pairs.push((tokens[i], tokens[j]));
-        }
-    }
 
     let mut futures = vec![];
-    for pair in pairs {
-        for template in templates {
-            futures.push(query_pool(db, web30, pair.0, pair.1, *template));
-        }
+    for pool in pools {
+        futures.push(query_pool(db, web30, pool.0, pool.1, pool.2));
     }
 
     let results = join_all(futures).await;

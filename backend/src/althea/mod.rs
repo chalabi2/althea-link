@@ -4,6 +4,7 @@ use actix_web::rt::System;
 use ambient::pools::InitPoolEvent;
 use ambient::{query_latest, search_for_pools, search_for_positions};
 use clarity::{Address, Uint256};
+use database::pools::get_init_pools;
 use database::{get_latest_searched_block, save_latest_searched_block};
 use deep_space::Contact;
 use log::{error, info};
@@ -23,6 +24,8 @@ pub mod token_mappings;
 
 // const ALTHEA_GRPC_URL: &str = "http://chainripper-2.althea.net:9090";
 // const ALTHEA_ETH_RPC_URL: &str = "http://chainripper-2.althea.net:8545";
+const ALTHEA_MAINNET_CHAIN_ID: &str = "althea_258432-1";
+const ALTHEA_MAINNET_EVM_CHAIN_ID: usize = 258432;
 const ALTHEA_GRPC_URL: &str = "http://localhost:9090";
 const ALTHEA_ETH_RPC_URL: &str = "http://localhost:8545";
 const ALTHEA_PREFIX: &str = "althea";
@@ -91,7 +94,12 @@ pub fn start_ambient_indexer(opts: Opts, db: Arc<rocksdb::DB>) {
                 save_latest_searched_block(&db, end_block);
 
                 if end_block != start_block {
-                    if let Err(e) = query_latest(&db, &web3, &tokens, &templates).await {
+                    let pools = get_init_pools(&db);
+                    let pools = pools
+                        .iter()
+                        .map(|p| (p.base, p.quote, p.pool_idx))
+                        .collect::<Vec<_>>();
+                    if let Err(e) = query_latest(&db, &web3, &pools).await {
                         error!("Error querying latest: {}", e);
                     }
                 }
