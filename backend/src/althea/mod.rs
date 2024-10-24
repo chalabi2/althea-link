@@ -19,6 +19,7 @@ use web30::client::Web3;
 pub mod abi_util;
 pub mod ambient;
 pub mod database;
+pub mod delegations;
 pub mod endpoints;
 pub mod error;
 pub mod governance;
@@ -147,5 +148,6 @@ fn get_templates(opts: &Opts) -> Vec<Uint256> {
 
 pub fn register_endpoints(cfg: &mut web::ServiceConfig) {
     cfg.service(endpoints::get_validators)
-        .service(endpoints::get_proposals);
+        .service(endpoints::get_proposals)
+        .service(endpoints::get_delegations);
 }

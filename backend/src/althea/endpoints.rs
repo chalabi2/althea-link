@@ -1,3 +1,4 @@
+use super::delegations::fetch_delegations;
 use crate::althea::{
     database::{
         pools::{get_init_pool, get_init_pools},
@@ -13,7 +14,8 @@ use actix_web::{
     web::{self, Json},
     HttpResponse, Responder,
 };
-use clarity::{Address, Uint256};
+use clarity::{Address, Uint256}; // Add Uint256 here
+use deep_space::Address as CosmosAddress;
 use log::{error, info};
 use rocksdb::DB;
 use serde::{Deserialize, Serialize};
@@ -424,6 +426,56 @@ pub async fn get_proposals(
         }
         Err(e) => {
             error!("Error getting proposals: {}", e);
+            HttpResponse::InternalServerError().finish()
+        }
+    }
+}
+
+#[derive(Deserialize)]
+pub struct DelegatorQuery {
+    address: String,
+}
+
+/// Retrieves delegations for a specific address
+///
+/// # Query Parameters
+///
+/// - `address`: The delegator's address to query delegations for
+///
+/// # Response
+///
+/// Returns a JSON array of delegation information including validator addresses
+/// and delegation amounts. If no delegations are found, returns a 404 Not Found response.
+///
+/// # Example
+///
+/// - `GET /delegations?address=althea1...` - Returns all delegations for the specified address
+#[get("/delegations")]
+pub async fn get_delegations(
+    query: web::Query<DelegatorQuery>,
+    db: web::Data<Arc<DB>>,
+) -> impl Responder {
+    info!("Querying delegations for address: {}", query.address);
+    let contact = super::get_althea_contact(super::TIMEOUT);
+
+    let delegator_address = match CosmosAddress::from_bech32(query.address.clone()) {
+        Ok(addr) => addr,
+        Err(e) => {
+            error!("Invalid address format: {}", e);
+            return HttpResponse::BadRequest().body("Invalid address format");
+        }
+    };
+
+    match fetch_delegations(&db, &contact, delegator_address).await {
+        Ok(delegations) => {
+            if delegations.is_empty() {
+                HttpResponse::NotFound().body("No delegations found")
+            } else {
+                HttpResponse::Ok().json(delegations)
+            }
+        }
+        Err(e) => {
+            error!("Error fetching delegations: {}", e);
             HttpResponse::InternalServerError().finish()
         }
     }
