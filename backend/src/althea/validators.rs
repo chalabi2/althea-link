@@ -1,6 +1,9 @@
+use cosmos_sdk_proto_althea::cosmos::base::query::v1beta1::PageRequest;
 use cosmos_sdk_proto_althea::cosmos::staking::v1beta1::{QueryValidatorsRequest, Validator};
 use log::info;
 use serde::{Deserialize, Serialize};
+
+use std::str::FromStr;
 use std::time::{SystemTime, UNIX_EPOCH};
 
 #[derive(Debug, Serialize, Deserialize, Clone)]
@@ -53,19 +56,32 @@ pub async fn fetch_validators(
 
     let request = QueryValidatorsRequest {
         status: String::new(),
-        pagination: None,
+        pagination: Some(PageRequest {
+            key: Vec::new(),
+            offset: 0,
+            limit: 1000,
+            count_total: true,
+            reverse: false,
+        }),
     };
 
-    let validators_list = contact.get_validators_list(request).await?;
+    let validators = contact.get_validators_list(request).await?;
+    let mut all_validators: Vec<ValidatorInfo> =
+        validators.into_iter().map(ValidatorInfo::from).collect();
 
-    let validators: Vec<ValidatorInfo> = validators_list
-        .into_iter()
-        .map(ValidatorInfo::from)
-        .collect();
+    // Sort validators by tokens (voting power) in descending order
+    all_validators.sort_by(|a, b| {
+        let a_tokens = u128::from_str(&a.tokens).unwrap_or_default();
+        let b_tokens = u128::from_str(&b.tokens).unwrap_or_default();
+        b_tokens.cmp(&a_tokens)
+    });
 
-    cache_validators(db, &validators);
-    info!("Successfully fetched and stored validators");
-    Ok(validators)
+    cache_validators(db, &all_validators);
+    info!(
+        "Successfully fetched and stored {} validators",
+        all_validators.len()
+    );
+    Ok(all_validators)
 }
 
 fn get_cached_validators(db: &rocksdb::DB) -> Option<Vec<ValidatorInfo>> {
@@ -139,4 +155,24 @@ impl From<Validator> for ValidatorInfo {
                 .as_secs(),
         }
     }
+}
+
+impl ValidatorInfo {
+    pub fn is_active(&self) -> bool {
+        self.status == 3 && !self.jailed
+    }
+}
+
+pub async fn fetch_validators_filtered(
+    db: &rocksdb::DB,
+    contact: &deep_space::Contact,
+    active_only: Option<bool>,
+) -> Result<Vec<ValidatorInfo>, Box<dyn std::error::Error>> {
+    let validators = fetch_validators(db, contact).await?;
+
+    Ok(match active_only {
+        Some(true) => validators.into_iter().filter(|v| v.is_active()).collect(),
+        Some(false) => validators.into_iter().filter(|v| !v.is_active()).collect(),
+        None => validators,
+    })
 }

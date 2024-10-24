@@ -311,11 +311,20 @@ pub async fn user_positions(
 /// # Response
 ///
 /// The response body will be a JSON array of validator information
+#[derive(Deserialize)]
+pub struct ValidatorQuery {
+    active: Option<bool>,
+}
+
 #[get("/validators")]
-pub async fn get_validators(db: web::Data<Arc<DB>>) -> impl Responder {
-    info!("Querying validators");
+pub async fn get_validators(
+    query: web::Query<ValidatorQuery>,
+    db: web::Data<Arc<DB>>,
+) -> impl Responder {
+    info!("Querying validators with filter: {:?}", query.active);
     let contact = super::get_althea_contact(super::TIMEOUT);
-    match super::validators::fetch_validators(&db, &contact).await {
+
+    match super::validators::fetch_validators_filtered(&db, &contact, query.active).await {
         Ok(validators) => {
             if validators.is_empty() {
                 HttpResponse::NotFound().body("No validators found")

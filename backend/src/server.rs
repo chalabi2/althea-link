@@ -28,7 +28,6 @@ pub async fn start_server(opts: Opts, db: Arc<rocksdb::DB>) {
                     .service(query_pool)
                     .service(query_all_mint_ranged)
                     .service(query_all_burn_ranged)
-                    .service(query_all_mint_ambient)
                     .service(query_all_mint_ambient),
             )
             // Graphcache-go endpoints
