@@ -1,6 +1,7 @@
 use crate::database::compact_db;
 use crate::Opts;
 use actix_web::rt::System;
+use actix_web::web;
 use ambient::pools::InitPoolEvent;
 use ambient::{query_latest, search_for_pools, search_for_positions};
 use clarity::{Address, Uint256};
@@ -21,6 +22,7 @@ pub mod database;
 pub mod endpoints;
 pub mod error;
 pub mod token_mappings;
+pub mod validators;
 
 const ALTHEA_GRPC_URL: &str = "http://chainripper-2.althea.net:9090";
 const ALTHEA_ETH_RPC_URL: &str = "http://chainripper-2.althea.net:8545";
@@ -140,4 +142,8 @@ fn get_templates(opts: &Opts) -> Vec<Uint256> {
     .iter()
     .map(|v| (*v).into())
     .collect::<Vec<_>>()
+}
+
+pub fn register_endpoints(cfg: &mut web::ServiceConfig) {
+    cfg.service(endpoints::get_validators);
 }
