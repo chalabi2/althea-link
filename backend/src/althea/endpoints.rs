@@ -304,7 +304,6 @@ pub async fn user_positions(
     HttpResponse::Ok().json(results)
 }
 
-
 /// Retrieves validators from the Althea chain
 ///
 /// # Query Parameters
