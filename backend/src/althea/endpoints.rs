@@ -14,7 +14,7 @@ use actix_web::{
     HttpResponse, Responder,
 };
 use clarity::{Address, Uint256};
-use log::info;
+use log::{error, info};
 use rocksdb::DB;
 use serde::{Deserialize, Serialize};
 use std::sync::Arc;
@@ -300,4 +300,32 @@ pub async fn user_positions(
         });
     }
     HttpResponse::Ok().json(results)
+}
+
+/// Retrieves all validators from the Althea chain
+///
+/// # Query
+///
+/// A simple HTTP GET request
+///
+/// # Response
+///
+/// The response body will be a JSON array of validator information
+#[get("/validators")]
+pub async fn get_validators(db: web::Data<Arc<DB>>) -> impl Responder {
+    info!("Querying validators");
+    let contact = super::get_althea_contact(super::TIMEOUT);
+    match super::validators::fetch_validators(&db, &contact).await {
+        Ok(validators) => {
+            if validators.is_empty() {
+                HttpResponse::NotFound().body("No validators found")
+            } else {
+                HttpResponse::Ok().json(validators)
+            }
+        }
+        Err(e) => {
+            error!("Error getting validators: {}", e);
+            HttpResponse::InternalServerError().finish()
+        }
+    }
 }

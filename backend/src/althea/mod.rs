@@ -22,12 +22,12 @@ pub mod endpoints;
 pub mod error;
 pub mod token_mappings;
 
-// const ALTHEA_GRPC_URL: &str = "http://chainripper-2.althea.net:9090";
-// const ALTHEA_ETH_RPC_URL: &str = "http://chainripper-2.althea.net:8545";
+const ALTHEA_GRPC_URL: &str = "http://chainripper-2.althea.net:9090";
+const ALTHEA_ETH_RPC_URL: &str = "http://chainripper-2.althea.net:8545";
 const ALTHEA_MAINNET_CHAIN_ID: &str = "althea_258432-1";
 const ALTHEA_MAINNET_EVM_CHAIN_ID: usize = 258432;
-const ALTHEA_GRPC_URL: &str = "http://localhost:9090";
-const ALTHEA_ETH_RPC_URL: &str = "http://localhost:8545";
+// const ALTHEA_GRPC_URL: &str = "http://localhost:9090";
+// const ALTHEA_ETH_RPC_URL: &str = "http://localhost:8545";
 const ALTHEA_PREFIX: &str = "althea";
 const TIMEOUT: Duration = Duration::from_secs(45);
 /// The core Ambient DEX contract
