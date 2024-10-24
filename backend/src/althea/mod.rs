@@ -21,6 +21,7 @@ pub mod ambient;
 pub mod database;
 pub mod endpoints;
 pub mod error;
+pub mod governance;
 pub mod token_mappings;
 pub mod validators;
 
@@ -145,5 +146,6 @@ fn get_templates(opts: &Opts) -> Vec<Uint256> {
 }
 
 pub fn register_endpoints(cfg: &mut web::ServiceConfig) {
-    cfg.service(endpoints::get_validators);
+    cfg.service(endpoints::get_validators)
+        .service(endpoints::get_proposals);
 }

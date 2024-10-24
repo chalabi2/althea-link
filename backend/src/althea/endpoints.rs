@@ -302,15 +302,25 @@ pub async fn user_positions(
     HttpResponse::Ok().json(results)
 }
 
-/// Retrieves all validators from the Althea chain
+/// Retrieves validators from the Althea chain
 ///
-/// # Query
+/// # Query Parameters
 ///
-/// A simple HTTP GET request
+/// - `active` (optional): Filter validators by their active status
+///   - `?active=true` - Returns only active validators
+///   - `?active=false` - Returns only inactive validators
+///   - If omitted, returns all validators regardless of status
 ///
 /// # Response
 ///
-/// The response body will be a JSON array of validator information
+/// Returns a JSON array of validator information. If no validators are found matching
+/// the criteria, returns a 404 Not Found response.
+///
+/// # Examples
+///
+/// - `GET /validators` - Returns all validators
+/// - `GET /validators?active=true` - Returns only active validators
+/// - `GET /validators?active=false` - Returns only inactive validators
 #[derive(Deserialize)]
 pub struct ValidatorQuery {
     active: Option<bool>,
@@ -334,6 +344,86 @@ pub async fn get_validators(
         }
         Err(e) => {
             error!("Error getting validators: {}", e);
+            HttpResponse::InternalServerError().finish()
+        }
+    }
+}
+
+/// Retrieves proposals from the Althea chain
+///
+/// # Query Parameters
+///
+/// You can filter proposals using either `status` or `active` parameter (but not both):
+///
+/// - `status` (optional): Filter proposals by their status code
+///   - `0` - Unspecified
+///   - `1` - Deposit Period
+///   - `2` - Voting Period
+///   - `3` - Passed
+///   - `4` - Rejected
+///   - `5` - Failed
+///
+/// - `active` (optional): Filter proposals by their active status
+///   - `?active=true` - Returns only active proposals (in deposit or voting period)
+///   - `?active=false` - Returns only inactive proposals (passed, rejected, or failed)
+///   - If omitted, returns all proposals
+///
+/// # Response
+///
+/// Returns a JSON array of proposal information. If no proposals are found matching
+/// the criteria, returns a 404 Not Found response.
+///
+/// # Examples
+///
+/// - `GET /proposals` - Returns all proposals
+/// - `GET /proposals?active=true` - Returns only active proposals
+/// - `GET /proposals?active=false` - Returns only inactive proposals
+/// - `GET /proposals?status=1` - Returns only proposals in deposit period
+/// - `GET /proposals?status=2` - Returns only proposals in voting period
+/// - `GET /proposals?status=3` - Returns only passed proposals
+/// - `GET /proposals?status=4` - Returns only rejected proposals
+/// - `GET /proposals?status=5` - Returns only failed proposals
+#[derive(Deserialize)]
+pub struct ProposalQuery {
+    status: Option<i32>,
+    active: Option<bool>,
+}
+
+#[get("/proposals")]
+pub async fn get_proposals(
+    query: web::Query<ProposalQuery>,
+    db: web::Data<Arc<DB>>,
+) -> impl Responder {
+    info!(
+        "Querying proposals with filters - status: {:?}, active: {:?}",
+        query.status, query.active
+    );
+    let contact = super::get_althea_contact(super::TIMEOUT);
+
+    let result = if query.status.is_some() {
+        // If status filter is provided, use the original status filtering
+        match super::governance::fetch_proposals(&db, &contact).await {
+            Ok(proposals) => Ok(proposals
+                .into_iter()
+                .filter(|p| p.status == query.status.unwrap())
+                .collect::<Vec<_>>()),
+            Err(e) => Err(e),
+        }
+    } else {
+        // Otherwise use the new active/inactive filtering
+        super::governance::fetch_proposals_filtered(&db, &contact, query.active).await
+    };
+
+    match result {
+        Ok(proposals) => {
+            if proposals.is_empty() {
+                HttpResponse::NotFound().body("No proposals found")
+            } else {
+                HttpResponse::Ok().json(proposals)
+            }
+        }
+        Err(e) => {
+            error!("Error getting proposals: {}", e);
             HttpResponse::InternalServerError().finish()
         }
     }
