@@ -86,7 +86,8 @@ fn get_cached_delegations(
 }
 
 fn cache_delegations(db: &rocksdb::DB, delegator: &CosmosAddress, delegations: &[DelegationInfo]) {
-    let key = format!("delegations:{}", delegator).into_bytes();
+    const DELEGATIONS_KEY_PREFIX: &str = "delegations:";
+    let key = format!("{}{}", DELEGATIONS_KEY_PREFIX, delegator).into_bytes();
     let encoded = bincode::serialize(delegations).unwrap();
     db.put(key, encoded).unwrap();
 }

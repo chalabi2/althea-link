@@ -7,6 +7,7 @@ use crate::althea::endpoints::{
 use crate::tls::{load_certs, load_private_key};
 use crate::Opts;
 use actix_web::{middleware, web, App, HttpServer, Responder};
+use deep_space::Contact;
 use log::info;
 use rustls::ServerConfig;
 
@@ -16,9 +17,20 @@ async fn index() -> impl Responder {
 
 pub async fn start_server(opts: Opts, db: Arc<rocksdb::DB>) {
     let db = web::Data::new(db.clone());
+
+    // Create shared Contact instance
+    let contact = Contact::new(
+        super::althea::ALTHEA_GRPC_URL,
+        super::althea::TIMEOUT,
+        super::althea::ALTHEA_PREFIX,
+    )
+    .expect("Failed to create Contact");
+    let contact = web::Data::new(Arc::new(contact));
+
     let server = HttpServer::new(move || {
         App::new()
             .app_data(db.clone())
+            .app_data(contact.clone())
             .route("/", web::get().to(index))
             // Debug endpoints
             .service(

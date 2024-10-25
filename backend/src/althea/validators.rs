@@ -1,11 +1,12 @@
+use crate::Arc;
 use cosmos_sdk_proto_althea::cosmos::base::query::v1beta1::PageRequest;
 use cosmos_sdk_proto_althea::cosmos::staking::v1beta1::{QueryValidatorsRequest, Validator};
-use log::info;
+use deep_space::Contact;
+use log::{error, info};
+use rocksdb::DB;
 use serde::{Deserialize, Serialize};
-
 use std::str::FromStr;
 use std::time::{SystemTime, UNIX_EPOCH};
-
 #[derive(Debug, Serialize, Deserialize, Clone)]
 pub struct ValidatorInfo {
     pub operator_address: String,
@@ -106,9 +107,9 @@ fn get_cached_validators(db: &rocksdb::DB) -> Option<Vec<ValidatorInfo>> {
 }
 
 fn cache_validators(db: &rocksdb::DB, validators: &[ValidatorInfo]) {
-    let key = b"validators";
+    const VALIDATORS_CACHE_KEY: &[u8] = b"validators";
     let encoded = bincode::serialize(validators).unwrap();
-    db.put(key, encoded).unwrap();
+    db.put(VALIDATORS_CACHE_KEY, encoded).unwrap();
 }
 
 impl From<Validator> for ValidatorInfo {
@@ -175,4 +176,22 @@ pub async fn fetch_validators_filtered(
         Some(false) => validators.into_iter().filter(|v| !v.is_active()).collect(),
         None => validators,
     })
+}
+
+pub fn start_validator_cache_refresh_task(db: Arc<DB>, contact: Contact) {
+    tokio::spawn(async move {
+        loop {
+            // Check if cache needs refresh
+            if get_cached_validators(&db).is_none() {
+                info!("Validator cache expired, refreshing...");
+                match fetch_validators(&db, &contact).await {
+                    Ok(_) => info!("Successfully refreshed validator cache"),
+                    Err(e) => error!("Failed to refresh validator cache: {}", e),
+                }
+            }
+
+            // Sleep for 1 minute before checking again
+            tokio::time::sleep(tokio::time::Duration::from_secs(60)).await;
+        }
+    });
 }

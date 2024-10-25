@@ -16,6 +16,7 @@ use actix_web::{
 };
 use clarity::{Address, Uint256}; // Add Uint256 here
 use deep_space::Address as CosmosAddress;
+use deep_space::Contact;
 use log::{error, info};
 use rocksdb::DB;
 use serde::{Deserialize, Serialize};
@@ -332,9 +333,9 @@ pub struct ValidatorQuery {
 pub async fn get_validators(
     query: web::Query<ValidatorQuery>,
     db: web::Data<Arc<DB>>,
+    contact: web::Data<Arc<Contact>>,
 ) -> impl Responder {
     info!("Querying validators with filter: {:?}", query.active);
-    let contact = super::get_althea_contact(super::TIMEOUT);
 
     match super::validators::fetch_validators_filtered(&db, &contact, query.active).await {
         Ok(validators) => {

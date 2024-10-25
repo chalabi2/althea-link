@@ -77,8 +77,8 @@ pub async fn fetch_proposals(
 }
 
 fn get_cached_proposals(db: &rocksdb::DB) -> Option<Vec<ProposalInfo>> {
-    let key = b"proposals";
-    match db.get(key).unwrap() {
+    const PROPOSALS_CACHE_KEY: &[u8] = b"proposals";
+    match db.get(PROPOSALS_CACHE_KEY).unwrap() {
         Some(data) => {
             let proposals: Vec<ProposalInfo> = bincode::deserialize(&data).unwrap();
             let now = SystemTime::now()
