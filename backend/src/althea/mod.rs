@@ -30,6 +30,7 @@ pub const ALTHEA_GRPC_URL: &str = "http://chainripper-2.althea.net:9090";
 pub const ALTHEA_ETH_RPC_URL: &str = "http://chainripper-2.althea.net:8545";
 pub const ALTHEA_MAINNET_CHAIN_ID: &str = "althea_258432-1";
 pub const ALTHEA_MAINNET_EVM_CHAIN_ID: usize = 258432;
+pub const CACHE_DURATION: u64 = 300;
 // const ALTHEA_GRPC_URL: &str = "http://localhost:9090";
 // const ALTHEA_ETH_RPC_URL: &str = "http://localhost:8545";
 
@@ -68,9 +69,11 @@ pub fn start_ambient_indexer(opts: Opts, db: Arc<rocksdb::DB>) {
     let tokens = get_tokens(&opts);
     let templates = get_templates(&opts);
 
-    // Start validator cache refresh task
+    // Start cache refresh tasks
     let contact = get_althea_contact(TIMEOUT);
-    start_validator_cache_refresh_task(db.clone(), contact);
+    start_validator_cache_refresh_task(db.clone(), contact.clone());
+    start_proposal_cache_refresh_task(db.clone(), contact.clone());
+    start_delegation_cache_refresh_task(db.clone(), contact);
 
     thread::spawn(move || {
         let db = db.clone();
@@ -157,4 +160,6 @@ pub fn register_endpoints(cfg: &mut web::ServiceConfig) {
         .service(endpoints::get_delegations);
 }
 
+pub use delegations::start_delegation_cache_refresh_task;
+pub use governance::start_proposal_cache_refresh_task;
 pub use validators::start_validator_cache_refresh_task;

@@ -1,3 +1,4 @@
+use crate::althea::CACHE_DURATION;
 use crate::Arc;
 use cosmos_sdk_proto_althea::cosmos::base::query::v1beta1::PageRequest;
 use cosmos_sdk_proto_althea::cosmos::staking::v1beta1::{QueryValidatorsRequest, Validator};
@@ -96,7 +97,7 @@ fn get_cached_validators(db: &rocksdb::DB) -> Option<Vec<ValidatorInfo>> {
                 .as_secs();
 
             // Cache for 5 minutes
-            if now - validators[0].last_updated < 300 {
+            if now - validators[0].last_updated < CACHE_DURATION {
                 Some(validators)
             } else {
                 None
@@ -190,8 +191,8 @@ pub fn start_validator_cache_refresh_task(db: Arc<DB>, contact: Contact) {
                 }
             }
 
-            // Sleep for 1 minute before checking again
-            tokio::time::sleep(tokio::time::Duration::from_secs(60)).await;
+            // Sleep for the cache duration before refreshing again
+            tokio::time::sleep(tokio::time::Duration::from_secs(CACHE_DURATION)).await;
         }
     });
 }

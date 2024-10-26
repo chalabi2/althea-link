@@ -396,15 +396,14 @@ pub struct ProposalQuery {
 pub async fn get_proposals(
     query: web::Query<ProposalQuery>,
     db: web::Data<Arc<DB>>,
+    contact: web::Data<Arc<Contact>>,
 ) -> impl Responder {
     info!(
         "Querying proposals with filters - status: {:?}, active: {:?}",
         query.status, query.active
     );
-    let contact = super::get_althea_contact(super::TIMEOUT);
 
     let result = if query.status.is_some() {
-        // If status filter is provided, use the original status filtering
         match super::governance::fetch_proposals(&db, &contact).await {
             Ok(proposals) => Ok(proposals
                 .into_iter()
@@ -413,7 +412,6 @@ pub async fn get_proposals(
             Err(e) => Err(e),
         }
     } else {
-        // Otherwise use the new active/inactive filtering
         super::governance::fetch_proposals_filtered(&db, &contact, query.active).await
     };
 
@@ -455,9 +453,9 @@ pub struct DelegatorQuery {
 pub async fn get_delegations(
     query: web::Query<DelegatorQuery>,
     db: web::Data<Arc<DB>>,
+    contact: web::Data<Arc<Contact>>,
 ) -> impl Responder {
     info!("Querying delegations for address: {}", query.address);
-    let contact = super::get_althea_contact(super::TIMEOUT);
 
     let delegator_address = match CosmosAddress::from_bech32(query.address.clone()) {
         Ok(addr) => addr,

@@ -1,8 +1,17 @@
+use bincode;
 use cosmos_sdk_proto_althea::cosmos::base::query::v1beta1::PageRequest;
 use cosmos_sdk_proto_althea::cosmos::gov::v1beta1::{Proposal, QueryProposalsRequest};
-use log::info;
+use deep_space::Contact;
+use log::{error, info};
+use rocksdb::DB;
 use serde::{Deserialize, Serialize};
+
+use std::sync::Arc;
 use std::time::{SystemTime, UNIX_EPOCH};
+use tokio::time::sleep;
+
+use crate::althea::CACHE_DURATION;
+
 #[derive(Debug, Serialize, Deserialize, Clone)]
 pub struct ProposalInfo {
     pub proposal_id: u64,
@@ -87,7 +96,7 @@ fn get_cached_proposals(db: &rocksdb::DB) -> Option<Vec<ProposalInfo>> {
                 .as_secs();
 
             // Cache for 5 minutes
-            if now - proposals[0].last_updated < 300 {
+            if now - proposals[0].last_updated < CACHE_DURATION {
                 Some(proposals)
             } else {
                 None
@@ -156,4 +165,22 @@ pub async fn fetch_proposals_filtered(
         Some(false) => proposals.into_iter().filter(|p| !p.is_active()).collect(),
         None => proposals,
     })
+}
+
+pub fn start_proposal_cache_refresh_task(db: Arc<DB>, contact: Contact) {
+    tokio::spawn(async move {
+        loop {
+            // Check if cache needs refresh
+            if get_cached_proposals(&db).is_none() {
+                info!("Proposal cache expired, refreshing...");
+                match fetch_proposals(&db, &contact).await {
+                    Ok(_) => info!("Successfully refreshed proposal cache"),
+                    Err(e) => error!("Failed to refresh proposal cache: {}", e),
+                }
+            }
+
+            // Sleep for the cache duration before refreshing again
+            sleep(tokio::time::Duration::from_secs(CACHE_DURATION)).await;
+        }
+    });
 }
