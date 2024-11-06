@@ -1,0 +1,29 @@
+---
+- name: Test Deployment
+  hosts: vagrant
+  vars:
+    app_dir: /var/www/deployment
+    frontend_dir: "{{ app_dir }}/frontend"
+    backend_dir: "{{ app_dir }}/backend"
+
+  tasks:
+    - name: Ensure required directories exist
+      file:
+        path: "{{ item }}"
+        state: directory
+        mode: "0755"
+      with_items:
+        - "{{ frontend_dir }}"
+        - "{{ backend_dir }}"
+
+    - name: Test backend connection
+      wait_for:
+        host: localhost
+        port: 8080
+        timeout: 5
+      ignore_errors: yes
+      register: backend_check
+
+    - name: Display backend status
+      debug:
+        msg: "Backend status: {{ backend_check.state }}"

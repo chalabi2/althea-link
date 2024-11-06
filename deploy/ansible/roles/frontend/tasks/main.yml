@@ -1,0 +1,32 @@
+---
+- name: Check if frontend has changed
+  stat:
+    path: "{{ frontend_dir }}/package.json"
+  register: frontend_package
+
+- name: Sync frontend to server
+  synchronize:
+    src: "{{ project_root }}/frontend/"
+    dest: "{{ frontend_dir }}"
+    delete: yes
+  register: frontend_sync
+
+- name: Install frontend dependencies
+  shell: |
+    export NVM_DIR="$HOME/.nvm"
+    [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+    /home/joseph/.nvm/versions/node/v22.11.0/bin/npm install
+  args:
+    chdir: "{{ frontend_dir }}"
+    executable: /bin/bash
+  when: frontend_sync.changed or not frontend_package.stat.exists
+
+- name: Build frontend
+  shell: |
+    export NVM_DIR="$HOME/.nvm"
+    [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+    /home/joseph/.nvm/versions/node/v22.11.0/bin/npm run build
+  args:
+    chdir: "{{ frontend_dir }}"
+    executable: /bin/bash
+  when: frontend_sync.changed

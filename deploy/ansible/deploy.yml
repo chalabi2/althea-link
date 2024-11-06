@@ -1,0 +1,46 @@
+---
+- name: Deploy Application
+  hosts: production
+  vars:
+    project_root: "{{ playbook_dir }}/../.."
+    app_dir: /var/www/deployment
+    frontend_dir: "{{ app_dir }}/frontend"
+    backend_dir: "{{ app_dir }}/backend"
+    domain: test.althea.link
+
+  tasks:
+    - name: Ensure required directories exist
+      file:
+        path: "{{ item }}"
+        state: directory
+        mode: "0755"
+      with_items:
+        - "{{ frontend_dir }}"
+        - "{{ backend_dir }}"
+
+    - name: Include frontend role
+      include_role:
+        name: frontend
+
+    - name: Include backend role
+      include_role:
+        name: backend
+
+    - name: Configure Nginx
+      template:
+        src: nginx.conf.j2
+        dest: /etc/nginx/sites-available/althea.link
+      become: yes
+
+    - name: Enable Nginx site
+      file:
+        src: /etc/nginx/sites-available/althea.link
+        dest: /etc/nginx/sites-enabled/althea.link
+        state: link
+      become: yes
+
+    - name: Restart Nginx
+      service:
+        name: nginx
+        state: restarted
+      become: yes

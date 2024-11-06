@@ -1,0 +1,11 @@
+---
+- name: Development Deployment
+  hosts: vagrant
+  vars:
+    app_dir: /var/www/deployment
+    frontend_dir: "{{ app_dir }}/frontend"
+    backend_dir: "{{ app_dir }}/backend"
+    project_root: "{{ playbook_dir }}/../.."
+
+  roles:
+    - backend

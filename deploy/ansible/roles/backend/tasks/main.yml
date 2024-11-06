@@ -1,0 +1,50 @@
+---
+- name: Ensure required directories exist
+  file:
+    path: "{{ backend_dir }}"
+    state: directory
+    mode: "0755"
+
+- name: Check if backend source has changed
+  stat:
+    path: "{{ backend_dir }}/Cargo.toml"
+  register: backend_cargo
+
+- name: Copy backend source
+  synchronize:
+    src: "{{ project_root }}/backend/"
+    dest: "{{ backend_dir }}"
+    rsync_opts:
+      - "--exclude=target"
+  register: backend_sync
+
+- name: Update Rust
+  shell: |
+    export PATH="/home/joseph/.cargo/bin:$PATH"
+    rustup update stable
+  args:
+    chdir: "{{ backend_dir }}"
+  when: backend_sync.changed
+
+- name: Build backend
+  shell: |
+    export PATH="/home/joseph/.cargo/bin:$PATH"
+    cargo build --release
+  args:
+    chdir: "{{ backend_dir }}"
+  when: backend_sync.changed
+
+- name: Create systemd service
+  template:
+    src: althea-backend.service.j2
+    dest: /etc/systemd/system/althea-backend.service
+  become: yes
+
+- name: Start backend service
+  systemd:
+    name: althea-backend
+    state: restarted
+    daemon_reload: yes
+    enabled: yes
+  become: yes
+  when: backend_sync.changed

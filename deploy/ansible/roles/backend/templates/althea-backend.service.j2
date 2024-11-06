@@ -1,0 +1,15 @@
+[Unit]
+Description=Althea Link Backend
+After=network.target
+
+[Service]
+Type=simple
+User=root
+Group=root
+WorkingDirectory={{ backend_dir }}
+ExecStart={{ backend_dir }}/target/release/althea_link_backend
+Restart=always
+Environment=RUST_LOG=info
+
+[Install]
+WantedBy=multi-user.target

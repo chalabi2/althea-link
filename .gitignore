@@ -1,1 +1,5 @@
 backend/backend_db_path
+backend/target
+test.bash
+test_deploy_key.pub
+test_deploy_key

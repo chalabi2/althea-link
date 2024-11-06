@@ -1,0 +1,76 @@
+FROM ubuntu:20.04
+
+ENV DEBIAN_FRONTEND=noninteractive
+ENV container docker
+ENV PATH="/root/.cargo/bin:${PATH}"
+ENV CARGO_HOME=/root/.cargo
+ENV RUSTUP_HOME=/root/.rustup
+
+# Prevent systemd from starting services during installation
+RUN mkdir -p /run/systemd && echo 'exit 0' > /usr/sbin/policy-rc.d
+
+RUN apt-get update && apt-get install -y \
+    openssh-server \
+    systemd \
+    systemd-sysv \
+    python3 \
+    python3-pip \
+    nginx \
+    curl \
+    build-essential \
+    sshpass \
+    pkg-config \
+    libssl-dev \
+    gcc \
+    g++ \
+    make \
+    rsync \
+    git \
+    cmake \
+    clang \
+    libclang-dev \
+    llvm-dev \
+    zlib1g-dev \
+    libbz2-dev \
+    liblz4-dev \
+    libzstd-dev \
+    libsnappy-dev \
+    libgflags-dev \
+    libc++-dev \
+    libc++abi-dev \
+    ninja-build \
+    && rm -rf /var/lib/apt/lists/*
+
+# Install RocksDB from source
+RUN git clone --branch v8.10.0 https://github.com/facebook/rocksdb.git && \
+    cd rocksdb && \
+    PORTABLE=1 make -j4 shared_lib && \
+    make install-shared && \
+    ldconfig && \
+    cd .. && \
+    rm -rf rocksdb
+
+# Install Rust
+RUN curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
+RUN /root/.cargo/bin/rustup default stable
+
+# Configure SSH
+RUN echo 'root:vagrant' | chpasswd
+RUN sed -i 's/#PermitRootLogin prohibit-password/PermitRootLogin yes/' /etc/ssh/sshd_config
+RUN sed -i 's/#PasswordAuthentication yes/PasswordAuthentication yes/' /etc/ssh/sshd_config
+
+# Generate SSH keys
+RUN ssh-keygen -A
+
+# Configure systemd
+RUN systemctl enable ssh
+RUN systemctl enable systemd-journald
+
+# Remove policy-rc.d
+RUN rm /usr/sbin/policy-rc.d
+
+EXPOSE 22 80 8080
+
+STOPSIGNAL SIGRTMIN+3
+
+CMD [ "/sbin/init" ]
