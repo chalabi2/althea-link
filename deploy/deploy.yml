@@ -1,0 +1,8 @@
+# Sets up althea.link with nginx host for the main site
+
+- name: Install Althea.link
+  hosts: link
+  user: root
+  roles:
+    - frontend
+    - backend

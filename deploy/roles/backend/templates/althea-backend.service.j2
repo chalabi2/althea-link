@@ -1,0 +1,14 @@
+[Unit]
+Description=Althea Link Backend
+After=network.target
+
+[Service]
+Type=simple
+User=root
+Group=root
+ExecStart=althea-link-backend
+Restart=always
+Environment=RUST_LOG=info
+
+[Install]
+WantedBy=multi-user.target

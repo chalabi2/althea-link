@@ -1,0 +1,41 @@
+---
+
+- name: Copy althea-link-backend binary
+  copy:
+    src: "{{playbook_dir}}/althea-link-backend"
+    dest: /usr/bin/althea-link-backend
+    mode: 0755
+  become: true
+
+- name: Create systemd service
+  template:
+    src: althea-backend.service.j2
+    dest: /etc/systemd/system/althea-backend.service
+  become: yes
+
+- name: Start backend service
+  systemd:
+    name: althea-backend
+    state: restarted
+    daemon_reload: yes
+    enabled: yes
+  become: yes
+
+- name: Wait for Quick crashes
+  pause:
+    seconds: 5
+
+- name: Check if althea-backend is running
+  command: systemctl status althea-backend
+  ignore_errors: true
+  changed_when: false
+  register: service_link_status
+
+- name: Report status of althea-link-backend
+  fail:
+    msg: |
+      Service althea-backend is not running.
+      Output of `systemctl status althea-backend`:
+      {{ service_link_status.stdout }}
+      {{ service_link_status.stderr }}
+  when: service_link_status is failed

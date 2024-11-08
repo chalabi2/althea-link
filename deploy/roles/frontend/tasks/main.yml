@@ -1,0 +1,45 @@
+---
+- name: Install Dependencies
+  ansible.builtin.apt:
+    name: rsync,nginx,htop,vim,iftop,python3-certbot-nginx
+    state: present
+    update_cache: yes
+  become: true
+
+- name: Copy site
+  ansible.posix.synchronize:
+    src: "{{ playbook_dir }}/frontend/"
+    dest: /usr/share/nginx/frontend/
+    delete: true
+  become: true
+
+- name: Copy nginx config
+  template:
+    src: "althealink.j2"
+    dest: /etc/nginx/sites-enabled/althealink
+
+- name: Make sure default site is removed
+  ansible.builtin.file:
+    path: "/etc/nginx/sites-available/default"
+    state: absent
+
+# If this fails check out status of certbot: https://letsencrypt.status.io/
+- name: ISSUE CERT
+  command: certbot --nginx -d {{ link_server_name }} --email justin@althea.net --noninteractive --agree-tos --redirect
+
+- name: Setup certbot-renew cron
+  ansible.builtin.cron:
+    name: certbot-renew
+    minute: 0
+    hour: 0,12
+    user: root
+    job: >
+      python3 -c ''import random; import time; time.sleep(random.random() * 3600)''
+      /usr/local/bin/certbot-auto renew -q | sudo tee -a /etc/crontab > /dev/null
+
+- name: Set Nginx to run on startup
+  ansible.builtin.systemd:
+    name: nginx
+    state: restarted
+    enabled: true
+  become: true
