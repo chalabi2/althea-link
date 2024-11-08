@@ -9,7 +9,7 @@
 - name: Copy site
   ansible.posix.synchronize:
     src: "{{ playbook_dir }}/frontend/"
-    dest: /usr/share/nginx/frontend/
+    dest: /usr/share/nginx/althealink/
     delete: true
   become: true
 
@@ -17,6 +17,11 @@
   template:
     src: "althealink.j2"
     dest: /etc/nginx/sites-enabled/althealink
+
+- name: Make sure default site is removed
+  ansible.builtin.file:
+    path: "/etc/nginx/sites-enabled/default"
+    state: absent
 
 - name: Make sure default site is removed
   ansible.builtin.file:

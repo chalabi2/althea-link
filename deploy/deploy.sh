@@ -9,7 +9,7 @@ pushd frontend
 npm run build
 rm -rf ../deploy/frontend/
 mkdir ../deploy/frontend
-cp -r .next/server/app/* ../deploy/frontend/
+cp -r out/* ../deploy/frontend/
 popd
 pushd $DIR
 ansible-playbook -i hosts deploy.yml
