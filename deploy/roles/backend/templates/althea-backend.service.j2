@@ -1,0 +1,14 @@
+[Unit]
+Description=Althea Link Backend
+After=network.target
+
+[Service]
+Type=simple
+User=root
+Group=root
+ExecStart=althea-link-backend
+Restart=always
+Environment=RUST_LOG=info port=8080 https=true cert_file=/etc/letsencrypt/live/{{ link_server_name }}/cert.pem key_file=/etc/letsencrypt/live/{{ link_server_name }}/chain.pem 
+
+[Install]
+WantedBy=multi-user.target

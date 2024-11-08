@@ -1,5 +1,6 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  output: 'export',
   images: {
     remotePatterns: [
       {
@@ -15,24 +16,6 @@ const nextConfig = {
     config.resolve.fallback = { fs: false, net: false, tls: false };
     config.externals.push("pino-pretty", "lokijs", "encoding");
     return config;
-  },
-  // Adding CORS Headers for safe to access the manifest.json 
-  headers: async () => {
-    return [
-      {
-        source: "/:path*",
-        headers: [
-          { key: "Access-Control-Allow-Credentials", value: "true" },
-          { key: "Access-Control-Allow-Origin", value: "https://safe.neobase.one" },
-          { key: "Access-Control-Allow-Methods", value: "GET" },
-          {
-            key: "Access-Control-Allow-Headers",
-            value:
-            "X-Requested-With, content-type, Authorization",
-          },
-        ],
-      },
-    ];
   },
 };
 
