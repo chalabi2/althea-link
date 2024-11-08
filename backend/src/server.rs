@@ -1,12 +1,13 @@
 use std::sync::Arc;
 
 use crate::althea::endpoints::{
-    query_all_burn_ranged, query_all_init_pools, query_all_mint_ambient, query_all_mint_ranged,
-    query_pool, user_pool_positions, user_positions,
+    get_delegations, get_proposals, get_validators, query_all_burn_ranged, query_all_init_pools,
+    query_all_mint_ambient, query_all_mint_ranged, query_pool, user_pool_positions, user_positions,
 };
 use crate::tls::{load_certs, load_private_key};
 use crate::Opts;
 use actix_web::{middleware, web, App, HttpServer, Responder};
+use deep_space::Contact;
 use log::info;
 use rustls::ServerConfig;
 
@@ -16,18 +17,31 @@ async fn index() -> impl Responder {
 
 pub async fn start_server(opts: Opts, db: Arc<rocksdb::DB>) {
     let db = web::Data::new(db.clone());
+
+    // Create shared Contact instance
+    let contact = Contact::new(
+        super::althea::ALTHEA_GRPC_URL,
+        super::althea::TIMEOUT,
+        super::althea::ALTHEA_PREFIX,
+    )
+    .expect("Failed to create Contact");
+    let contact = web::Data::new(Arc::new(contact));
+
     let server = HttpServer::new(move || {
         App::new()
             .app_data(db.clone())
+            .app_data(contact.clone())
             .route("/", web::get().to(index))
             // Debug endpoints
             .service(
                 web::scope("/debug")
+                    .service(get_validators)
+                    .service(get_proposals)
+                    .service(get_delegations)
                     .service(query_all_init_pools)
                     .service(query_pool)
                     .service(query_all_mint_ranged)
                     .service(query_all_burn_ranged)
-                    .service(query_all_mint_ambient)
                     .service(query_all_mint_ambient),
             )
             // Graphcache-go endpoints
